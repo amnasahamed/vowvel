@@ -1,0 +1,31 @@
+# Generation prompts
+
+Created with the built-in image generation tool. These are AI-generated photorealistic promotional mockups, not photographs of real events or exact website screenshots. Physical stationery is styling for the digital invitation product.
+
+## vowvel-instagram-dp.png
+
+Create a finished square profile logo for Vowvel, a premium digital wedding invitation brand. Use attached existing Vowvel wordmark as strict typographic reference. Extract/reinterpret only the capital V with its distinctive folded-paper incision into a beautifully balanced robust serif monogram. Warm ivory V on solid deep aubergine background. Flat vector-like immaculate edges, no texture, no shadows, no mockup, no extra text or symbols. Center monogram within middle 58% of square so it is perfectly legible in circular Instagram and WhatsApp avatar crops. Sophisticated timeless editorial identity. Square 1:1.
+
+## 01-brand-introduction.png
+
+Create a photorealistic premium editorial Instagram launch post for Vowvel digital wedding invitations. Portrait 4:5 composition. Real warm ivory linen table, beautiful folded ivory envelope with aubergine ribbon, one physically plausible modern smartphone resting naturally on the table, soft afternoon window light, subtle shadows, fine tactile paper detail. Phone screen shows the second attached palace invitation artwork faithfully with tiny tasteful 'You’re invited' typography; screen undistorted, realistic reflections. Physical stationery is atmospheric styling, smartphone invitation is clear focal subject. Upper third clean ivory negative space with elegant aubergine headline exactly 'Something worth opening.' and small exact brand wordmark 'Vowvel' matching first reference. Small footer 'Digital wedding invitations'. Luxury campaign photography, authentic materials, restrained composition, no people, no fake UI, no collage, no watermarks.
+
+## 02-conservatory.png
+
+Finished photorealistic luxury Instagram campaign image, portrait 4:5. Vowvel digital wedding invitation design Conservatory. Real garden breakfast table of pale travertine, a few white garden roses and sage green silk ribbon, dappled warm sunlight. One natural modern smartphone resting diagonally at very slight angle with its whole screen legible, showing attached second reference glasshouse invitation artwork faithfully, tiny refined 'You’re invited'. Real photography, detailed flowers, subtle realistic glass reflections, no floating objects or artificial plastic CGI. Upper third airy uncluttered pale background and elegant aubergine editorial headline exactly 'Love, in full bloom.' Small label 'CONSERVATORY'. Small 'Vowvel' wordmark matching first reference at bottom. Balanced sophisticated product campaign, no other text.
+
+## 03-gulmohar.png
+
+Create a realistic premium editorial Instagram product campaign for Vowvel, portrait 4:5. Gulmohar digital wedding invitation. Authentic warm sandstone ledge in an elegant Indian heritage courtyard, one small aged brass bowl, a few vermilion gulmohar blossoms, fine ivory cotton fabric. One realistic smartphone rests securely on ledge showing attached second reference palace invitation artwork faithfully, tiny tasteful 'You’re invited'. Soft warm side lighting, believable scale and optics, handcrafted material textures, luxurious restraint, no CGI, no clutter. Upper third softly lit plain sandstone negative space with refined aubergine headline exactly 'A beautiful beginning.' Small label 'GULMOHAR'. Small 'Vowvel' wordmark matching first reference at bottom. All device edges and screen undistorted. No other text.
+
+## 04-after-hours.png
+
+Create a finished photorealistic luxury editorial Instagram campaign post, portrait 4:5. Vowvel After Hours digital wedding invitation. Real intimate evening table with burgundy velvet, single slender candle in aged silver holder, cropped fine crystal coupe, one beautiful dark flower, warm amber candlelight and cinematic shadows. Modern smartphone physically resting on table, screen clearly showing attached second reference candlelit ballroom artwork faithfully, tiny elegant 'You’re invited'. Believable phone proportions and realistic reflections, editorial photography not CGI. Upper third clean deep burgundy negative space with warm ivory serif headline exactly 'An evening to remember.' Small label 'AFTER HOURS'. Small ivory 'Vowvel' wordmark following first reference at bottom. Rich but restrained, no extra words.
+
+## 05-sunday-edit.png
+
+Create a finished photorealistic editorial Instagram campaign, portrait 4:5, for Vowvel Sunday Edit digital wedding invitations. Real cheerful sunlit breakfast still life: butter yellow cotton tablecloth, blue gingham napkin, loose cobalt satin bow, three real cherries, edge of a small pink frosted cake, a few daisies. One modern smartphone lies naturally on table, screen showing attached second reference illustrated yellow cherry/ribbon invitation artwork faithfully, tiny 'You’re invited'. Authentic photographic food and fabric textures, natural summer window shadows, no CGI or floating items. Upper third uncluttered butter yellow space with bold tasteful aubergine editorial headline exactly 'Your kind of happy.' Small label 'SUNDAY EDIT'. Small exact 'Vowvel' wordmark matching first reference at bottom. Delightful but sophisticated, no extra text.
+
+## 06-azure.png
+
+Create a finished photorealistic high-end Instagram campaign image, portrait 4:5, for Vowvel Azure digital wedding invitations. Real Mediterranean seaside terrace still life on warm white plaster table, one fresh lemon with green leaf, restrained pink bougainvillea sprig, folded blue-and-ivory striped linen, softly blurred blue sea in distant background. One realistic modern smartphone resting naturally on table with complete clear screen displaying attached second reference illustrated Amalfi coastal invitation artwork faithfully, tiny tasteful 'You’re invited'. Real sunlight and material texture, fine realistic reflections, no CGI or fake floating objects. Upper third clean pale negative space with elegant dark blue serif headline exactly 'Somewhere lovely. Together.' Small label 'AZURE'. Small exact 'Vowvel' wordmark following first reference at bottom. Polished editorial travel product photography, no extra words.

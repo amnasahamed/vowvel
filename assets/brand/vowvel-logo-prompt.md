@@ -1,0 +1,7 @@
+# Vowvel logo — version 1
+
+Generated with the built-in image-generation tool. Raster PNG artwork; not a vector master.
+
+## Generation prompt
+
+Use case: logo-brand. Create an exceptional luxury logo for Vowvel, a modern wedding and engagement invitation website. Single finished identity, not a grid of alternatives or branding mockups. Exact wordmark text: "Vowvel" (V-o-w-v-e-l). On a perfectly flat warm ivory background, center a sophisticated dark oxblood wordmark with bespoke high-contrast editorial serif lettering, precise optical kerning, elegant but robust hairlines, expressive V and softly sculpted lowercase letters. Above the wordmark place a compact original monogram: two subtly interwoven V strokes forming a graceful folded ribbon / open invitation silhouette, simple, balanced, unmistakably readable at small scale. A sense of two lives meeting, expressed abstractly without literal hearts. The symbol should complement the type, not overwhelm it. Quiet European stationery-house luxury with modern warmth. Generous negative space, masterful proportions, crisp flat vector-like edges, limited monochrome ink, visually striking and timeless. No tagline, no extra text, no crowns, diamonds, rings, flowers, wedding clipart, generic infinity symbols, crests, drop shadows, gradients, metallic effects, texture, embossing, photography or mockup props. Deliver a high-resolution landscape logo artwork with the complete lockup centered and fully visible.
