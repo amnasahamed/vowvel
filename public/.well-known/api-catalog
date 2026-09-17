@@ -1,0 +1,25 @@
+{
+  "linkset": [
+    {
+      "anchor": "https://vowvel.com/api",
+      "service-desc": [
+        {
+          "href": "https://vowvel.com/openapi.json",
+          "type": "application/openapi+json"
+        }
+      ],
+      "service-doc": [
+        {
+          "href": "https://vowvel.com/docs/api",
+          "type": "text/html"
+        }
+      ],
+      "status": [
+        {
+          "href": "https://vowvel.com/api/health",
+          "type": "application/json"
+        }
+      ]
+    }
+  ]
+}

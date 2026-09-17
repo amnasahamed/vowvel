@@ -1,0 +1,40 @@
+# Vowvel
+
+> A luxury wedding and engagement invitation experience, built with React, TypeScript, and Vite for Cloudflare Workers Static Assets.
+
+Vowvel provides an editorial storefront and five signature invitation design worlds: Conservatory, Gulmohar, After Hours, Sunday Edit, and Azure. Each experience features original thematic artwork, differing envelope openings, interactive reveal animations, guest schedules, calendar sync, keepsakes, maps, RSVP response management, and transparent pricing.
+
+## Signature Invitation Themes
+
+- [Conservatory](https://vowvel.com/#/preview/conservatory): Botanical glasshouse, warm ivory, hand-pressed gold foil, organic romanticism.
+- [Gulmohar](https://vowvel.com/#/preview/gulmohar): Heritage royal crimson, marigold arches, celebratory evening warmth.
+- [After Hours](https://vowvel.com/#/preview/afterhours): Noir editorial, chandeliers, jazz salon, black-tie midnight elegance.
+- [Sunday Edit](https://vowvel.com/#/preview/sunday): Warm editorial linen, relaxed typography, intimate daytime weekend gathering.
+- [Azure](https://vowvel.com/#/preview/azure): Mediterranean cliffside, cobalt tiles, sea breeze romance.
+
+## Editorial Journal & Design Essays
+
+- [The Vowvel Atelier Journal](https://vowvel.com/#/blog): 20 comprehensive essays on wedding stationery craft, botanical glasshouse design, royal Indian heritage, black-tie midnight glamour, playful papercraft, tactile unboxing psychology, zero-app RSVPs, and modern wedding etiquette.
+- [The Conservatory Botanical Guide](https://vowvel.com/#/blog/the-conservatory-botanical-wedding-invitations-guide): Pressed petals, sage green (#42573f) palettes, and glasshouse love letters.
+- [Gulmohar Palace Heritage Guide](https://vowvel.com/#/blog/gulmohar-palace-heritage-wedding-invitations): Royal Rajasthan courtyards, vermilion (#963e2d) blooms, and multi-ceremony Indian itineraries.
+- [After Hours Black-Tie Guide](https://vowvel.com/#/blog/after-hours-modern-black-tie-invitations): Midnight black cherry (#2e1823) velvet, champagne gold (#dfc899), and candelit chandeliers.
+- [The Sunday Edit Papercraft Guide](https://vowvel.com/#/blog/the-sunday-edit-playful-modern-papercraft): Cobalt doodles (#2542a0) on butter paper (#f7e9a7) for playful modern celebrations.
+- [Azure Coastal Guide](https://vowvel.com/#/blog/azure-coastal-destination-wedding-invitations): Mediterranean watercolours, sea glass (#305c88), and destination travel logistics.
+- [Psychology of the Digital Unboxing](https://vowvel.com/#/blog/the-psychology-of-digital-unboxing): Tactile wax seals, opening rituals, and why sensory unboxing makes guests say "vow".
+
+## Key APIs & Machine Endpoints
+
+- [OpenAPI Specification](https://vowvel.com/openapi.json): Comprehensive REST API description including endpoints for quotes, coupons, orders, and RSVPs.
+- [API Catalog](https://vowvel.com/.well-known/api-catalog): RFC 9727 linkset for automated discovery.
+- [Auth Documentation](https://vowvel.com/auth.md): Agent authentication and registration instructions.
+- [A2A Agent Card](https://vowvel.com/.well-known/agent-card.json): Agent-to-Agent protocol declaration.
+- [MCP Server Card](https://vowvel.com/.well-known/mcp/server-card.json): Model Context Protocol server capabilities.
+- [Agent Skills](https://vowvel.com/.well-known/agent-skills/index.json): Skills index for autonomous agent actions.
+- [Agentic Resource Discovery](https://vowvel.com/.well-known/ai-catalog.json): ARD manifest indexing all services.
+
+## Pricing & Commerce
+
+- **Base Invitation License**: ₹2,499 INR (Signature Collection launch price; publishing is not yet available, hosting and payment terms will be confirmed before launch).
+- **Supported Commerce Protocols**: ACP (Agentic Commerce Protocol), UCP (Universal Commerce Protocol), MPP (Machine Payment Protocol), x402 HTTP payments, and AP2.
+
+For full details, see [llms-full.txt](https://vowvel.com/llms-full.txt).

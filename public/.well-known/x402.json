@@ -1,0 +1,17 @@
+{
+  "protocol": "x402",
+  "version": "1.0.0",
+  "facilitator": "https://x402.org/facilitator",
+  "accepted_currencies": ["INR", "USDC", "USD"],
+  "endpoints": [
+    {
+      "path": "/api/orders",
+      "method": "POST",
+      "price": {
+        "amount": "2499",
+        "currency": "INR"
+      },
+      "description": "Vowvel Bespoke Invitation License (Signature Collection; $40 USD international via PayPal - pending)"
+    }
+  ]
+}

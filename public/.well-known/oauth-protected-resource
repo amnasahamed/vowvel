@@ -1,0 +1,17 @@
+{
+  "resource": "https://vowvel.com",
+  "authorization_servers": [
+    "https://vowvel.com"
+  ],
+  "scopes_supported": [
+    "invitations:read",
+    "invitations:write",
+    "orders:read",
+    "orders:create",
+    "rsvp:write"
+  ],
+  "bearer_methods_supported": [
+    "header"
+  ],
+  "resource_documentation": "https://vowvel.com/docs/api"
+}

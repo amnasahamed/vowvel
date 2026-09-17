@@ -1,0 +1,252 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Vowvel Invitation & Commerce API",
+    "version": "1.0.0",
+    "description": "Bespoke luxury wedding and engagement invitation platform APIs for curation, draft customization, guest RSVPs, and machine checkout.",
+    "contact": {
+      "name": "Vowvel Support",
+      "email": "support@vowvel.com",
+      "url": "https://vowvel.com"
+    }
+  },
+  "servers": [
+    {
+      "url": "https://vowvel.com",
+      "description": "Production API"
+    }
+  ],
+  "x-service-info": {
+    "categories": [
+      "events",
+      "weddings",
+      "invitations",
+      "digital-goods",
+      "stationery"
+    ],
+    "protocols_supported": ["mpp", "acp", "ucp", "x402", "a2a"]
+  },
+  "paths": {
+    "/api/health": {
+      "get": {
+        "summary": "Health check",
+        "description": "Returns operational service status.",
+        "responses": {
+          "200": {
+            "description": "Service is healthy",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "ok": { "type": "boolean" },
+                    "version": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/commerce/catalog": {
+      "get": {
+        "summary": "Get invitation catalog and pricing",
+        "description": "Returns the five signature designs with current domestic (INR) and international (USD) pricing.",
+        "responses": {
+          "200": {
+            "description": "Catalog with pricing",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "currency": { "type": "string" },
+                    "basePriceCents": { "type": "integer" },
+                    "internationalPriceUSD": { "type": "integer" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/coupons/quote": {
+      "post": {
+        "summary": "Calculate pricing quote",
+        "description": "Calculates subtotal, discount, applicable taxes, and final payable total for a wedding invitation, optionally with a coupon code.",
+        "requestBody": {
+          "required": false,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": { "type": "string" }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Itemized pricing quote",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "subtotalCents": { "type": "integer" },
+                    "discountCents": { "type": "integer" },
+                    "taxCents": { "type": "integer" },
+                    "totalCents": { "type": "integer" },
+                    "currency": { "type": "string" }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/api/orders": {
+      "post": {
+        "summary": "Initiate invitation purchase order",
+        "description": "Creates a payable order for a customized luxury wedding invitation. Requires a signed-in customer session and CSRF token.",
+        "x-payment-info": {
+          "intent": "charge",
+          "method": "card",
+          "amount": 249900,
+          "currency": "INR",
+          "description": "Vowvel Bespoke Invitation License (Signature Collection; $40 USD international via PayPal - pending)"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "code": { "type": "string" },
+                  "subdomain": { "type": "string" },
+                  "invitation": { "type": "object" }
+                },
+                "required": ["subdomain", "invitation"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Order created",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "orderId": { "type": "string" },
+                    "totalCents": { "type": "integer" },
+                    "currency": { "type": "string" }
+                  }
+                }
+              }
+            }
+          },
+          "402": {
+            "description": "Payment Required via x402 protocol or payment gateway"
+          }
+        }
+      }
+    },
+    "/api/verify-payment": {
+      "post": {
+        "summary": "Verify Razorpay payment signature",
+        "description": "Verifies the Razorpay payment signature for a customer order. Requires a signed-in customer session and CSRF token.",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "orderId": { "type": "string" },
+                  "razorpay_payment_id": { "type": "string" },
+                  "razorpay_order_id": { "type": "string" },
+                  "razorpay_signature": { "type": "string" }
+                },
+                "required": ["orderId", "razorpay_payment_id", "razorpay_order_id", "razorpay_signature"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Payment signature verified"
+          }
+        }
+      }
+    },
+    "/api/invitations/{slug}": {
+      "get": {
+        "summary": "Get published invitation",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Invitation payload"
+          },
+          "404": {
+            "description": "Invitation not found"
+          }
+        }
+      }
+    },
+    "/api/invitations/{slug}/rsvp": {
+      "post": {
+        "summary": "Submit guest attendance RSVP",
+        "parameters": [
+          {
+            "name": "slug",
+            "in": "path",
+            "required": true,
+            "schema": { "type": "string" }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "guestName": { "type": "string" },
+                  "email": { "type": "string" },
+                  "attendance": { "type": "string", "enum": ["yes", "no"] },
+                  "partySize": { "type": "integer", "minimum": 1, "maximum": 20 },
+                  "eventIds": { "type": "array", "items": { "type": "string" } },
+                  "guestNames": { "type": "string" },
+                  "dietaryNotes": { "type": "string" },
+                  "message": { "type": "string" },
+                  "editToken": { "type": "string" }
+                },
+                "required": ["guestName", "attendance"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "RSVP recorded successfully"
+          }
+        }
+      }
+    }
+  }
+}

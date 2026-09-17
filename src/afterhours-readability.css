@@ -1,0 +1,85 @@
+/* After Hours: a dark velvet opening, followed by clear, generous stationery.
+   Deliberately scoped below the hero. Text colours follow the actual card surface. */
+.invitation.inv-afterhours :is(.inv-welcome,.inv-surprise,.inv-countdown-section,.inv-story,.inv-events,.inv-gallery,.inv-details,.inv-footer,.couple-section){
+ --ink:#f6e8ce;--accent:#d2b279;--line:#ac8e6066;color:#f6e8ce;font-size:15px;line-height:1.8;
+}
+.invitation.inv-afterhours :is(.inv-welcome,.inv-surprise,.inv-story,.inv-events,.inv-gallery,.inv-details,.inv-reply,.couple-section) h2{
+ font-family:'Cormorant Garamond',Georgia,serif;font-size:42px;line-height:1.13;font-weight:500;text-transform:none;letter-spacing:-.025em;
+}
+.invitation.inv-afterhours :is(.inv-prose,.inv-welcome>p,.inv-event-main>p,.inv-detail-grid p,.inv-footer>p,.couple-profile p){
+ color:inherit;font-size:15px;line-height:1.85;opacity:1;
+}
+.invitation.inv-afterhours :is(.inv-eyebrow,.couple-eyebrow,.couple-role){font-size:11px;line-height:1.6;letter-spacing:.1em;opacity:1;color:#e2c897}
+.invitation.inv-afterhours .inv-family-line{font-size:24px;line-height:1.5;color:#f6e8ce}
+.invitation.inv-afterhours .inv-welcome{padding-top:52px;padding-bottom:40px}
+.invitation.inv-afterhours .inv-welcome .inv-prose{max-width:350px}
+.invitation.inv-afterhours .inv-surprise>p{font-size:14px;line-height:1.65;color:#f6e8ce}
+.invitation.inv-afterhours .inv-scratch{background:#38202a;color:#fff0d5;border-color:#d2b279}
+.invitation.inv-afterhours .inv-scratch p{font-size:25px;line-height:1.45;color:#fff0d5}
+.invitation.inv-afterhours .inv-scratch-wrap>.inv-text-button{font-size:13px;line-height:1.5;min-height:44px;color:#f6e8ce;opacity:1;text-decoration:underline;text-underline-offset:5px}
+.invitation.inv-afterhours .inv-countdown strong{font-size:49px;color:#fff0d5}
+.invitation.inv-afterhours .inv-countdown span{font-size:11px;letter-spacing:.06em;color:#ead7b6;opacity:1}
+.invitation.inv-afterhours .inv-countdown-caption{font-size:21px;line-height:1.5;color:#f6e8ce}
+
+/* Brass folio edges frame the information; floral cutouts stay in the margins. */
+.invitation.inv-afterhours :is(.inv-events,.inv-details){
+ background-color:#2b1721;border:1px solid #d2b2799c;outline:1px solid #d2b27945;outline-offset:-7px;
+ margin:22px 18px;padding:45px 29px;box-shadow:0 7px 18px #10060b30;
+}
+.invitation.inv-afterhours .inv-events:after{
+ content:'';position:absolute;right:-23px;top:-19px;width:62px;height:105px;background:url('/art/layers/flowers.png') center/contain no-repeat;
+ opacity:.28;transform:rotate(18deg);pointer-events:none;z-index:-1;
+}
+.invitation.inv-afterhours .inv-event{padding-left:32px;border-color:#bda27185}
+.invitation.inv-afterhours .inv-event h3{font-size:32px;line-height:1.2;color:#fff0d5}
+.invitation.inv-afterhours .inv-event-number{background:#2b1721;color:#fff0d5;border-color:#d2b279;font-size:12px}
+.invitation.inv-afterhours .inv-event-main>.inv-eyebrow{font-size:12px;line-height:1.65;letter-spacing:.035em;color:#e9d1a8}
+.invitation.inv-afterhours .inv-event-main>strong{font-size:16px;line-height:1.6;font-weight:600;color:#fff0d5}
+.invitation.inv-afterhours .inv-event-main>.inv-address{font-size:14px;line-height:1.7;color:#f0dfc2}
+.invitation.inv-afterhours .inv-event-actions{gap:12px}
+.invitation.inv-afterhours .inv-event-actions :is(a,button){font-size:13px;line-height:1.5;min-height:44px;padding:11px 0;border-bottom-color:#d2b279;color:#fff0d5}
+.invitation.inv-afterhours .inv-detail-grid h3{font-size:31px;line-height:1.2;color:#fff0d5}
+.invitation.inv-afterhours .couple-family strong{font-size:14px;color:#fff0d5}
+.invitation.inv-afterhours .couple-section .couple-family p{font-size:14px;color:#f6e8ce}
+.invitation.inv-afterhours .inv-story-visual>span{font-size:11px;opacity:1;color:#ead7b6}
+.invitation.inv-afterhours .keepsake-count{font-size:13px;opacity:1;color:#f6e8ce}
+.invitation.inv-afterhours .keepsake-demo-label{font-size:12px!important;line-height:1.6!important;opacity:1;color:#ead7b6}
+.invitation.inv-afterhours .keepsake-arrow{color:#fff0d5;border-color:#d2b27999}
+.invitation.inv-afterhours .keepsake-photo figcaption{background:#e4d9bd;color:#34251e!important;font-size:22px!important;opacity:1}
+
+/* A pale reply card creates a clear reading and writing surface. */
+.invitation.inv-afterhours .inv-reply{
+ --ink:#38232c;--paper:#fff3dc;--accent:#826239;--line:#80604477;
+ background:#fff3dc;color:#38232c;border:1px solid #c2a26b;outline:1px solid #8761377a;outline-offset:-7px;
+ margin:30px 20px 55px;padding:42px 28px;box-shadow:0 8px 20px #0002;
+}
+.invitation.inv-afterhours .inv-reply:before{
+ content:'';height:30px;margin:0 3px 27px;border-top:1px solid #936b3d99;border-bottom:1px solid #936b3d55;
+ background:repeating-linear-gradient(45deg,transparent 0 12px,#936b3d0d 12px 13px);pointer-events:none;
+}
+.invitation.inv-afterhours .inv-reply .inv-eyebrow{color:#6d4932;font-size:11px;opacity:1}
+.invitation.inv-afterhours .inv-reply h2{color:#38232c}
+.invitation.inv-afterhours .inv-reply>p,.invitation.inv-afterhours .inv-reply-success p{color:#38232c;font-size:15px;line-height:1.75;opacity:1}
+.invitation.inv-afterhours .inv-reply :is(label,legend){font-size:14px;line-height:1.6;color:#38232c;opacity:1}
+.invitation.inv-afterhours .inv-reply label>span{color:#654d4b}
+.invitation.inv-afterhours .inv-reply input:not([type=radio]):not([type=checkbox]),.invitation.inv-afterhours .inv-reply textarea{
+ background:#fffaf0;border:1px solid #9b816b;padding:12px 10px;font-size:16px;line-height:1.5;color:#38232c;border-radius:2px;caret-color:#38232c;
+}
+.invitation.inv-afterhours .inv-reply :is(input,textarea)::placeholder{color:#715e56;opacity:1;font-size:14px}
+.invitation.inv-afterhours .inv-reply input:is([type=radio],[type=checkbox]){width:18px;height:18px;flex:0 0 18px;accent-color:#573440}
+.invitation.inv-afterhours .inv-reply :is(.inv-attendance label,.inv-checkbox){min-height:38px;gap:10px}
+.invitation.inv-afterhours .inv-reply .inv-button{background:#482936;color:#fff6e4;border-color:#482936;font-size:15px;line-height:1.5;font-weight:500;min-height:50px}
+.invitation.inv-afterhours .inv-reply small{font-size:12px;line-height:1.65;opacity:1;color:#5b4541}
+.invitation.inv-afterhours .inv-reply .inv-form-error{font-size:14px;line-height:1.6;font-weight:600;color:#9a2828;opacity:1}
+.invitation.inv-afterhours .inv-reply :focus-visible{outline:3px solid #78543c;outline-offset:3px}
+.invitation.inv-afterhours .inv-footer h2{font-family:'Cormorant Garamond',Georgia,serif;font-size:43px;line-height:1.3;color:#fff0d5}
+.invitation.inv-afterhours .inv-footer .inv-text-button{font-size:13px;min-height:44px;color:#f6e8ce;opacity:1}
+.invitation.inv-afterhours .inv-guest-nav{background:#2b1721;border-color:#d2b279;color:#fff0d5}
+.invitation.inv-afterhours .inv-guest-nav :is(a,button){font-size:12px;min-height:44px;line-height:1.4;padding:12px 13px;color:#fff0d5}
+.invitation.inv-afterhours .inv-guest-nav a:first-child{background:#f3dfb8;color:#38232c}
+@media(max-width:360px){
+ .invitation.inv-afterhours :is(.inv-events,.inv-details,.inv-reply){margin-left:12px;margin-right:12px;padding-left:22px;padding-right:22px}
+ .invitation.inv-afterhours :is(.inv-welcome,.inv-surprise,.inv-story,.inv-events,.inv-gallery,.inv-details,.inv-reply,.couple-section) h2{font-size:37px}
+ .invitation.inv-afterhours .inv-event{padding-left:28px}.invitation.inv-afterhours .inv-countdown strong{font-size:42px}
+ .invitation.inv-afterhours .inv-guest-nav :is(a,button){font-size:11px;padding:12px 10px}
+}

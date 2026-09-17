@@ -1,0 +1,11 @@
+.invitation .date-scratch-card{max-width:440px;min-height:220px;margin:0 auto;padding:30px 24px;background:var(--paper)}
+.invitation .date-scratch-result{display:grid;gap:16px;place-items:center;min-width:0}
+.invitation .date-scratch-result .inv-eyebrow{margin:0;font-size:9px}
+.invitation .date-scratch-result strong{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,7cqw,42px);font-weight:500;line-height:1.15}
+.invitation .date-scratch-result p{font-family:inherit;font-size:13px;line-height:1.6;overflow-wrap:anywhere}
+.invitation .date-scratch-conservatory .date-scratch-card{border-radius:48% 48% 8px 8px / 24% 24% 8px 8px;border:3px double #667b5d}
+.invitation .date-scratch-gulmohar .date-scratch-card{border-radius:50% 50% 6px 6px / 38% 38% 6px 6px;border:5px double #ae7437;outline:1px solid #ae7437;outline-offset:6px}
+.invitation .date-scratch-afterhours .date-scratch-card{border-radius:0;clip-path:polygon(18px 0,calc(100% - 18px) 0,100% 18px,100% calc(100% - 18px),calc(100% - 18px) 100%,18px 100%,0 calc(100% - 18px),0 18px);border:1px solid #9eaab6;background:#20252a;color:#f4eee4}
+.invitation .date-scratch-sunday .date-scratch-card{border-radius:12px;border:2px dashed #284595;box-shadow:6px 7px 0 #284595;transform:rotate(-2deg)}
+.invitation .date-scratch-azure .date-scratch-card{border:7px dotted #6396a7;border-radius:0;outline:1px solid #6396a7;outline-offset:5px;transform:rotate(1deg)}
+.invitation .inv-scratch-wrap>.inv-text-button{font-size:11px;min-height:44px;margin:14px auto 0}

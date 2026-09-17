@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <style>
+    :root {
+      --bg: #FAF7F0;
+      --border: #E6DEC9;
+      --ink: #24141E;
+      --gold: #C5A880;
+      --gold-dark: #8C6F4B;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #1C181B;
+        --border: #3A3237;
+        --ink: #F7F3EB;
+        --gold: #D6BC96;
+        --gold-dark: #B89B72;
+      }
+    }
+    .bg { fill: var(--bg); }
+    .border { stroke: var(--border); }
+    .ink { fill: var(--ink); }
+    .gold { fill: var(--gold); }
+    .gold-dark { fill: var(--gold-dark); }
+  </style>
+  <rect width="512" height="512" rx="112" class="bg" />
+  <rect width="510" height="510" x="1" y="1" rx="111" fill="none" class="border" stroke-width="2" opacity="0.6" />
+  <g transform="translate(256, 266)">
+    <path d="M -132 -135 L -62 -135 C -75 -105, -78 -75, -55 0 L -22 108 C -14 135, -4 145, 12 145 L 2 145 L -46 145 L -56 108 L -125 -105 C -142 -125, -150 -132, -165 -135 Z" class="ink" />
+    <path d="M -122 -130 L -56 -130 C -64 -100, -56 -60, -32 20 L -2 120 L 18 120 L 86 -85 C 98 -118, 102 -125, 120 -130 L 78 -130 L 10 -130 L 25 -100 C 32 -85, 34 -75, 24 -40 L -2 45 L -42 -85 C -50 -110, -54 -122, -62 -130 Z" class="ink" />
+    <path d="M 68 -75 L 115 -130 L 142 -130 C 134 -115, 126 -95, 114 -60 L 84 35 L 64 35 Z" class="ink" />
+    <polygon points="112,-132 144,-132 128,-106" class="gold" />
+    <polygon points="128,-106 144,-132 140,-95" class="gold-dark" opacity="0.6" />
+  </g>
+</svg>

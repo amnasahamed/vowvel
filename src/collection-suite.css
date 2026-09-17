@@ -1,0 +1,9 @@
+.suite-inclusions { display: block; margin-top: 14px; font-size: 12px; line-height: 1.7; color: #545d4d; }
+.design-caption { align-items: start; }
+.design-caption > .text-button { flex-shrink: 0; margin-top: 22px; }
+.price-card { border-top: 4px solid #47513d; }
+.price-card .eyebrow { font-size: 12px; }
+.price-card ul li { line-height: 1.7; align-items: start; }
+.price-card ul li svg { flex-shrink: 0; margin-top: 4px; }
+.site-footer { flex-wrap: wrap; }
+@media(max-width:600px) { .suite-inclusions { max-width: 24ch; } }

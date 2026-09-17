@@ -1,0 +1,63 @@
+{
+  "specVersion": "1.0",
+  "host": {
+    "displayName": "Vowvel",
+    "identifier": "did:web:vowvel.com"
+  },
+  "entries": [
+    {
+      "identifier": "urn:air:vowvel.com:server:mcp",
+      "displayName": "Vowvel MCP Server",
+      "type": "application/mcp-server-card+json",
+      "url": "https://vowvel.com/.well-known/mcp/server-card.json",
+      "representativeQueries": [
+        "curate luxury wedding invitations",
+        "calculate wedding invitation price",
+        "preview botanical wedding theme"
+      ]
+    },
+    {
+      "identifier": "urn:air:vowvel.com:agent:concierge",
+      "displayName": "Vowvel Concierge Agent",
+      "type": "application/json",
+      "url": "https://vowvel.com/.well-known/agent-card.json",
+      "representativeQueries": [
+        "connect to wedding concierge",
+        "coordinate guest invitations",
+        "record wedding rsvp"
+      ]
+    },
+    {
+      "identifier": "urn:air:vowvel.com:skills:catalog",
+      "displayName": "Vowvel Agent Skills Discovery",
+      "type": "application/json",
+      "url": "https://vowvel.com/.well-known/agent-skills/index.json",
+      "representativeQueries": [
+        "list invitation customization skills",
+        "submit guest attendance",
+        "validate creator promo discount"
+      ]
+    },
+    {
+      "identifier": "urn:air:vowvel.com:api:catalog",
+      "displayName": "Vowvel API Catalog",
+      "type": "application/linkset+json",
+      "url": "https://vowvel.com/.well-known/api-catalog",
+      "representativeQueries": [
+        "discover vowvel rest apis",
+        "fetch wedding invitation openapi spec"
+      ]
+    },
+    {
+      "identifier": "urn:air:vowvel.com:commerce:acp",
+      "displayName": "Vowvel Agentic Commerce",
+      "type": "application/json",
+      "url": "https://vowvel.com/.well-known/acp.json",
+      "representativeQueries": [
+        "buy wedding invitation license",
+        "check invitation pricing in inr",
+        "checkout luxury invitation"
+      ]
+    }
+  ]
+}

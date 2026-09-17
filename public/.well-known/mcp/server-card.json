@@ -1,0 +1,99 @@
+{
+  "serverInfo": {
+    "name": "vowvel-mcp",
+    "version": "1.0.0"
+  },
+  "endpoint": "https://vowvel.com/api/mcp",
+  "capabilities": {
+    "tools": {
+      "listChanged": false
+    },
+    "resources": {
+      "subscribe": false,
+      "listChanged": false
+    },
+    "prompts": {
+      "listChanged": false
+    }
+  },
+  "tools": [
+    {
+      "name": "list_themes",
+      "description": "List all five Vowvel signature invitation themes, aesthetics, and design assets.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {}
+      }
+    },
+    {
+      "name": "get_theme_details",
+      "description": "Get typography, color palettes, and envelope styles for a specific theme.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "themeId": {
+            "type": "string",
+            "enum": ["conservatory", "gulmohar", "afterhours", "sunday", "azure"]
+          }
+        },
+        "required": ["themeId"]
+      }
+    },
+    {
+      "name": "calculate_quote",
+      "description": "Calculate itemized pricing quote with optional coupon code.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "couponCode": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    {
+      "name": "create_invitation_draft",
+      "description": "Create or validate a wedding invitation data structure with events, couple details, and keepsakes.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "theme": {
+            "type": "string"
+          },
+          "partner1": {
+            "type": "string"
+          },
+          "partner2": {
+            "type": "string"
+          },
+          "events": {
+            "type": "array"
+          }
+        },
+        "required": ["theme", "partner1", "partner2"]
+      }
+    },
+    {
+      "name": "submit_rsvp",
+      "description": "Submit a guest response for a published wedding invitation.",
+      "inputSchema": {
+        "type": "object",
+        "properties": {
+          "slug": {
+            "type": "string"
+          },
+          "status": {
+            "type": "string",
+            "enum": ["attending", "declining"]
+          },
+          "partySize": {
+            "type": "integer",
+            "minimum": 1,
+            "maximum": 10
+          }
+        },
+        "required": ["slug", "status", "partySize"]
+      }
+    }
+  ]
+}

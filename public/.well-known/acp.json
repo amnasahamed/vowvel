@@ -1,0 +1,20 @@
+{
+  "protocol": {
+    "name": "acp",
+    "version": "1.0.0"
+  },
+  "api_base_url": "https://vowvel.com/api",
+  "transports": [
+    "http",
+    "json-rpc"
+  ],
+  "capabilities": {
+    "services": [
+      "catalog",
+      "quote",
+      "checkout",
+      "orders",
+      "rsvp"
+    ]
+  }
+}

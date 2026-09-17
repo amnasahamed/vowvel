@@ -1,0 +1,13 @@
+import React from 'react';
+import ReactDOM from 'react-dom/client';
+import '@fontsource-variable/dm-sans';
+import '@fontsource/cormorant-garamond/400.css';
+import '@fontsource/cormorant-garamond/500.css';
+import '@fontsource/cormorant-garamond/400-italic.css';
+import '@fontsource/dm-serif-display/400.css';
+import '@fontsource/space-grotesk/500.css';
+import App from './App';
+import './styles.css';
+const hostLabel=location.hostname.endsWith('.vowvel.com')?location.hostname.slice(0,-'.vowvel.com'.length):'';
+if(hostLabel&&!['www'].includes(hostLabel)&&!location.hash)location.hash=`/invite/${hostLabel}`;
+ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><App/></React.StrictMode>);

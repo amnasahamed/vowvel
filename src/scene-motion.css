@@ -1,0 +1,108 @@
+/* Decorative depth, progressively enhanced. No JS scroll listeners or text motion.
+   The named timeline belongs to each hero, so movement begins only as it exits.
+   Individual translate composes with each piece's existing rotation/entrance. */
+@supports (animation-timeline: view()) and (animation-range: exit 0% exit 100%) {
+  @media (prefers-reduced-motion: no-preference) {
+    .invitation:not(.inv-embedded) .inv-hero {
+      view-timeline-name: --vowvel-scene-exit;
+      view-timeline-axis: block;
+    }
+
+    .invitation:not(.inv-embedded) .inv-hero :is(.scene-parallax-near, .scene-parallax-far, [data-layer="sage-paper"], [data-layer="translucent-vellum"]) {
+      animation: vowvel-scene-depth 1s linear both;
+      animation-timeline: --vowvel-scene-exit;
+      animation-range: exit 0% exit 100%;
+    }
+    .invitation:not(.inv-embedded) .inv-hero .scene-parallax-near { --scene-offset: -24px; }
+    .invitation:not(.inv-embedded) .inv-hero .scene-parallax-far { --scene-offset: 12px; }
+    .invitation:not(.inv-embedded) .inv-hero [data-layer="sage-paper"] { --scene-offset: 6px; }
+    .invitation:not(.inv-embedded) .inv-hero [data-layer="translucent-vellum"] { --scene-offset: 4px; }
+
+    /* Retain the existing botanical animations as the first animation track. */
+    .invitation:not(.inv-embedded) .inv-hero [data-layer="pressed-botanical-behind"] {
+      --scene-offset: 12px;
+      animation: botanical-sway-back 9s ease-in-out infinite alternate, vowvel-scene-depth 1s linear both;
+      animation-timeline: auto, --vowvel-scene-exit;
+      animation-range: normal, exit 0% exit 100%;
+    }
+    .invitation:not(.inv-embedded) .inv-hero [data-layer="foreground-botanical"] {
+      --scene-offset: -24px;
+      animation: botanical-sway-front 8s ease-in-out infinite alternate, vowvel-scene-depth 1s linear both;
+      animation-timeline: auto, --vowvel-scene-exit;
+      animation-range: normal, exit 0% exit 100%;
+    }
+    .invitation:not(.inv-embedded) .inv-hero [data-layer="torn-cotton-paper"] {
+      --scene-offset: 6px;
+      animation: botanical-paper-enter 1.3s cubic-bezier(.2,.8,.2,1) both, vowvel-scene-depth 1s linear both;
+      animation-timeline: auto, --vowvel-scene-exit;
+      animation-range: normal, exit 0% exit 100%;
+    }
+    .invitation:not(.inv-embedded) .inv-hero [data-layer="silk-bow"] {
+      --scene-offset: -12px;
+      animation: botanical-bow-enter 1.2s .1s both, vowvel-scene-depth 1s linear both;
+      animation-timeline: auto, --vowvel-scene-exit;
+      animation-range: normal, exit 0% exit 100%;
+    }
+  }
+}
+@keyframes vowvel-scene-depth {
+  from { translate: 0 0; }
+  to { translate: 0 var(--scene-offset, 6px); }
+}
+
+/* Four additional scenes: only independent ornaments move. Stationery carrying
+   the invitation copy, tickets, postmarks and text stay anchored. */
+@supports (animation-timeline: view()) and (animation-range: exit 0% exit 100%) and (animation-composition: add) {
+  @media (prefers-reduced-motion: no-preference) {
+    .invitation:not(.inv-embedded) .cinematic-scene {
+      view-timeline-name: --vowvel-cinematic-exit;
+      view-timeline-axis: block;
+    }
+    .invitation:not(.inv-embedded) .cinematic-scene :is([data-layer="courtyard-window"], [data-layer="cloth-tape"], [data-layer="cut-paper-flower"], [data-layer="loose-ribbon"]) {
+      animation: vowvel-scene-depth 1s linear both;
+      animation-timeline: --vowvel-cinematic-exit;
+      animation-range: exit 0% exit 100%;
+    }
+    .invitation:not(.inv-embedded) .cinematic-scene [data-layer="courtyard-window"] { --scene-offset: 12px; }
+    .invitation:not(.inv-embedded) .cinematic-scene [data-layer="cloth-tape"] { --scene-offset: 4px; }
+    .invitation:not(.inv-embedded) .cinematic-scene [data-layer="cut-paper-flower"] { --scene-offset: -24px; }
+    .invitation:not(.inv-embedded) .cinematic-scene [data-layer="loose-ribbon"] { --scene-offset: -12px; }
+    .invitation:not(.inv-embedded) .cinematic-scene [data-layer="painted-arch"] {
+      --scene-offset: 6px;
+      animation: cine-arch-enter 1.4s ease both, vowvel-scene-depth 1s linear both;
+      animation-timeline: auto, --vowvel-cinematic-exit;
+      animation-range: normal, exit 0% exit 100%;
+      animation-composition: replace, add;
+    }
+    .invitation:not(.inv-embedded) .cinematic-scene [data-layer="foreground-blooms"] {
+      --scene-offset: -24px;
+      animation: cine-flower-enter 1.4s both, vowvel-scene-depth 1s linear both;
+      animation-timeline: auto, --vowvel-cinematic-exit;
+      animation-range: normal, exit 0% exit 100%;
+      animation-composition: replace, add;
+    }
+    .invitation:not(.inv-embedded) .cinematic-scene [data-layer="foreground-lemons"] {
+      --scene-offset: -18px;
+      animation: cine-flower-enter 1.35s both, vowvel-scene-depth 1s linear both;
+      animation-timeline: auto, --vowvel-cinematic-exit;
+      animation-range: normal, exit 0% exit 100%;
+      animation-composition: replace, add;
+    }
+    .invitation:not(.inv-embedded) .cinematic-scene [data-layer="left-velvet"] {
+      --scene-offset: -12px;
+      animation: cine-curtain-left 1.6s both, vowvel-scene-depth 1s linear both;
+      animation-timeline: auto, --vowvel-cinematic-exit;
+      animation-range: normal, exit 0% exit 100%;
+      animation-composition: replace, add;
+    }
+    .invitation:not(.inv-embedded) .cinematic-scene [data-layer="right-velvet"] {
+      --scene-offset: 12px;
+      animation: cine-curtain-right 1.6s both, vowvel-scene-depth 1s linear both;
+      animation-timeline: auto, --vowvel-cinematic-exit;
+      animation-range: normal, exit 0% exit 100%;
+      animation-composition: replace, add;
+    }
+  }
+}
+/* Clip ornaments without creating a non-scrolling ancestor for view timelines. */
+@supports (overflow:clip){.invitation{overflow:clip}}

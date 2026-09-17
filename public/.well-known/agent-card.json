@@ -1,0 +1,39 @@
+{
+  "name": "Vowvel Concierge Agent",
+  "version": "1.0.0",
+  "description": "Luxury wedding and engagement invitation curation, guest reply management, and ceremony personalization agent.",
+  "supportedInterfaces": [
+    {
+      "transport": "http",
+      "url": "https://vowvel.com/api/agent/a2a",
+      "protocol": "http"
+    }
+  ],
+  "capabilities": {
+    "streaming": false,
+    "pushNotifications": false,
+    "stateTransitionHistory": false
+  },
+  "skills": [
+    {
+      "id": "curate_themes",
+      "name": "Curate Themes",
+      "description": "Explore and select from Vowvel's five signature invitation design directions."
+    },
+    {
+      "id": "calculate_quote",
+      "name": "Calculate Quote",
+      "description": "Calculate itemized pricing quotes with coupon validation and taxes."
+    },
+    {
+      "id": "manage_rsvp",
+      "name": "Manage RSVP",
+      "description": "Record guest attendance, party size, event selections, and dietary requests."
+    },
+    {
+      "id": "draft_invitation",
+      "name": "Draft Invitation",
+      "description": "Assemble ceremony itineraries, venue details, couple portraits, and keepsakes into a structured invitation draft."
+    }
+  ]
+}

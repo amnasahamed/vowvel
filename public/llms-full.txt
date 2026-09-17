@@ -1,0 +1,36 @@
+# Vowvel — Full System Documentation for LLMs & AI Agents
+
+Vowvel is a bespoke wedding and engagement invitation platform crafted with high aesthetic fidelity, editorial typography, and production-grade resilience on Cloudflare Workers and D1 database.
+
+## Architecture & Capabilities
+
+### Client Experience
+- Five signature design directions: Conservatory, Gulmohar, After Hours, Sunday Edit, Azure.
+- Fluid responsive layouts, interactive envelope wax-seal and scratch-off unboxing.
+- Real-time client-side invitation editor with undo/redo, multi-event schedules (up to 8 events), couple portraits, maps, dress code, transport guidance, and calendar exports (.ics).
+- Complete guest RSVP collection with party size, dietary choices, and editable responses.
+
+### Server & Infrastructure
+- Cloudflare Workers runtime with nodejs_compat.
+- Cloudflare D1 distributed SQLite database for structured commerce, sessions, coupons, and RSVPs.
+- Cloudflare R2 object storage for custom photography and invitation media assets.
+- Cloudflare Email Routing and transactional OTP delivery for passwordless administrative and creator access.
+
+## Autonomous Agent Integration
+
+AI agents can interact with Vowvel through several standard protocols:
+1. **WebMCP**: In-browser tool execution via `navigator.modelContext.registerTool()`.
+2. **MCP (Model Context Protocol)**: Server card at `/.well-known/mcp/server-card.json`.
+3. **A2A (Agent-to-Agent)**: Card at `/.well-known/agent-card.json`.
+4. **Agent Skills**: Defined at `/.well-known/agent-skills/index.json`.
+5. **OpenAPI & MPP**: API schema at `/openapi.json` declaring payment requirements via `x-payment-info`.
+6. **Agentic Commerce (ACP)**: `/.well-known/acp.json`.
+7. **Auth.md**: Agent onboarding at `/auth.md`.
+
+## Standard Endpoints
+
+- `POST /api/coupons/quote`: Calculate total with coupon code, taxes, and itemized breakdown.
+- `POST /api/orders`: Create a validated checkout order.
+- `POST /api/verify-payment`: Verify Razorpay payment signature.
+- `POST /api/invitations/:slug/rsvp`: Submit guest attendance and preferences.
+- `GET /api/invitations/:slug`: Retrieve published invitation details.

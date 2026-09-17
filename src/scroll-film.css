@@ -1,0 +1,19 @@
+.invitation.inv-continuous{overflow:clip}
+.world-chapter{position:relative;height:230svh;margin:36px 0 56px;isolation:isolate}
+.world-chapter-sticky{position:sticky;top:0;height:100svh;max-height:1000px;min-height:480px;overflow:hidden;background:#2b3022;color:#fff7e6}
+.world-chapter-media{position:absolute;inset:0;transform-origin:50% 35%}
+.world-chapter-media img,.world-chapter-media video{width:100%;height:100%;object-fit:cover;object-position:center;display:block}
+.world-chapter-media video{position:absolute;inset:0}
+.world-chapter-shade{position:absolute;inset:0;background:linear-gradient(180deg,#15160f30,transparent 28%,transparent 44%,#14110cbd)}
+.world-chapter-label{position:absolute;top:32px;left:30px;right:30px;text-align:center;font:500 9px/1.5 'DM Sans Variable',sans-serif;letter-spacing:.15em;text-transform:uppercase;text-shadow:0 1px 8px #0008}
+.world-chapter-label i{padding:0 12px;opacity:.6}
+.world-chapter-copy{position:absolute;left:9%;right:9%;bottom:10%;text-align:center}
+.invitation .world-chapter-copy h2{font:400 clamp(36px,8cqw,60px)/1.03 'Cormorant Garamond',Georgia,serif;color:#fff7e6;text-wrap:balance;letter-spacing:-.035em;margin:0 auto 18px;max-width:13ch}
+.invitation .world-chapter-copy p{font:400 12px/1.8 'DM Sans Variable',sans-serif;color:#fff7e6;max-width:30ch;margin:auto;text-wrap:balance}
+.world-chapter-progress{position:absolute;bottom:25px;left:35%;right:35%;height:1px;background:#fff4}
+.world-chapter-progress span{display:block;height:100%;background:#fff2cf;transform-origin:left}
+.world-chapter.chapter-still{height:auto}.chapter-still .world-chapter-sticky{position:relative;height:auto;min-height:0;aspect-ratio:3/4}
+.inv-embedded .world-chapter-copy{bottom:8%}.inv-embedded .world-chapter-label{top:18px;font-size:7px}
+@media(prefers-reduced-motion:reduce){.world-chapter{height:auto}.world-chapter-sticky{position:relative;height:auto;aspect-ratio:3/4;min-height:0}.world-chapter-progress{display:none}}
+.world-chapter-media img,.world-chapter-media video{object-position:center top}
+.world-chapter-copy{bottom:13%}

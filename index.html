@@ -1,0 +1,58 @@
+<!doctype html><html lang="en"><head><meta charset="UTF-8"/><meta name="viewport" content="width=device-width,initial-scale=1.0"/><meta name="theme-color" content="#f8f6ef"/><meta name="description" content="Wedding and engagement invitations worth opening. Discover five artful designs, make one yours, and invite your favourite people with Vowvel."/><title>Vowvel | Something worth opening</title>
+<!-- Google tag (gtag.js) -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-7NGG7740CQ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-7NGG7740CQ');
+</script>
+<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+<link rel="icon" type="image/png" sizes="48x48" href="/favicon-48x48.png" />
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32x32.png" />
+<link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
+<link rel="icon" href="/favicon.ico" sizes="48x48 32x32 16x16" />
+<link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+<link rel="mask-icon" href="/safari-pinned-tab.svg" color="#24141e" />
+<link rel="manifest" href="/site.webmanifest" />
+<meta name="apple-mobile-web-app-title" content="Vowvel" />
+<meta name="application-name" content="Vowvel" />
+<meta name="msapplication-TileColor" content="#f8f6ef" />
+<link rel="api-catalog" href="/.well-known/api-catalog" type="application/linkset+json" />
+<link rel="ai-catalog" href="/.well-known/ai-catalog.json" type="application/json" />
+<link rel="service-desc" href="/openapi.json" type="application/openapi+json" />
+<script>
+  function registerWebMCP() {
+    if ("modelContext" in navigator && navigator.modelContext && typeof navigator.modelContext.registerTool === "function") {
+      try {
+        navigator.modelContext.registerTool({
+          name: "browse_invitations",
+          description: "Browse Vowvel signature luxury wedding & engagement invitation designs, pricing, and features.",
+          inputSchema: {
+            type: "object",
+            properties: {
+              category: { type: "string", description: "Filter by wedding or engagement" }
+            }
+          },
+          execute: async function() {
+            return {
+              themes: [
+                { id: "conservatory", name: "Conservatory", aesthetic: "Botanical glasshouse, ivory, gold foil, organic romanticism" },
+                { id: "gulmohar", name: "Gulmohar", aesthetic: "Royal crimson, marigold, architectural arches, warm festivities" },
+                { id: "afterhours", name: "After Hours", aesthetic: "Noir editorial, chandeliers, jazz club, modern champagne gala" },
+                { id: "sunday", name: "Sunday Edit", aesthetic: "Warm editorial linen, minimalist typography, intimate weekend" },
+                { id: "azure", name: "Azure", aesthetic: "Coastal cliffside, Mediterranean tiles, ocean romance" }
+              ],
+              pricing: { basePriceINR: 2499, internationalUSD: 40, currency: "INR" }
+            };
+          }
+        });
+      } catch (e) {
+        console.warn("WebMCP registration:", e);
+      }
+    }
+  }
+  registerWebMCP();
+</script>
+</head><body><div id="root"></div><script type="module" src="/src/main.tsx"></script></body></html>

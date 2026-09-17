@@ -1,0 +1,21 @@
+{
+  "protocol_version": "1.0.0",
+  "services": [
+    "catalog",
+    "quote",
+    "checkout",
+    "orders"
+  ],
+  "capabilities": [
+    "bespoke-invitations",
+    "coupon-redemption",
+    "instant-provisioning",
+    "guest-rsvp"
+  ],
+  "endpoints": {
+    "catalog": "https://vowvel.com/api/commerce/catalog",
+    "quote": "https://vowvel.com/api/orders/quote",
+    "checkout": "https://vowvel.com/api/orders/checkout",
+    "spec": "https://vowvel.com/openapi.json"
+  }
+}

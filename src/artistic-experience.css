@@ -1,0 +1,451 @@
+/* Shared interaction contracts; four individually composed invitation worlds. */
+.invitation.inv-is-open:not(.inv-embedded){width:100%;max-width:1440px;box-shadow:none}
+.invitation .art-experience{--ink:#36523c;--paper:#f5f2e6;--line:#49633e3d;--suite-card:#fffdf3;--suite-tint:#dee4d0;background:var(--paper);color:var(--ink);font-size:16px;line-height:1.85}
+.invitation .art-experience:before{opacity:.045}
+.invitation .art-experience .inv-section{padding:90px 8%}
+.invitation .art-experience h2{font:400 clamp(44px,5.5cqw,78px)/1.04 'Cormorant Garamond',serif;letter-spacing:-.04em;text-wrap:balance}
+.invitation .art-experience h2 em{font-weight:400}
+.invitation .art-experience h3{font:400 clamp(29px,3cqw,43px)/1.15 'Cormorant Garamond',serif;text-wrap:balance}
+.art-kicker{display:block;font:500 12px/1.7 'DM Sans Variable',sans-serif;letter-spacing:.12em;text-transform:uppercase;margin-bottom:24px}
+.invitation .art-experience .art-prose{font-size:16px;line-height:1.95;max-width:38ch;margin-top:26px}
+.art-experience :is(p,h1,h2,h3,span){overflow-wrap:anywhere}
+.art-experience :is(a,button){touch-action:manipulation}
+.art-experience a{display:inline-flex;align-items:center;gap:8px;text-underline-offset:6px}
+.art-link{font-size:14px;min-height:44px;margin-top:26px}
+.art-signature{display:block;font:400 38px/1.5 'Great Vibes',cursive;margin-top:25px}
+.invitation .art-family{font:italic 25px/1.5 'Cormorant Garamond',serif;margin-top:28px;max-width:32ch}
+.art-monogram{display:block;font:400 65px/1.2 'Cormorant Garamond',serif;margin:30px 0 0}
+.art-monogram i{font:400 .65em 'Great Vibes',cursive;padding:0 8px}
+.invitation .art-experience .art-hero{min-height:760px;height:100svh;max-height:1100px;display:flex;justify-content:flex-start;align-items:center;isolation:isolate;color:var(--ink);background:var(--paper);text-align:left}
+.art-hero-landscape{position:absolute;inset:0 0 -12% 35%;z-index:-1}
+.art-hero-landscape img{width:100%;height:100%;object-fit:cover;object-position:center 65%;display:block}
+.art-hero-landscape:after{content:'';position:absolute;inset:0;background:linear-gradient(90deg,var(--paper),transparent 45%)}
+.art-hero-copy{width:66%;padding:100px 0 110px 7%}
+.invitation .art-hero h1{font:400 clamp(60px,9cqw,130px)/.87 'Cormorant Garamond',serif;letter-spacing:-.045em;outline:none}
+.art-hero h1>span{display:block}.art-hero h1>i{display:block;font:400 .55em/1.2 'Great Vibes',cursive;margin:12px 0 10px 18%}
+.art-hero h1>span:last-child{margin-left:12%}
+.invitation .art-long-names h1{font-size:6cqw;line-height:1.05}
+.invitation .art-occasion{font:italic 24px/1.4 'Cormorant Garamond',serif;margin-top:35px;max-width:28ch}
+.art-hero-date{font-size:14px;display:flex;flex-direction:column;margin-top:20px}
+.art-hero-enter{position:absolute;bottom:28px;left:7%;font-size:12px;min-height:44px;text-transform:uppercase;letter-spacing:.06em;text-decoration:none}
+.art-welcome h2{margin-bottom:20px}
+.garden-letter{display:grid;grid-template-columns:.8fr 1.2fr;gap:15%;align-items:center;background:#f5f2e6}
+.garden-specimen{position:relative;min-height:450px;display:flex;align-items:center;justify-content:center;border:1px solid #48614140;background:#ecefdc}
+.garden-specimen img{width:80%;height:410px;object-fit:contain;transform:rotate(14deg);filter:drop-shadow(5px 12px 8px #39582a18)}
+.garden-specimen>span{position:absolute;left:24px;bottom:22px;font:18px/1.5 'Cormorant Garamond',serif;background:#ecefdce8;padding:10px}
+.art-story{display:grid;grid-template-columns:1.1fr 1fr;gap:10%;align-items:center;background:#e4e9d7}
+.art-story-photo{position:relative}.art-story-photo img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+.art-story-photo>span{display:block;font:italic 17px/1.5 'Cormorant Garamond',serif;margin-top:18px}
+.art-story-copy .art-monogram{opacity:.75}
+.art-conservatory .art-story-photo{padding:15px 15px 25px;background:#fffcf1;transform:rotate(-3deg);box-shadow:12px 16px 0 #ced7be}
+.art-conservatory .art-story-photo:before{content:'';position:absolute;right:-35px;bottom:-30px;width:100px;height:170px;background:url('/art/layers/flowers.png') center/contain no-repeat;transform:rotate(12deg);pointer-events:none}
+.invitation .art-conservatory .art-events{display:grid;grid-template-columns:1fr 1fr;column-gap:9%;padding:85px 8% 100px;background:#f5f2e6}
+.art-conservatory .art-events-heading{grid-column:1/-1;margin-bottom:50px}
+.garden-event-view{position:relative;min-height:600px;align-self:stretch;overflow:hidden;border-radius:48% 48% 0 0 / 24% 24% 0 0;background:#dce3d1}
+.garden-event-view img{width:100%;height:100%;object-fit:cover;position:absolute;inset:0}
+.garden-event-view>span{position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,#1b3119c9);color:#fffbe8;padding:80px 25px 30px;text-align:center;font:30px/1.2 'Cormorant Garamond',serif}
+.art-event{position:relative}
+.art-conservatory .art-event{padding:28px 0 35px;border-top:1px solid var(--line)}
+.art-conservatory .art-event:last-child{border-bottom:1px solid var(--line)}
+.art-event-stub{display:flex;flex-wrap:wrap;align-items:center;gap:4px 14px;font-size:13px;margin-bottom:20px}
+.art-event-number{font:italic 26px/1 'Cormorant Garamond',serif}
+.art-event-time{width:100%}
+.art-event-content h3{margin-bottom:16px}
+.art-event-note{font-size:16px;line-height:1.85}
+.art-event-venue{display:block;font-size:16px;font-weight:500;margin-top:22px}
+.art-event-address{font-size:14px;margin-top:3px}
+.art-event-actions{display:flex;gap:12px 24px;flex-wrap:wrap;margin-top:17px}
+.art-event-actions :is(button,a){font-size:13px;min-height:44px;padding:8px 0}
+.art-event-actions button{border:0;border-bottom:1px solid var(--line);background:none}
+.art-interlude{display:grid;grid-template-columns:1fr 1fr;align-items:center;gap:8%;padding:65px 8%;background:#e4e9d7}
+.art-interlude:not(:has(.art-surprise-wrap)){grid-template-columns:1fr}
+.invitation .art-experience .inv-countdown-section{border:0;margin:0;padding:30px 0}
+.invitation .art-experience .inv-countdown strong{font-size:clamp(38px,5cqw,66px)}
+.invitation .art-experience .inv-countdown{margin:30px auto}
+.invitation .art-experience .inv-surprise{margin:0;padding:30px 0;background:none}
+.invitation .art-experience .inv-surprise h2{font:italic 36px/1.15 'Cormorant Garamond',serif}
+.invitation .art-experience .inv-surprise>.inv-eyebrow{font-size:12px}
+.invitation .art-experience .inv-scratch{box-shadow:none;min-height:170px;background:var(--suite-card)}
+.art-surprise-wrap{position:relative}.art-surprise-wrap>img{position:absolute;right:-25px;bottom:25px;width:65px;z-index:3;pointer-events:none}
+.art-photo-collection{display:grid;grid-template-columns:1fr 1.1fr 1fr;align-items:start;gap:28px;margin-top:55px}
+.art-photo-collection figure{margin:0;min-width:0}
+.art-photo-collection img{display:block;width:100%;aspect-ratio:4/5;object-fit:cover}
+.art-photo-collection figcaption{display:flex;gap:12px;font:italic 18px/1.4 'Cormorant Garamond',serif;margin-top:16px}
+.art-photo-collection figcaption>span{font:12px/2 'DM Sans Variable',sans-serif;opacity:.7;flex-shrink:0}
+.art-conservatory .art-photo-collection figure:nth-child(3n+2){margin-top:60px}
+.art-conservatory .art-photo-collection img{border-radius:48% 48% 0 0 / 24% 24% 0 0}
+.invitation .art-sample-label{font-size:12px;text-align:center;margin-top:35px;opacity:.75}
+.invitation .art-experience .art-notes{display:grid;grid-template-columns:.85fr 1.15fr;gap:10%;background:#e4e9d7;text-align:left}
+.art-notes-list{display:grid;grid-template-columns:1fr 1fr;gap:30px}
+.art-notes-list>div{padding-top:20px;border-top:1px solid var(--line)}
+.art-note-number{font:italic 22px 'Cormorant Garamond',serif;margin-bottom:20px;display:block}
+.invitation .art-notes-list h3{font-size:30px;margin-bottom:16px}
+.art-notes-list p{font-size:15px;line-height:1.9}
+.art-reply-stage{display:grid;grid-template-columns:.85fr 1.15fr;background:#f5f2e6;padding:90px 8%;gap:9%;align-items:start}
+.art-reply-art{position:sticky;top:55px;min-height:500px;display:flex;flex-direction:column;align-items:center;justify-content:center}
+.art-reply-art>img{width:60%;max-height:420px;object-fit:contain}
+.art-reply-art>span{font:400 clamp(45px,5.5cqw,75px)/1.05 'Cormorant Garamond',serif;display:block;margin-top:20px}
+.invitation .art-experience .inv-reply{margin:0;padding:38px;background:var(--suite-card);box-shadow:none;border:1px solid var(--line);outline:1px solid var(--line);outline-offset:-9px;text-align:left}
+.invitation .art-experience .inv-reply .suite-monogram{display:none}
+.invitation .art-experience .inv-reply h2{font-size:clamp(40px,4cqw,57px)}
+.invitation .art-experience .inv-reply>p{font-size:23px}
+.invitation .art-experience .inv-reply .inv-button{background:var(--ink);color:var(--paper);border:0;border-radius:0}
+.invitation .art-experience .inv-reply :is(input:not([type=radio]):not([type=checkbox]),textarea){background:transparent;border:0;border-bottom:1px solid var(--line);border-radius:0;padding:12px 0}
+.art-footer{position:relative;isolation:isolate;text-align:center;padding:120px 8% 80px;overflow:hidden;min-height:700px;display:grid;place-items:center}
+.art-footer-landscape{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center 80%;z-index:-2}
+.art-footer:after{content:'';position:absolute;inset:0;background:linear-gradient(var(--paper),transparent);z-index:-1}
+.art-footer>div{width:fit-content;max-width:100%;padding:40px;background:color-mix(in srgb,var(--paper) 93%,transparent)}
+.invitation .art-footer h2{font:400 clamp(50px,8cqw,105px)/1.2 'Great Vibes',cursive;margin:25px auto;text-wrap:balance;display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:8px 20px}
+.art-footer h2 i{font-family:'Cormorant Garamond',serif;font-size:.7em}.art-footer h2>span{max-width:100%}
+.art-footer p{font-size:16px;max-width:35ch;margin:auto!important}
+.art-footer-brand{display:block;font-size:12px;letter-spacing:.08em;margin-top:28px}
+.art-footer button{display:block;margin:20px auto 0;background:none;border:0;font-size:13px;min-height:44px}
+.invitation .art-experience .couple-section{background:var(--paper);max-width:none;padding:70px 8%}
+.invitation .art-experience .couple-profiles{max-width:800px;margin:auto}
+/* Gulmohar: painted architecture, ceremonial symmetry and vermilion folios. */
+.invitation .art-gulmohar{--ink:#873725;--paper:#f4e4c4;--line:#a668364d;--suite-card:#fff0d0;--suite-tint:#e9d4ac}
+.invitation .art-gulmohar .art-hero{justify-content:center;text-align:center;min-height:800px}
+.art-gulmohar .art-hero-landscape{inset:0 0 -8%}.art-gulmohar .art-hero-landscape img{object-position:center 65%}
+.art-gulmohar .art-hero-landscape:after{background:linear-gradient(180deg,#f4e4c4a1,transparent 65%)}
+.art-gulmohar .art-hero-copy{padding:70px 20px 320px;width:min(90%,750px);align-self:flex-start}
+.invitation .art-gulmohar .art-hero h1{font-size:clamp(64px,7cqw,105px);line-height:.9}
+.art-gulmohar .art-hero h1>span:last-child{margin:0}.art-gulmohar .art-hero h1 i{margin:10px 0;font-size:.6em;line-height:.8}
+.art-gulmohar .art-occasion{max-width:none;text-align:center;margin-top:25px}
+.art-gulmohar .art-hero-date{width:fit-content;max-width:100%;margin:20px auto 0;background:#f4e4c4e8;padding:8px 20px}
+.art-gulmohar .art-hero-enter{left:50%;translate:-50% 0;background:#f4e4c4e8;padding:8px 18px;white-space:nowrap}
+.invitation .art-gulmohar .palace-blessing{position:relative;padding:170px 22% 85px;text-align:center;min-height:830px}
+.palace-blessing-frame{position:absolute;inset:35px 0 0;width:85%;height:calc(100% - 35px);object-fit:fill;margin:auto;pointer-events:none;opacity:.75}
+.palace-blessing>div{position:relative}.palace-blessing .art-family,.palace-blessing .art-prose{margin-left:auto!important;margin-right:auto!important}.palace-blessing .art-monogram{margin:18px auto 20px}
+.invitation .palace-blessing h2{font-size:clamp(42px,5.5cqw,77px)}
+.invitation .art-gulmohar .art-story{background:#ead6ad;grid-template-columns:.85fr 1.15fr;gap:12%}
+.art-gulmohar .art-story-photo img{border-radius:48% 48% 0 0 / 25% 25% 0 0;border:8px solid #f7e9cb;outline:1px solid #a6683690}
+.invitation .art-gulmohar .art-events{background:#8e3626;color:#fff0ce;text-align:center}
+.art-gulmohar .art-event-list{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:35px;margin-top:55px}
+.art-gulmohar .art-event{padding:130px 35px 35px;background:#f3e2bd;color:#743623;min-width:0}
+.palace-event-arch{position:absolute;inset:0;width:100%;height:100%;pointer-events:none;opacity:.85}
+.art-gulmohar .art-event-stub,.art-gulmohar .art-event-content{position:relative}
+.art-gulmohar .art-event-stub{flex-direction:column;gap:10px}.art-gulmohar .art-event-time{width:auto}
+.art-gulmohar .art-event-number{font-size:30px}
+.art-gulmohar .art-event-actions{justify-content:center;gap:8px 15px}
+.art-gulmohar .art-interlude{background:#e8d1a7}
+.art-gulmohar .art-surprise-wrap>img{display:none}
+.art-gulmohar .art-photo-collection{gap:35px}.art-gulmohar .art-photo-collection figure{padding:15px;background:#e7cfa3;border:1px solid #b88a4a70}
+.art-gulmohar .art-photo-collection img{border-radius:46% 46% 0 0 / 25% 25% 0 0}
+.invitation .art-gulmohar .art-notes{background:#ead6ad;border-block:8px double #b88a4a70}
+.art-gulmohar .art-notes-list{gap:35px}
+.art-gulmohar .art-reply-stage{background:#8e3626;--ink:#873725;align-items:stretch}
+.art-gulmohar .art-reply-art{overflow:hidden;position:relative;min-height:600px;margin:-90px 0 -90px -20%;isolation:isolate}
+.art-gulmohar .art-reply-art img{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;z-index:-2}
+.art-gulmohar .art-reply-art:after{content:'';position:absolute;inset:0;background:linear-gradient(transparent,#64251cd9);z-index:-1}
+.art-gulmohar .art-reply-art>span{color:#fff0ce;padding:50px 15%;margin-top:auto}
+.art-gulmohar .art-footer>div{border:3px double #a6683660;border-radius:48% 48% 0 0 / 20% 20% 0 0;padding-top:70px}
+/* Sunday Edit: a playful, tangible scrapbook and a day’s worth of tickets. */
+.invitation .art-sunday{--ink:#284695;--paper:#faedb9;--line:#28469550;--suite-card:#fff8dc;--suite-tint:#f3b7a2}
+.invitation .art-sunday :is(h1,h2,h3){font-family:'DM Serif Display',serif;letter-spacing:-.035em}
+.invitation .art-sunday h2{font-size:clamp(43px,5.2cqw,72px)}
+.art-sunday .art-hero-landscape{inset:0 0 -10% 40%;transform:rotate(6deg);opacity:.95}
+.art-sunday .art-hero-landscape:after{background:linear-gradient(90deg,#faedb9,transparent 30%)}
+.art-sunday .art-hero-copy{width:70%}
+.invitation .art-sunday .art-hero h1{font-family:'DM Serif Display',serif;font-size:clamp(62px,8.8cqw,125px)}
+.art-sunday .art-hero h1 i{font-family:'DM Serif Display',serif;font-size:.5em;color:#c35347;margin-left:23%}
+.art-sunday .art-hero-scribble{position:absolute;right:9%;bottom:90px;font:400 55px/.95 'Great Vibes',cursive;transform:rotate(-12deg);color:#294692;background:#f5bfa9;padding:30px;border-radius:50%}
+.invitation .art-sunday .sunday-hello{display:grid;grid-template-columns:1.1fr .9fr;align-items:center;gap:10%;padding:95px 8%;background:#f0b8a6}
+.sunday-note{position:relative;padding:50px 38px;background:#fffae5;transform:rotate(-2deg);box-shadow:12px 14px 0 #d9988a}
+.sunday-note:before{content:'';position:absolute;top:-14px;left:35%;width:100px;height:30px;background:#f0d87dc9;transform:rotate(4deg)}
+.sunday-memento{position:relative;transform:rotate(4deg)}
+.sunday-memento>img:first-child{position:absolute;width:160px;right:-25px;top:-70px;z-index:1}
+.sunday-memento>span{display:block;font:400 32px/1.2 'DM Serif Display',serif;margin:0 0 28px;text-align:center}
+.sunday-memento>img:last-child{display:block;width:100%;aspect-ratio:1;object-fit:cover;border:12px solid #fff7d7;border-bottom-width:45px}
+.invitation .art-sunday .art-story{background:#fff7dc;grid-template-columns:1fr 1.1fr;gap:10%}
+.art-sunday .art-story-photo{transform:rotate(3deg);border:12px solid #f0b8a6;background:#f0b8a6;padding-bottom:15px}
+.art-sunday .art-story-photo img{aspect-ratio:1}
+.art-sunday .art-story-photo>span{padding-inline:10px}
+.invitation .art-sunday .art-events{background:#faedb9}
+.art-sunday .art-events-heading{max-width:850px}
+.art-sunday .art-event-list{display:grid;gap:30px;margin-top:50px}
+.art-sunday .art-event{display:grid;grid-template-columns:160px 1fr 45px;background:#fff8dd;box-shadow:8px 9px 0 #ddc987;border:2px solid #284695;transform:rotate(-.6deg)}
+.art-sunday .art-event:nth-child(even){transform:rotate(.6deg);background:#f6c6b1}
+.art-sunday .art-event-stub{margin:0;padding:25px;flex-direction:column;justify-content:center;border-right:2px dashed #28469570;text-align:center}
+.art-sunday .art-event-number{font:400 65px/1.1 'DM Serif Display',serif;margin-bottom:15px}
+.art-sunday .art-event-content{padding:30px}
+.sunday-ticket-end{writing-mode:vertical-rl;border-left:2px dashed #28469570;display:grid;place-items:center;font-size:11px;letter-spacing:.14em;padding:16px 0}
+.art-sunday .art-interlude{background:#f0b8a6;border-block:12px solid #284695}
+.art-sunday .art-surprise-wrap>img{width:90px;right:-30px;bottom:10px}
+.art-sunday .art-photo-collection{gap:30px;align-items:center}
+.art-sunday .art-photo-collection figure{padding:12px 12px 20px;background:#fffbe8;box-shadow:6px 8px 0 #d9c687;transform:rotate(-4deg)}
+.art-sunday .art-photo-collection figure:nth-child(3n+2){transform:rotate(4deg);margin-top:65px}
+.art-sunday .art-photo-collection figure:nth-child(3n){transform:rotate(-1deg);margin-top:-20px}
+.art-sunday .art-photo-collection figcaption{font-family:'DM Serif Display',serif;font-size:16px}
+.invitation .art-sunday .art-notes{background:#fff8dd;border-top:16px solid #284695;grid-template-columns:1fr 1fr}
+.art-sunday .art-notes-list{grid-template-columns:1fr;gap:22px}
+.art-sunday .art-notes-list>div{position:relative;padding:20px 0 22px 48px;background:repeating-linear-gradient(transparent 0 31px,#2846950b 31px 32px)}
+.art-sunday .art-note-number{position:absolute;left:0;top:22px;font-family:'DM Serif Display',serif;font-size:24px}
+.art-sunday .art-reply-stage{background:#f0b8a6}
+.art-sunday .art-reply-art{min-height:650px;isolation:isolate}
+.art-sunday .art-reply-art>img{width:100%;max-height:none;aspect-ratio:3/4;object-fit:cover;transform:rotate(-5deg);box-shadow:9px 12px 0 #d99585}
+.art-sunday .art-reply-art>span{position:absolute;left:5%;top:23%;font-family:'DM Serif Display',serif;font-size:clamp(42px,5cqw,70px);text-align:center;width:90%}
+.invitation .art-sunday .inv-reply{border:0;outline:0;box-shadow:9px 12px 0 #d99585}
+.art-sunday .art-footer>div{transform:rotate(-2deg);box-shadow:10px 12px 0 #f0b8a6}
+.invitation .art-sunday .art-footer h2{font-family:'DM Serif Display',serif;font-size:clamp(48px,6cqw,85px)}
+/* Azure: postcard typography, airmail edges and a coastal travel journal. */
+.invitation .art-azure{--ink:#275779;--paper:#f4f1e4;--line:#38647c40;--suite-card:#fffaf0;--suite-tint:#d3e2e3}
+.art-azure .art-hero-landscape{inset:0 0 -10% 28%}
+.art-azure .art-hero-copy{width:70%}
+.art-azure .art-hero h1{font-style:italic}
+.invitation .art-azure .coast-postcard{display:grid;grid-template-columns:1fr .9fr;gap:9%;margin:75px 6%;padding:60px;background:#fffaf0;border:9px solid transparent;border-image:repeating-linear-gradient(135deg,#346b90 0 20px,#fffaf0 20px 40px,#bb6753 40px 60px,#fffaf0 60px 80px) 9;box-shadow:12px 14px 0 #d8e1d9}
+.coast-address{position:relative;border-left:1px solid var(--line);padding:230px 0 25px 35px}
+.coast-address>img{position:absolute;top:-15px;right:-25px;width:170px;transform:rotate(9deg)}
+.coast-postmark{position:absolute;top:95px;left:25px;transform:rotate(-12deg);border:1px solid #38647c60;border-radius:50%;padding:25px 14px;font-size:11px;text-align:center;width:140px;line-height:1.5}
+.coast-address>p{font:italic 24px/1.6 'Cormorant Garamond',serif;padding:20px 0 9px;border-bottom:1px solid var(--line)}
+.coast-written{font:400 36px/1.4 'Great Vibes',cursive;margin-top:35px;display:block;transform:rotate(-7deg)}
+.invitation .art-azure .art-story{background:#d9e5e3;grid-template-columns:1.15fr 1fr;padding-top:90px;padding-bottom:110px}
+.art-azure .art-story-photo{padding:15px 15px 28px;background:#fffaf0;transform:rotate(-2deg);box-shadow:10px 13px 0 #bed3d2}
+.art-azure .art-story-photo img{aspect-ratio:1.15}
+.invitation .art-azure .art-events{background:#f4f1e4}
+.art-azure .art-event-list{margin-top:55px;display:grid;gap:30px}
+.art-azure .art-event{display:grid;grid-template-columns:200px 1fr;border-block:1px solid var(--line);background:#fffaf0}
+.art-azure .art-event-stub{margin:0;padding:35px 28px;display:flex;flex-direction:column;justify-content:center;align-items:start;border-right:1px dashed #38647c80;background:#e0e9e5}
+.art-azure .art-event-number{font-size:65px;margin-bottom:16px}
+.art-azure .art-event-content{padding:35px 45px}
+.art-azure .art-interlude{background:#d9e5e3}
+.art-azure .art-surprise-wrap>img{width:110px;right:-40px;bottom:0}
+.art-azure .art-photo-collection{grid-template-columns:1fr 1fr;gap:40px}
+.art-azure .art-photo-collection figure:first-child{grid-column:1/-1}
+.art-azure .art-photo-collection figure:first-child img{aspect-ratio:2.2}
+.art-azure .art-photo-collection img{aspect-ratio:1.2}
+.art-azure .art-photo-collection figcaption{justify-content:space-between}
+.invitation .art-azure .art-notes{background:#d9e5e3;grid-template-columns:.9fr 1.1fr;gap:9%}
+.art-azure .art-notes-heading>img{display:block;width:90%;aspect-ratio:4/5;object-fit:cover;margin-top:40px;object-position:center 75%}
+.art-azure .art-notes-list{grid-template-columns:1fr;gap:25px}
+.art-azure .art-notes-list>div{padding:20px 0 15px 35px;position:relative}
+.art-azure .art-note-number{position:absolute;left:0;top:20px}
+.art-azure .art-reply-stage{background:#f4f1e4}
+.art-azure .art-reply-art>img{width:90%;transform:rotate(-8deg)}
+.invitation .art-azure .inv-reply{border:7px solid transparent;outline:0;border-image:repeating-linear-gradient(135deg,#346b90 0 20px,#fffaf0 20px 40px) 7}
+.art-azure .art-footer>div{border:1px solid #38647c50;outline:1px solid #38647c30;outline-offset:-10px}
+/* Small-screen art direction: preserve the object, change its arrangement. */
+@container(max-width:700px){
+ .invitation .art-experience .inv-section{padding:65px 8%}
+ .invitation .art-experience h2{font-size:clamp(44px,11cqw,70px)}
+ .invitation .art-experience .art-hero{min-height:760px;height:100svh;max-height:1000px;align-items:flex-start;text-align:center}
+ .art-hero-landscape{inset:0 0 -8%}
+ .art-hero-landscape:after{background:linear-gradient(var(--paper),color-mix(in srgb,var(--paper) 80%,transparent) 37%,transparent 75%)}
+ .art-hero-copy{width:100%;padding:100px 8% 230px}
+ .invitation .art-hero h1{font-size:clamp(66px,18cqw,112px)}
+ .art-hero h1>span:last-child{margin-left:0}.art-hero h1>i{margin:12px 0;font-size:.55em;line-height:.8}
+ .invitation .art-experience .art-long-names h1{font-size:11cqw;line-height:1.05}
+ .invitation .art-occasion{font-size:22px;margin:25px auto 0}
+ .art-hero-date{margin-top:15px}
+ .art-hero-enter{left:50%;translate:-50% 0;white-space:nowrap;background:color-mix(in srgb,var(--paper) 95%,transparent);padding:8px 16px;bottom:25px}
+ .garden-letter{grid-template-columns:1fr;gap:45px}
+ .garden-specimen{min-height:320px;width:78%;margin:auto}.garden-specimen img{height:310px;width:85%}.garden-specimen>span{font-size:16px;left:10px;bottom:12px}
+ .invitation .art-experience .art-story{grid-template-columns:1fr;gap:50px}
+ .art-story-photo{width:88%;margin:auto}.art-story-copy .art-prose{max-width:none}
+ .invitation .art-conservatory .art-events{display:block}
+ .art-conservatory .art-events-heading{margin-bottom:35px}
+ .garden-event-view{min-height:430px;margin-bottom:35px}
+ .art-interlude{grid-template-columns:1fr;gap:30px;padding:40px 8%}
+ .invitation .art-experience .inv-countdown strong{font-size:clamp(36px,10cqw,57px)}
+ .invitation .art-experience .inv-surprise h2{font-size:34px}
+ .art-photo-collection{grid-template-columns:1fr 1fr;gap:25px 20px;margin-top:38px}
+ .art-photo-collection figure:first-child{grid-column:1/-1;width:80%;margin:auto}
+ .art-conservatory .art-photo-collection figure:nth-child(3n+2){margin-top:25px}
+ .art-photo-collection figcaption{font-size:16px;gap:7px}
+ .invitation .art-experience .art-notes{grid-template-columns:1fr;gap:35px}
+ .art-notes-list{gap:25px;grid-template-columns:1fr}
+ .art-notes-list>div{padding-top:20px}
+ .art-note-number{margin-bottom:10px}
+ .art-reply-stage{grid-template-columns:1fr;gap:35px;padding:65px 8%}
+ .art-reply-art{position:relative;top:auto;min-height:240px;flex-direction:row;gap:25px}
+ .art-reply-art>img{width:38%;height:230px}
+ .art-reply-art>span{font-size:43px;margin:0;flex:1}
+ .invitation .art-experience .inv-reply{padding:32px 24px}
+ .invitation .art-experience .inv-reply h2{font-size:43px}
+ .art-footer{padding:75px 6% 100px;min-height:600px}
+ .art-footer>div{padding:30px 22px}
+ .invitation .art-footer h2{font-size:14cqw;flex-direction:column;gap:0;line-height:1.3}
+ .art-footer h2 i{font-size:.6em}
+ .invitation .art-gulmohar .art-hero{min-height:800px}
+ .art-gulmohar .art-hero-copy{width:100%;padding:100px 8% 300px}
+ .invitation .art-gulmohar .art-hero h1{font-size:17cqw}
+ .invitation .art-gulmohar .palace-blessing{padding:135px 16% 65px;min-height:800px}
+ .palace-blessing-frame{width:97%;top:15px;height:calc(100% - 15px)}
+ .palace-blessing .art-kicker{font-size:11px}
+ .palace-blessing .art-family{font-size:22px}
+ .palace-blessing .art-monogram{font-size:48px}
+ .invitation .art-gulmohar .palace-blessing h2{font-size:11cqw}
+ .art-gulmohar .art-event-list{grid-template-columns:1fr;gap:32px;margin-top:35px}
+ .art-gulmohar .art-event{padding:140px 45px 40px}
+ .art-gulmohar .art-photo-collection{gap:20px}
+ .art-gulmohar .art-photo-collection figure{padding:8px}
+ .art-gulmohar .art-photo-collection figcaption{display:block;font-size:16px}
+ .art-gulmohar .art-photo-collection figcaption>span{display:block}
+ .art-gulmohar .art-reply-art{margin:0;min-height:380px;align-items:end;display:flex}
+ .art-gulmohar .art-reply-art img{height:100%;width:100%}
+ .art-gulmohar .art-reply-art>span{padding:150px 28px 35px;font-size:52px}
+ .art-gulmohar .art-footer>div{padding-top:55px}
+ .art-sunday .art-hero-copy{width:100%;padding-top:100px}
+ .art-sunday .art-hero-landscape{inset:0 0 -10%;transform:none}
+ .art-sunday .art-hero-landscape:after{background:linear-gradient(#faedb9, #faedb9e8 48%,transparent 90%)}
+ .invitation .art-sunday .art-hero h1{font-size:17cqw}
+ .art-sunday .art-hero h1 i{margin-left:0}
+ .art-sunday .art-hero-scribble{font-size:37px;padding:20px;right:9%;bottom:85px}
+ .invitation .art-sunday .sunday-hello{grid-template-columns:1fr;gap:70px;padding:70px 8%}
+ .sunday-note{padding:40px 25px}.sunday-note .art-prose{max-width:none}
+ .sunday-memento{width:82%;margin:auto}.sunday-memento>img:first-child{width:115px;top:-40px;right:-25px}
+ .sunday-memento>span{font-size:29px}
+ .art-sunday .art-event{grid-template-columns:72px minmax(0,1fr)}
+ .art-sunday .art-event-stub{padding:14px 9px;gap:12px}
+ .art-sunday .art-event-number{font-size:43px}
+ .art-sunday .art-event-day,.art-sunday .art-event-time{font-size:12px;line-height:1.65}
+ .art-sunday .art-event-content{padding:25px 20px}
+ .sunday-ticket-end{display:none}
+ .invitation .art-sunday .art-event h3{font-size:29px}
+ .art-sunday .art-photo-collection figure:nth-child(3n+2){margin-top:25px}
+ .art-sunday .art-photo-collection figure:nth-child(3n){margin-top:0}
+ .art-sunday .art-photo-collection figure{padding:8px 8px 15px;box-shadow:4px 5px 0 #d9c687}
+ .art-sunday .art-photo-collection figcaption{font-size:14px;display:block}
+ .art-sunday .art-reply-art{min-height:390px;width:85%;margin:auto}
+ .art-sunday .art-reply-art>img{height:390px;max-height:none;width:100%}
+ .art-sunday .art-reply-art>span{font-size:48px;top:30%;left:8%;width:84%}
+ .invitation .art-sunday .art-footer h2{font-size:13cqw}
+ .art-azure .art-hero-landscape{inset:0 0 -8%}
+ .art-azure .art-hero-copy{width:100%}
+ .invitation .art-azure .coast-postcard{margin:45px 5%;padding:38px 23px;grid-template-columns:1fr;gap:25px;border-width:6px;box-shadow:6px 8px 0 #d8e1d9}
+ .coast-address{border-left:0;border-top:1px solid var(--line);padding:110px 0 0}
+ .coast-address>img{top:15px;right:-10px;width:130px}
+ .coast-postmark{left:0;top:20px;width:120px;font-size:10px;padding:18px 10px}
+ .coast-address>p{font-size:23px;padding-top:20px}
+ .coast-written{font-size:34px}
+ .art-azure .art-event{grid-template-columns:80px 1fr}
+ .art-azure .art-event-stub{padding:20px 12px;gap:10px;font-size:12px}
+ .art-azure .art-event-number{font-size:43px}
+ .art-azure .art-event-content{padding:25px 20px}
+ .invitation .art-azure .art-event h3{font-size:30px}
+ .art-azure .art-photo-collection{gap:25px;grid-template-columns:1fr}
+ .art-azure .art-photo-collection figure:first-child{width:100%}
+ .art-azure .art-photo-collection figure:first-child img{aspect-ratio:1.2}
+ .art-azure .art-notes-heading>img{width:100%;aspect-ratio:1.5;margin-top:30px}
+ .art-azure .art-reply-art>img{width:43%;height:200px}
+}
+@media(prefers-reduced-motion:reduce){.art-hero-landscape{transform:none!important}}
+.invitation.inv-embedded .art-experience .art-hero{height:auto;min-height:760px}
+/* Content stays readable while a section settles into place. */
+.invitation .inv-section-reveal{opacity:1;translate:0 12px;transition:translate .7s cubic-bezier(.2,.7,.2,1)}
+.invitation .inv-section-reveal.inv-section-visible{translate:0 0}
+.garden-specimen{min-height:480px;overflow:hidden}
+.garden-specimen img{width:100%;height:100%;position:absolute;inset:0;object-fit:cover;transform:none;filter:none}
+.garden-specimen>span{background:#f5f2e6eb}
+/* The lettering occupies the open centre, away from the painted pillars. */
+.art-gulmohar .art-event{padding-inline:21%}
+.palace-blessing-frame{height:560px;inset:25px 0 auto;mask-image:linear-gradient(#000 60%,transparent)}
+.invitation .art-gulmohar .palace-blessing{padding-top:235px;padding-bottom:80px;min-height:0}
+.palace-blessing>.palace-blessing-frame+div{position:relative}
+@container(max-width:700px){
+ .garden-specimen{min-height:360px;width:85%}
+ .art-gulmohar .art-event{padding:150px 21% 40px}
+ .palace-blessing-frame{height:420px;width:100%;top:20px}
+ .invitation .art-gulmohar .palace-blessing{padding:195px 14% 65px;min-height:0}
+ .palace-blessing .art-kicker{font-size:11px}
+}
+.invitation .inv-page{animation:none}
+.palace-blessing-frame{width:min(84%,500px);height:auto;aspect-ratio:2/3;object-fit:contain;mask-image:linear-gradient(#000 30%,transparent 60%)}
+.art-gulmohar .art-hero-landscape:after{background:linear-gradient(180deg,#f4e4c4e8,#f4e4c4b8 40%,transparent 75%)}
+/* Personalised names can be much longer than the collection sample. */
+.invitation .art-experience .art-hero.art-long-names{height:auto;min-height:100svh;max-height:none}
+.invitation .nocturne .nocturne-entrance:has(.nocturne-long-names){height:auto;min-height:100svh;max-height:none}
+/* Portrait compositions: the artwork is the invitation, even before motion loads. */
+.ambient-film{position:absolute;inset:0;overflow:hidden}
+.ambient-film>img,.ambient-film>video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.ambient-film>video{opacity:0;transition:opacity .8s ease}
+.ambient-film.ambient-ready>video{opacity:1}
+.invitation .ambient-toggle{position:absolute;right:20px;bottom:28px;z-index:5;width:44px;height:44px;display:grid;place-items:center;border:1px solid #ffffff80;border-radius:50%;background:#182d26b3;color:#fff;backdrop-filter:blur(8px)}
+.art-hero-landscape{z-index:0;inset:0 0 0 35%}
+.art-hero-landscape:after{pointer-events:none}
+.art-hero-copy{position:relative;z-index:1;pointer-events:none}
+.art-hero-enter,.art-hero-scribble{z-index:2}
+.invitation .nocturne-scene{z-index:0;inset:0}
+.nocturne-scene .ambient-toggle{bottom:30px}
+.nocturne-entrance-copy,.nocturne-enter{z-index:2}
+@container(max-width:700px){
+ .invitation .art-experience .art-hero{height:auto;min-height:max(720px,100svh);max-height:none}
+ .art-hero-landscape,.art-sunday .art-hero-landscape,.art-azure .art-hero-landscape{inset:0;transform:none!important}
+ .art-hero-landscape .ambient-film>img,.art-hero-landscape .ambient-film>video{object-position:center}
+ .art-hero-copy{padding:110px 10% 190px}
+ .invitation .art-hero .art-kicker{font-size:11px;letter-spacing:.13em;margin-bottom:27px}
+ .invitation .art-conservatory .art-hero{color:#fff9e7;align-items:center}
+ .art-conservatory .art-hero-landscape:after{background:linear-gradient(180deg,#182d264d,#182d268c 30%,#182d2699 66%,#182d2633)}
+ .art-conservatory .art-hero-copy{padding:140px 9% 180px;text-shadow:0 2px 18px #142b24a6}
+ .invitation .art-conservatory .art-hero h1{font-size:20cqw}
+ .art-conservatory .art-hero-enter{background:#f5f2e6;color:#36523c;bottom:32px;left:8%;translate:none;font-size:11px}
+ .art-conservatory .garden-specimen{width:100%;min-height:420px;transform:rotate(-3deg);border:9px solid #fffdf3;box-shadow:8px 10px 0 #dfe3cf}
+ .garden-letter-copy{position:relative;padding-left:16px;border-left:1px solid #49633e40}
+ .invitation .art-gulmohar .art-hero{min-height:max(780px,100svh)}
+ .art-gulmohar .art-hero-landscape:after{background:radial-gradient(ellipse 43% 31% at 50% 32%,#f4e4c4ef 40%,#f4e4c480 78%,transparent 100%)}
+ .art-gulmohar .art-hero-copy{padding:130px 16% 350px}
+ .invitation .art-gulmohar .art-hero h1{font-size:15.5cqw}
+ .art-gulmohar .art-hero .art-kicker{font-size:10px;margin-bottom:22px}
+ .art-gulmohar .art-hero-enter{bottom:28px;font-size:10px;left:8%;translate:none}
+ .art-gulmohar .art-event{padding-top:130px;padding-bottom:28px}
+ .invitation .art-sunday .art-hero{min-height:max(780px,100svh)}
+ .art-sunday .art-hero-landscape:after{background:radial-gradient(ellipse 43% 28% at 50% 44%,#faedb9dd 35%,transparent 100%)}
+ .art-sunday .art-hero-copy{padding:185px 13% 220px}
+ .invitation .art-sunday .art-hero h1{font-size:15cqw}
+ .art-sunday .art-hero-scribble{display:none}
+ .art-sunday .art-hero-enter{bottom:28px;left:8%;translate:none;font-size:11px}
+ .art-sunday .art-event{grid-template-columns:1fr}
+ .art-sunday .art-event-stub{flex-direction:row;align-items:center;justify-content:space-between;border-right:0;border-bottom:2px dashed #28469570;padding:14px 20px}
+ .art-sunday .art-event-number{font-size:32px;margin:0}
+ .art-sunday .art-event-content{padding:26px}
+ .invitation .art-sunday .art-event h3{font-size:37px}
+ .art-sunday .art-event-actions{gap:15px}
+ .art-azure .art-hero-landscape:after{background:linear-gradient(#e4eff580,#e4eff5b3 35%,transparent 60%)}
+ .art-azure .art-hero-copy{padding:100px 10% 320px}
+ .invitation .art-azure .art-hero h1{font-size:18cqw}
+ .art-azure .art-hero-enter{left:8%;translate:none;bottom:28px;font-size:11px}
+ .invitation .art-azure .art-occasion{font-size:21px}
+ .art-azure .art-event{grid-template-columns:1fr;border-top:3px solid #38647c}
+ .art-azure .art-event-stub{flex-direction:row;align-items:center;justify-content:space-between;border:0;padding:15px 20px}
+ .art-azure .art-event-number{font-size:32px;margin:0}
+ .art-azure .art-event-content{padding:25px}
+ .invitation .art-azure .art-event h3{font-size:36px}
+ .invitation.inv-continuous:has(.inv-reply:focus-within) .inv-guest-nav{visibility:hidden;pointer-events:none}
+ .invitation .art-experience .art-long-names .art-hero-copy{padding-inline:10%}
+ .invitation .art-experience .art-long-names h1{font-size:10cqw}
+}
+@media(prefers-reduced-motion:reduce){.ambient-film>video{display:none}.invitation .inv-section-reveal{translate:none;transition:none}}
+
+.art-gulmohar .art-hero-landscape{inset:0}
+.nocturne-scene:after{pointer-events:none}
+@container(max-width:700px){
+ .art-azure .art-hero-date{width:fit-content;max-width:100%;margin:18px auto 0;padding:8px 18px;background:#f4f1e4eb;border:1px solid #27577924}
+ .art-azure .art-occasion{text-shadow:0 1px 8px #f4f1e4,0 0 20px #f4f1e4}
+}
+/* Gulmohar celebrations read as one programme, with space between occasions. */
+.invitation .art-gulmohar .palace-programme{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.45fr);gap:8%;padding:100px 8%;text-align:left;background:#813628;color:#fff0ce}
+.palace-programme-intro{min-width:0}.palace-programme .art-events-heading{margin:0;text-align:left}
+.invitation .palace-programme .art-events-heading h2{font-size:clamp(44px,5cqw,68px);line-height:1.04;letter-spacing:-.035em}
+.palace-programme .art-kicker{color:#e5c69a;font-size:10px;letter-spacing:.19em}
+.palace-programme-signoff{display:block;margin-top:32px;font:italic 22px/1.5 'Cormorant Garamond',serif;color:#e5c69a}
+.palace-programme-list{list-style:none;margin:0;padding:0;border-top:1px solid #dabb815e;min-width:0}
+.palace-programme-entry{display:grid;grid-template-columns:minmax(100px,.58fr) minmax(0,1.42fr);gap:28px;padding:36px 0 40px;border-bottom:1px solid #dabb815e;min-width:0}
+.palace-programme-date{display:flex;flex-direction:column;align-items:flex-start;font:12px/1.7 'DM Sans Variable',sans-serif;color:#edcf9f}
+.palace-programme-number{font:italic 34px/1 'Cormorant Garamond',serif;margin-bottom:22px;color:#d5b57f}
+.palace-programme-time{margin-top:5px;color:#fff0ce}
+.invitation .palace-programme-content h3{font:400 clamp(29px,3.4cqw,45px)/1.08 'Cormorant Garamond',serif;color:#fff0ce;margin:0 0 18px;text-wrap:balance}
+.palace-programme-content .art-event-note{font-size:14px;line-height:1.85;color:#f1d6b6;margin:0 0 22px;max-width:38ch}
+.palace-programme-content .art-event-venue{display:block;font-size:13px;font-weight:500;color:#fff0ce}
+.palace-programme-content .art-event-address{font-size:12px;line-height:1.7;color:#e5c69a;margin-top:5px}
+.art-gulmohar .palace-programme-content .art-event-actions{justify-content:flex-start;gap:10px 22px;margin-top:20px;flex-wrap:wrap}
+.palace-programme-content .art-event-actions :is(a,button){font-size:11px;min-height:44px;text-decoration:none;border-bottom:1px solid #e5c69a65;color:#fff0ce}
+.palace-programme-content .art-event-actions :is(a,button):hover{border-bottom-color:#fff0ce}
+@container(max-width:850px){
+ .invitation .art-gulmohar .palace-programme{grid-template-columns:1fr;gap:38px;padding:65px 8%}
+ .invitation .palace-programme .art-events-heading h2{font-size:clamp(42px,9cqw,62px)}
+ .palace-programme-signoff{margin-top:20px;font-size:21px}
+ .palace-programme-entry{grid-template-columns:minmax(80px,.55fr) minmax(0,1.45fr);gap:20px;padding:28px 0 32px}
+ .palace-programme-date{font-size:11px}.palace-programme-number{font-size:29px;margin-bottom:18px}
+ .invitation .palace-programme-content h3{font-size:clamp(27px,6.4cqw,38px)}
+ .palace-programme-content .art-event-note{font-size:13px;line-height:1.8}
+}
+@container(max-width:360px){.palace-programme-entry{grid-template-columns:1fr;gap:17px}.palace-programme-date{flex-direction:row;align-items:baseline;gap:10px;flex-wrap:wrap}.palace-programme-number{margin:0}.palace-programme-time{margin:0}}

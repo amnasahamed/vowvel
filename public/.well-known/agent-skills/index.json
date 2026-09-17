@@ -1,0 +1,26 @@
+{
+  "$schema": "https://schemas.agentskills.io/discovery/0.2.0/schema.json",
+  "skills": [
+    {
+      "name": "invitation-curator",
+      "type": "skill-md",
+      "description": "Curate bespoke wedding and engagement invitation experiences across Vowvel's five signature artistic themes.",
+      "url": "/.well-known/agent-skills/invitation-curator/SKILL.md",
+      "digest": "sha256:0008565daa91503e50b508ac4342a0ceec81f28182faa321ae37433fb2c6b1ea"
+    },
+    {
+      "name": "rsvp-concierge",
+      "type": "skill-md",
+      "description": "Collect, validate, and manage wedding and celebration RSVP responses for invited guests.",
+      "url": "/.well-known/agent-skills/rsvp-concierge/SKILL.md",
+      "digest": "sha256:caef724535b30b6218fa183865f524e5f55ce225c0da9d14ec7cca939733cb4c"
+    },
+    {
+      "name": "commerce-assistant",
+      "type": "skill-md",
+      "description": "Handle quotes, coupon validations, and checkout initialization for Vowvel bespoke invitations.",
+      "url": "/.well-known/agent-skills/commerce-assistant/SKILL.md",
+      "digest": "sha256:c5545f337ffd4bc13551133b36dcac33dbeaa6557eff0f2f7d5b7aa9321c3611"
+    }
+  ]
+}

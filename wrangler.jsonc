@@ -1,0 +1,71 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "vowvel",
+  "main": "worker/index.ts",
+  "compatibility_date": "2026-09-15",
+  "compatibility_flags": ["nodejs_compat"],
+  "secrets": {
+    "required": ["OTP_SECRET", "RAZORPAY_KEY_ID", "RAZORPAY_KEY_SECRET", "RAZORPAY_WEBHOOK_SECRET"]
+  },
+  "routes": [
+    {
+      "pattern": "vowvel.com",
+      "custom_domain": true
+    },
+    {
+      "pattern": "www.vowvel.com",
+      "custom_domain": true
+    },
+    {
+      "pattern": "*.vowvel.com/*",
+      "zone_name": "vowvel.com"
+    }
+  ],
+  "vars": {
+    "ENVIRONMENT": "production",
+    "APP_NAME": "Vowvel",
+    "SESSION_TTL_DAYS": "14",
+    "ADMIN_EMAIL": "amnasahmd@gmail.com",
+    "EMAIL_FROM": "notifications@vowvel.com",
+    "EMAIL_REPLY_TO": "support@vowvel.com",
+    "PUBLIC_APP_URL": "https://vowvel.com"
+  },
+  "send_email": [
+    {
+      "name": "EMAIL"
+    }
+  ],
+  "d1_databases": [
+    {
+      "binding": "DB",
+      "database_name": "vowvel",
+      "database_id": "1781bd0a-cad5-465d-9fc0-76a1ca3d0642",
+      "migrations_dir": "migrations"
+    }
+  ],
+  "r2_buckets": [
+    {
+      "binding": "MEDIA",
+      "bucket_name": "vowvel-media"
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 1
+  },
+  "triggers": {
+    "crons": ["*/15 * * * *"]
+  },
+  "assets": {
+    "binding": "ASSETS",
+    "directory": "./dist",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": [
+      "/api/*",
+      "/",
+      "/.well-known/*",
+      "/auth.md",
+      "/openapi.json"
+    ]
+  }
+}

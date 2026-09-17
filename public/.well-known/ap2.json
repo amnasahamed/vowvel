@@ -1,0 +1,19 @@
+{
+  "protocol": {
+    "name": "ap2",
+    "version": "1.0.0"
+  },
+  "endpoints": {
+    "mandate_verification": "https://vowvel.com/api/ap2/mandate/verify",
+    "checkout": "https://vowvel.com/api/orders/checkout"
+  },
+  "supported_credentials": [
+    "verifiable_presentation",
+    "payment_mandate_v1"
+  ],
+  "supported_networks": [
+    "card",
+    "upi",
+    "lightning"
+  ]
+}

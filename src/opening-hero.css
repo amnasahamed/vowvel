@@ -1,0 +1,50 @@
+.opening-hero{position:relative;height:100svh;min-height:480px;display:grid;place-items:center;isolation:isolate;color:var(--ink);overflow:hidden}
+.opening-hero-frame{position:relative;width:min(100%,calc(100svh * 9 / 16));aspect-ratio:9/16;max-height:100%;container-type:inline-size}
+.opening-hero-art{display:block;width:100%;height:100%;object-fit:contain}
+.opening-hero-letter{position:absolute;left:27%;right:27%;top:29%;bottom:34%;display:flex;flex-direction:column;justify-content:center;align-items:center;text-align:center;gap:3cqw;animation:letter-arrives 1.8s cubic-bezier(.2,.7,.2,1) both;animation-delay:.35s}
+.invitation .opening-names{font-family:'Cormorant Garamond',Georgia,serif;font-size:clamp(24px,9cqw,48px);line-height:.95;letter-spacing:-.04em;width:100%;text-wrap:balance;outline:none}
+.opening-names span{display:block;overflow-wrap:anywhere}.opening-names i{display:block;font-size:.55em;line-height:1.3;margin:1cqw 0;font-weight:400}
+.invitation .opening-hero-preface{font:400 clamp(8px,2.3cqw,12px)/1.4 'DM Sans Variable',sans-serif;max-width:90%;text-wrap:balance}
+.invitation .opening-hero-occasion{font:italic 4cqw/1.2 'Cormorant Garamond',Georgia,serif}.invitation .opening-hero-date{font:400 clamp(9px,2.7cqw,14px)/1.5 'DM Sans Variable',sans-serif;text-wrap:balance}
+.opening-hero-continue{position:absolute;bottom:24px;left:0;right:0;text-align:center;font:italic 17px/1.5 'Cormorant Garamond',Georgia,serif;text-decoration:none;animation:letter-arrives 1.2s .8s both}.opening-hero-continue span{display:block;font:16px sans-serif;margin-top:7px}
+.opening-hero-gulmohar .opening-hero-letter{left:29%;right:29%;top:26%;bottom:25%}
+.opening-hero-afterhours .opening-hero-letter{left:25%;right:25%;top:28%;bottom:30%;color:#ead6a8}
+.opening-hero-sunday .opening-hero-letter{left:30%;right:30%;top:29%;bottom:29%;gap:2cqw}
+.opening-hero-azure .opening-hero-letter{left:30%;right:30%;top:31%;bottom:29%}
+.invitation .opening-hero-long .opening-names{font-size:6cqw;line-height:1.05}
+.opening-hero-embedded{height:auto;min-height:0}.opening-hero-embedded .opening-hero-frame{width:100%;max-height:none}.opening-hero-embedded .opening-hero-letter,.opening-hero-embedded .opening-hero-continue{animation:none}
+.invitation.inv-continuous .inv-topbar{position:absolute;top:0;left:0;right:0;z-index:15;background:transparent;border:0}.inv-continuous .inv-topbar>span{display:none}.inv-continuous .inv-topbar button{background:color-mix(in srgb,var(--paper) 90%,transparent);padding:8px 12px;border-radius:20px}
+@keyframes letter-arrives{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.opening-hero-letter,.opening-hero-continue{animation:none}}
+html{scrollbar-gutter:stable}.opening-hero{min-height:0}.invitation .inv-family-line{font:italic 23px/1.5 'Cormorant Garamond',Georgia,serif;margin:20px auto;max-width:28ch;text-wrap:balance}
+.invitation .opening-hero-long .opening-names{font-size:4.2cqw;line-height:1.05}.opening-hero-long .opening-hero-letter{gap:1.5cqw}
+/* Letterpress typography shared by the moving film and the live stationery. */
+.opening-hero-letter{animation:none;gap:2cqw}.opening-letter-in-film{animation:letter-arrives .65s cubic-bezier(.2,.7,.2,1) both}
+.invitation .opening-names{font-size:10cqw;font-weight:500;line-height:.97}
+.opening-letter-flourish{font:6cqw/1 Georgia,serif;opacity:.75}.opening-letter-rule{width:25%;height:1px;background:currentColor;opacity:.45}
+.invitation .opening-hero-preface{font-size:2.5cqw}.invitation .opening-hero-date{font-size:3cqw}
+.opening-hero-conservatory .opening-names{font-family:'Great Vibes',cursive;font-size:11cqw;font-weight:400;line-height:1.12;letter-spacing:0}
+.opening-hero-gulmohar .opening-letter-flourish{font-size:7cqw;color:#98622f}
+.opening-hero-afterhours .opening-hero-letter{color:#fff4df;left:23%;right:23%;gap:2.5cqw}
+.invitation .opening-hero-afterhours .opening-names{font-size:10cqw;font-weight:500;letter-spacing:0;line-height:1.02}
+.opening-hero-afterhours .opening-hero-preface,.opening-hero-afterhours .opening-hero-date{font-weight:500;font-size:3cqw!important}
+.opening-hero-sunday .opening-names{font-family:'DM Serif Display',Georgia,serif;font-size:9cqw;letter-spacing:-.03em}
+.opening-hero-azure .opening-names{font-style:italic;font-size:10cqw}
+.invitation .opening-hero-long .opening-names{font-family:'Cormorant Garamond',Georgia,serif;font-size:4.2cqw;line-height:1.05}.opening-hero-long .opening-letter-flourish{display:none}
+.inv-film-letter-frame{position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:min(100%,calc(100svh * 9 / 16));aspect-ratio:9/16;container-type:inline-size;pointer-events:none}
+@media(prefers-reduced-motion:reduce){.opening-letter-in-film{animation:none}}
+.opening-hero-continue{left:50%;right:auto;translate:-50% 0;width:44px;height:52px;bottom:max(18px,calc(env(safe-area-inset-bottom) + 10px));display:grid;place-items:center;padding:0;background:color-mix(in srgb,var(--paper) 88%,transparent);border:1px solid color-mix(in srgb,var(--ink) 28%,transparent);border-radius:999px;box-shadow:0 8px 24px color-mix(in srgb,var(--ink) 14%,transparent),inset 0 1px 0 color-mix(in srgb,white 45%,transparent);backdrop-filter:blur(8px);animation:none}.opening-hero-continue span{margin:0;font:18px/1 'DM Sans Variable',sans-serif;animation:opening-scroll-cue 1.8s cubic-bezier(.4,0,.2,1) infinite}
+/* The landscape on the collection card becomes the live invitation. */
+.opening-hero.world-opening{height:100svh;height:100dvh;min-height:480px;display:block;overflow:hidden}
+.world-opening .world-opening-frame{width:100%;height:100%;transform-origin:center 60%}
+.world-opening .world-scene{height:100%;aspect-ratio:auto}
+.world-opening .world-lettering{z-index:1;text-shadow:0 1px 0 color-mix(in srgb,var(--world-paper) 74%,transparent),0 0 18px var(--world-paper)}
+.world-opening .world-lettering:before{content:'';position:absolute;z-index:-1;inset:-18% -9%;background:radial-gradient(ellipse at center,color-mix(in srgb,var(--world-paper) 78%,transparent) 0 38%,color-mix(in srgb,var(--world-paper) 52%,transparent) 58%,transparent 78%);pointer-events:none}
+.world-opening :is(.world-preface,.world-date){width:fit-content;max-width:100%;margin-inline:auto;padding:.25em .8em;background:color-mix(in srgb,var(--world-paper) 72%,transparent);box-shadow:0 0 15px color-mix(in srgb,var(--world-paper) 68%,transparent)}
+.world-opening .opening-hero-continue{z-index:2}
+.opening-hero-embedded.world-opening{height:auto;min-height:0}
+.opening-hero-embedded.world-opening .world-opening-frame{height:auto}
+.opening-hero-embedded.world-opening .world-scene{height:auto;aspect-ratio:3/4}
+.opening-hero-embedded.world-opening .opening-hero-continue{width:36px;height:42px;bottom:10px}
+@keyframes opening-scroll-cue{0%,100%{transform:translateY(-3px);opacity:.72}50%{transform:translateY(4px);opacity:1}}
+@media(prefers-reduced-motion:reduce){.opening-hero-continue span{animation:none}}

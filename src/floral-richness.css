@@ -1,0 +1,48 @@
+/* Decorative layers stay outside the reading area and never intercept input. */
+.invitation:is(.inv-conservatory,.inv-gulmohar,.inv-sunday,.inv-azure) :is(.inv-welcome,.inv-gallery,.inv-reply){position:relative;isolation:isolate}
+.invitation:is(.inv-conservatory,.inv-gulmohar,.inv-sunday,.inv-azure) :is(.inv-welcome,.inv-gallery,.inv-reply)::before,
+.invitation:is(.inv-conservatory,.inv-gulmohar,.inv-sunday,.inv-azure) :is(.inv-welcome,.inv-gallery,.inv-reply)::after{content:'';position:absolute;pointer-events:none;background-repeat:no-repeat;background-size:contain;z-index:-1}
+.invitation:is(.inv-conservatory,.inv-gulmohar,.inv-sunday,.inv-azure) .inv-welcome{padding-top:107px;padding-bottom:47px}
+.invitation:is(.inv-conservatory,.inv-gulmohar,.inv-sunday,.inv-azure) .inv-gallery{padding-top:100px;padding-bottom:45px}
+.invitation:is(.inv-conservatory,.inv-gulmohar,.inv-sunday,.inv-azure) .inv-reply{padding-top:96px;margin-top:48px}
+/* Conservatory: pressed stems flank a letter on cotton stock. */
+.inv-conservatory .inv-welcome::before{background-image:url('/art/layers/flowers.png');width:100px;height:165px;left:-18px;top:4px;transform:rotate(-28deg)}
+.inv-conservatory .inv-welcome::after{background-image:url('/art/layers/flowers.png');width:83px;height:145px;right:-14px;top:13px;transform:rotate(32deg) scaleX(-1)}
+.inv-conservatory .inv-welcome .inv-ornament{font-size:0;width:90px;height:68px;background:url('/art/layers/ribbon.png') center top/65px auto no-repeat;margin-top:34px}
+.inv-conservatory .inv-gallery{background-color:#e5e9da;background-image:repeating-linear-gradient(90deg,transparent 0 31px,#78856712 31px 32px),repeating-linear-gradient(0deg,transparent 0 31px,#78856712 31px 32px)}
+.inv-conservatory .inv-gallery::before{background-image:url('/art/layers/flowers.png');width:145px;height:180px;left:-23px;top:-18px;transform:rotate(68deg)}
+.inv-conservatory .inv-gallery::after{background-image:url('/art/layers/ribbon.png');width:77px;height:95px;right:13px;top:0;transform:rotate(-12deg)}
+.inv-conservatory .inv-reply{background:#faf8ee;box-shadow:0 9px 0 -4px #dedfcd,0 10px 0 -4px #bcc3ab}
+.inv-conservatory .inv-reply::before{background-image:url('/art/layers/flowers.png');width:110px;height:92px;left:calc(50% - 55px);top:-14px;transform:rotate(65deg)}
+.inv-conservatory .inv-reply::after{inset:9px;border:1px solid #71825c38}
+/* Gulmohar: ornamental floral bands and layered rose/gold stationery. */
+.inv-gulmohar .inv-welcome{background:linear-gradient(#f3dfc8cc,#f8eddb00)}
+.inv-gulmohar .inv-welcome::before{width:calc(100% - 54px);height:24px;left:27px;top:34px;border-top:3px double #b9884e;border-bottom:1px solid #b9884e;background-image:radial-gradient(ellipse at center,#af7950 0 2px,transparent 3px);background-size:19px 17px;background-repeat:repeat-x;background-position:center}
+.inv-gulmohar .inv-welcome::after{background-image:url('/art/layers/flowers.png');width:110px;height:75px;left:calc(50% - 55px);bottom:-4px;transform:rotate(78deg);filter:sepia(.25)}
+.inv-gulmohar .inv-gallery{background:#edd4b9;border-top:4px double #b68d59;border-bottom:4px double #b68d59;background-image:radial-gradient(circle at 0 0,transparent 15px,#c59b6830 16px 17px,transparent 18px),radial-gradient(circle at 100% 100%,transparent 15px,#c59b6830 16px 17px,transparent 18px);background-size:34px 34px}
+.inv-gulmohar .inv-gallery::before{background-image:url('/art/layers/flowers.png');width:106px;height:115px;left:-5px;top:-5px;transform:rotate(32deg)}
+.inv-gulmohar .inv-gallery::after{background-image:url('/art/layers/flowers.png');width:106px;height:115px;right:-5px;top:-5px;transform:rotate(-32deg) scaleX(-1)}
+.inv-gulmohar .inv-reply{background:#fcf0dc;border:3px double #aa7445;outline:1px solid #aa7445;outline-offset:7px;box-shadow:0 13px 0 -6px #e4c5a7}
+.inv-gulmohar .inv-reply::before{background-image:url('/art/layers/ribbon.png');width:83px;height:74px;left:calc(50% - 41px);top:9px;filter:sepia(.7) saturate(.7)}
+.inv-gulmohar .inv-reply::after{left:17px;right:17px;top:17px;height:18px;border-top:1px solid #aa744550;border-bottom:1px solid #aa744550}
+/* Sunday: a bold cut-paper border, sticky scraps and a ribbon bow. */
+.inv-sunday .inv-welcome{background-image:linear-gradient(90deg,#2542a0 50%,transparent 50%);background-size:28px 8px;background-repeat:repeat-x;background-position:center bottom}
+.inv-sunday .inv-welcome::before{background-image:url('/art/layers/ribbon.png');width:106px;height:98px;top:0;right:17px;transform:rotate(16deg);filter:hue-rotate(120deg) saturate(2.5)}
+.inv-sunday .inv-welcome::after{left:29px;top:41px;width:54px;height:31px;background:#ed8f6880;transform:rotate(-13deg);border-left:3px dotted #f9e5a1;border-right:3px dotted #f9e5a1}
+.inv-sunday .inv-gallery{background-color:#efbaa1;background-image:linear-gradient(45deg,#fff6d733 25%,transparent 25%,transparent 75%,#fff6d733 75%),linear-gradient(45deg,#fff6d733 25%,transparent 25%,transparent 75%,#fff6d733 75%);background-size:40px 40px;background-position:0 0,20px 20px;border-top:2px dashed #2542a059;border-bottom:2px dashed #2542a059}
+.inv-sunday .inv-gallery::before{background-image:url('/art/layers/flowers.png');width:94px;height:113px;left:8px;top:-9px;transform:rotate(-22deg)}
+.inv-sunday .inv-gallery::after{right:29px;top:35px;width:66px;height:29px;background:#2542a0;transform:rotate(11deg);clip-path:polygon(0 0,100% 0,94% 25%,100% 50%,94% 75%,100% 100%,0 100%,6% 75%,0 50%,6% 25%)}
+.inv-sunday .inv-reply{border:2px solid #2542a0;background:#fff9df;box-shadow:7px 9px 0 #efbaa1,8px 10px 0 #2542a0;transform:rotate(-.7deg)}
+.inv-sunday .inv-reply::before{background-image:url('/art/layers/ribbon.png');width:100px;height:91px;left:calc(50% - 50px);top:0;filter:hue-rotate(120deg) saturate(2.5);transform:rotate(-8deg)}
+.inv-sunday .inv-reply::after{height:22px;top:10px;left:10px;right:10px;border-top:2px dashed #2542a049}
+/* Azure: lemon sprigs, blue ruling and a tactile correspondence card. */
+.inv-azure .inv-welcome::before{background-image:url('/art/layers/lemons.png');width:136px;height:112px;left:-23px;top:0;transform:rotate(-19deg)}
+.inv-azure .inv-welcome::after{background-image:url('/art/layers/lemons.png');width:105px;height:92px;right:-17px;top:20px;transform:rotate(23deg) scaleX(-1)}
+.inv-azure .inv-welcome .inv-ornament{border-top:3px double #305c883b;padding-top:18px;width:160px}
+.inv-azure .inv-gallery{background:#e2edf0;background-image:repeating-linear-gradient(0deg,transparent 0 23px,#305c8814 23px 24px)}
+.inv-azure .inv-gallery::before{background-image:url('/art/layers/lemons.png');width:160px;height:130px;right:-11px;top:-16px;transform:rotate(13deg)}
+.inv-azure .inv-gallery::after{width:62px;height:62px;left:30px;top:18px;border:3px double #305c8866;border-radius:50%;transform:rotate(-13deg);background-image:repeating-linear-gradient(0deg,transparent 0 8px,#305c8829 8px 9px);background-size:100% 100%}
+.inv-azure .inv-reply{background:#fffdf5;box-shadow:0 9px 0 -4px #d7e4e9}
+.inv-azure .inv-reply::before{background-image:url('/art/layers/lemons.png');width:117px;height:86px;left:calc(50% - 58px);top:-10px;transform:rotate(-8deg)}
+.inv-azure .inv-reply::after{inset:10px;border:1px solid #305c8826}
+@media(max-width:380px){.invitation:is(.inv-conservatory,.inv-gulmohar,.inv-sunday,.inv-azure) .inv-welcome{padding-top:107px}.inv-conservatory .inv-welcome::before{left:-31px}.inv-conservatory .inv-welcome::after{right:-24px}.inv-azure .inv-welcome::before{left:-38px}.inv-azure .inv-welcome::after{right:-30px}}
