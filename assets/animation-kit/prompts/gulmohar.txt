@@ -1,0 +1,10 @@
+Gulmohar — 6-second scroll film
+
+FIRST FRAME: frames/gulmohar-first.png
+LAST FRAME: frames/gulmohar-last.png
+
+Create one continuous 6-second video in portrait 9:16. Use the supplied FIRST image as the exact frame at 0 seconds and the supplied LAST image as the exact frame at 6 seconds. Follow a slow, steady camera path between them. Preserve the composition, style, colour palette, lighting and identity of every object. Motion must be subtle and suitable for smooth forward/backward scroll scrubbing. No cuts, fades, dissolves, scene changes, camera shake, sudden acceleration, morphing, people, added objects, text, logos or watermarks. No audio.
+
+Move gently forward along the reflecting pool toward the same palace doorway, ending at the supplied closer view. Let the foreground scalloped arch move outward naturally through parallax. Keep the pink sandstone architecture, windows, domes, gold details and two peacocks unchanged. Peacocks remain poised in place. Add only delicate water ripples and almost imperceptible movement in the gulmohar leaves. Preserve the hand-painted miniature style.
+
+SETTINGS: Duration 6 seconds; portrait 9:16; 24 or 30 fps; silent H.264 MP4. Prefer 720 × 1280 or 1080 × 1920 output. Upload both frames to the dedicated first/last frame inputs, not as a collage.

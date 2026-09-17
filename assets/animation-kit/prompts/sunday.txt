@@ -1,0 +1,10 @@
+The Sunday Edit — 6-second scroll film
+
+FIRST FRAME: frames/sunday-first.png
+LAST FRAME: frames/sunday-last.png
+
+Create one continuous 6-second video in portrait 9:16. Use the supplied FIRST image as the exact frame at 0 seconds and the supplied LAST image as the exact frame at 6 seconds. Follow a slow, steady camera path between them. Preserve the composition, style, colour palette, lighting and identity of every object. Motion must be subtle and suitable for smooth forward/backward scroll scrubbing. No cuts, fades, dissolves, scene changes, camera shake, sudden acceleration, morphing, people, added objects, text, logos or watermarks. No audio.
+
+Make a very gentle camera push into the same handmade paper-cut composition, ending at the supplied closer view. Keep the cobalt bow tied and preserve all cake tiers, cherries, daisies, champagne coupes and checkerboard squares. Only the free ribbon tail curls slightly as indicated by the end frame; paper edges may lift barely perceptibly. Keep the central butter-yellow space clear. Preserve tactile paper grain, crisp cut edges and soft shadows; no photorealistic transformation.
+
+SETTINGS: Duration 6 seconds; portrait 9:16; 24 or 30 fps; silent H.264 MP4. Prefer 720 × 1280 or 1080 × 1920 output. Upload both frames to the dedicated first/last frame inputs, not as a collage.

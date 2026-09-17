@@ -1,0 +1,10 @@
+Azure — 6-second scroll film
+
+FIRST FRAME: frames/azure-first.png
+LAST FRAME: frames/azure-last.png
+
+Create one continuous 6-second video in portrait 9:16. Use the supplied FIRST image as the exact frame at 0 seconds and the supplied LAST image as the exact frame at 6 seconds. Follow a slow, steady camera path between them. Preserve the composition, style, colour palette, lighting and identity of every object. Motion must be subtle and suitable for smooth forward/backward scroll scrubbing. No cuts, fades, dissolves, scene changes, camera shake, sudden acceleration, morphing, people, added objects, text, logos or watermarks. No audio.
+
+Make a gentle forward camera push toward the same cliffside village and bay, ending at the supplied closer view. Keep the horizon level, and preserve the church dome, buildings and mountain ridge. Foreground lemons and bougainvillea move outward through restrained parallax; a few leaves move softly in a sea breeze. Add small shimmering water ripples. The existing sailboat glides only the short distance needed to match the final frame. Preserve airy watercolor brushwork and sunny blue tones.
+
+SETTINGS: Duration 6 seconds; portrait 9:16; 24 or 30 fps; silent H.264 MP4. Prefer 720 × 1280 or 1080 × 1920 output. Upload both frames to the dedicated first/last frame inputs, not as a collage.

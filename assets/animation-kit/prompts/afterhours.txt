@@ -1,0 +1,10 @@
+After Hours — 6-second scroll film
+
+FIRST FRAME: frames/afterhours-first.png
+LAST FRAME: frames/afterhours-last.png
+
+Create one continuous 6-second video in portrait 9:16. Use the supplied FIRST image as the exact frame at 0 seconds and the supplied LAST image as the exact frame at 6 seconds. Follow a slow, steady camera path between them. Preserve the composition, style, colour palette, lighting and identity of every object. Motion must be subtle and suitable for smooth forward/backward scroll scrubbing. No cuts, fades, dissolves, scene changes, camera shake, sudden acceleration, morphing, people, added objects, text, logos or watermarks. No audio.
+
+Dolly gently forward beneath the same crystal chandelier toward the central ballroom arch, ending at the supplied closer view. Preserve burgundy velvet drapes, candle stands, calla lilies, champagne coupes and furniture positions. Candle flames flicker softly and warm reflections move subtly across rigid crystal. Do not make the chandelier swing. Keep the rich, dim black-cherry and antique-gold exposure consistent.
+
+SETTINGS: Duration 6 seconds; portrait 9:16; 24 or 30 fps; silent H.264 MP4. Prefer 720 × 1280 or 1080 × 1920 output. Upload both frames to the dedicated first/last frame inputs, not as a collage.
