@@ -1,6 +1,7 @@
 import {calculateCommission,calculateQuote,csvCell,generateCouponCode,normalizeCouponCode,normalizeRsvpInput,type CouponRule} from './domain.ts';
 import {clearSessionCookie,constantTimeEqual,hashPassword,hmacHex,isValidEmail,parseCookie,randomToken,sessionCookie,sha256} from './security.ts';
 import {flushEmailOutbox,otpEmail,purchaseEmail,redemptionEmail,sendTransactional,type EmailContent} from './email.ts';
+import {PAYPAL_CURRENCY,PAYPAL_PRICE_CENTS,capturePayPalOrder,createPayPalOrder,parsePayPalCaptureEvent,paypalAccessToken,refundPayPalCapture,requirePayPalCredentials,verifyPayPalWebhook} from './paypal.ts';
 
 
 type Role='owner'|'admin'|'finance'|'support'|'content'|'influencer'|'customer';
@@ -14,6 +15,10 @@ type RuntimeEnv=Omit<CloudflareEnv,'ENVIRONMENT'>&{
   RAZORPAY_KEY_ID?:string;
   RAZORPAY_KEY_SECRET?:string;
   RAZORPAY_WEBHOOK_SECRET?:string;
+  PAYPAL_CLIENT_ID?:string;
+  PAYPAL_CLIENT_SECRET?:string;
+  PAYPAL_WEBHOOK_ID?:string;
+  PAYPAL_API_BASE?:string;
 };
 interface AuthUser{id:string;email:string;name:string;role:Role;status:UserStatus;csrfToken:string}
 interface SessionRow{id:string;user_id:string;email:string;name:string;role:Role;status:UserStatus;csrf_token:string}
@@ -176,7 +181,7 @@ function publishedEvents(payload:Record<string,unknown>):Array<{id:string;name:s
   }).slice(0,8);
 }
 
-async function commerceRoutes(request:Request,env:RuntimeEnv,path:string,user:AuthUser|null):Promise<Response|null>{
+async function commerceRoutes(request:Request,env:RuntimeEnv,path:string,user:AuthUser|null,ctx:ExecutionContext):Promise<Response|null>{
   const subdomainMatch=path.match(/^\/api\/subdomains\/([A-Za-z0-9-]{1,50})$/);
   if(subdomainMatch&&request.method==='GET'){const label=subdomain(subdomainMatch[1]);const existing=await env.DB.prepare(`SELECT id FROM invitations WHERE custom_subdomain=?`).bind(label).first();return json({label,available:!existing,url:`https://${label}.vowvel.com`});}
   const rsvpMatch=path.match(/^\/api\/invitations\/([A-Za-z0-9_-]{8,80})\/rsvp$/);
@@ -212,18 +217,23 @@ async function commerceRoutes(request:Request,env:RuntimeEnv,path:string,user:Au
   }
   if(path==='/api/coupons/quote'&&request.method==='POST'){
     await releaseExpiredReservations(env);
-    const body=await readJson(request);const code=cleanText(body.code,64);const config=await settings(env);const coupon=code?await validateCoupon(env,user?.id||null,code,config.basePriceCents):null;const quote=calculateQuote(config.basePriceCents,config.taxBps,coupon?.rule||null);
-    return json({quote,currency:config.currency,coupon:coupon?{code:coupon.row.code,campaignId:coupon.row.campaign_id}:null});
+    const body=await readJson(request);const method=body.method==='paypal'?'paypal':'razorpay';
+    if(method==='paypal'){
+      if(cleanText(body.code,64))throw new ApiError(422,'Coupons are not supported for PayPal orders yet','coupon_unsupported');
+      return json({quote:{subtotalCents:PAYPAL_PRICE_CENTS,discountCents:0,taxableCents:PAYPAL_PRICE_CENTS,taxCents:0,totalCents:PAYPAL_PRICE_CENTS},currency:PAYPAL_CURRENCY,method:'paypal',coupon:null});
+    }
+    const code=cleanText(body.code,64);const config=await settings(env);const coupon=code?await validateCoupon(env,user?.id||null,code,config.basePriceCents):null;const quote=calculateQuote(config.basePriceCents,config.taxBps,coupon?.rule||null);
+    return json({quote,currency:config.currency,method:'razorpay',coupon:coupon?{code:coupon.row.code,campaignId:coupon.row.campaign_id}:null});
   }
   if(path==='/api/orders'&&request.method==='POST'){
     await releaseExpiredReservations(env);
-    const customer=requireRole(user,['customer']);requireCsrf(request,customer);const body=await readJson(request,15_000_000);const code=cleanText(body.code,64);const chosenSubdomain=subdomain(body.subdomain);const taken=await env.DB.prepare(`SELECT id FROM invitations WHERE custom_subdomain=?`).bind(chosenSubdomain).first();if(taken)throw new ApiError(409,'That invitation address was just taken. Choose another.','subdomain_taken');const invitationPayload=body.invitation;if(!invitationPayload||typeof invitationPayload!=='object'||Array.isArray(invitationPayload))throw new ApiError(400,'Invitation details are required');const serializedInvitation=JSON.stringify(invitationPayload);if(serializedInvitation.length>14_000_000)throw new ApiError(413,'Invitation is too large');const invitationId=id('invitation');const revisionId=id('revision');const slug=randomToken(12);const r2Key=`invitations/${invitationId}/${revisionId}.json`;await env.MEDIA.put(r2Key,serializedInvitation,{httpMetadata:{contentType:'application/json'}});const config=await settings(env);const coupon=code?await validateCoupon(env,customer.id,code,config.basePriceCents):null;const quote=calculateQuote(config.basePriceCents,config.taxBps,coupon?.rule||null);const orderId=id('order');const invitationUrl=`https://${chosenSubdomain}.vowvel.com`;const snapshot={...quote,currency:config.currency,couponCode:coupon?.row.code||null,invitationUrl,quotedAt:nowIso()};
+    const customer=requireRole(user,['customer']);requireCsrf(request,customer);const body=await readJson(request,15_000_000);const code=cleanText(body.code,64);const chosenSubdomain=subdomain(body.subdomain);const taken=await env.DB.prepare(`SELECT id FROM invitations WHERE custom_subdomain=?`).bind(chosenSubdomain).first();if(taken)throw new ApiError(409,'That invitation address was just taken. Choose another.','subdomain_taken');const invitationPayload=body.invitation;if(!invitationPayload||typeof invitationPayload!=='object'||Array.isArray(invitationPayload))throw new ApiError(400,'Invitation details are required');const serializedInvitation=JSON.stringify(invitationPayload);if(serializedInvitation.length>14_000_000)throw new ApiError(413,'Invitation is too large');const invitationId=id('invitation');const revisionId=id('revision');const slug=randomToken(12);const r2Key=`invitations/${invitationId}/${revisionId}.json`;await env.MEDIA.put(r2Key,serializedInvitation,{httpMetadata:{contentType:'application/json'}});const method=body.method==='paypal'?'paypal':'razorpay';if(method==='paypal'&&code)throw new ApiError(422,'Coupons are not supported for PayPal orders yet','coupon_unsupported');const config=await settings(env);const coupon=method==='paypal'?null:(code?await validateCoupon(env,customer.id,code,config.basePriceCents):null);const quote=method==='paypal'?{subtotalCents:PAYPAL_PRICE_CENTS,discountCents:0,taxableCents:PAYPAL_PRICE_CENTS,taxCents:0,totalCents:PAYPAL_PRICE_CENTS}:calculateQuote(config.basePriceCents,config.taxBps,coupon?.rule||null);const orderId=id('order');const invitationUrl=`https://${chosenSubdomain}.vowvel.com`;const snapshot={...quote,currency:method==='paypal'?PAYPAL_CURRENCY:config.currency,couponCode:coupon?.row.code||null,provider:method,invitationUrl,quotedAt:nowIso()};
     if(quote.totalCents>0&&quote.totalCents<100){await env.MEDIA.delete(r2Key);throw new ApiError(400,'Payment amount must be at least 100 paise','amount_too_small');}
     if(coupon){const reserved=await env.DB.prepare(`UPDATE coupon_codes SET reserved_count=reserved_count+1 WHERE id=? AND status='active' AND (max_redemptions IS NULL OR reserved_count+redeemed_count<max_redemptions)`).bind(coupon.row.id).run();if((reserved.meta.changes||0)!==1)throw new ApiError(409,'Coupon was just exhausted','coupon_exhausted');}
     try{await env.DB.batch([
       env.DB.prepare(`INSERT INTO invitations(id,owner_id,slug,state,published_revision_id,custom_subdomain) VALUES(?,?,?,'draft',?,?)`).bind(invitationId,customer.id,slug,revisionId,chosenSubdomain),
       env.DB.prepare(`INSERT INTO invitation_revisions(id,invitation_id,revision_number,data_json,created_by) VALUES(?,?,1,?,?)`).bind(revisionId,invitationId,JSON.stringify({r2Key}),customer.id),
-      env.DB.prepare(`INSERT INTO orders(id,user_id,invitation_id,state,currency,subtotal_cents,discount_cents,tax_cents,total_cents,coupon_code_id,influencer_id,commission_bps,price_snapshot_json) VALUES(?,?,?,'awaiting_payment',?,?,?,?,?,?,?,?,?)`).bind(orderId,customer.id,invitationId,config.currency,quote.subtotalCents,quote.discountCents,quote.taxCents,quote.totalCents,coupon?.row.id||null,coupon?.row.influencer_id||null,coupon?.row.commission_bps||0,JSON.stringify(snapshot)),
+      env.DB.prepare(`INSERT INTO orders(id,user_id,invitation_id,state,currency,subtotal_cents,discount_cents,tax_cents,total_cents,coupon_code_id,influencer_id,commission_bps,price_snapshot_json) VALUES(?,?,?,'awaiting_payment',?,?,?,?,?,?,?,?,?)`).bind(orderId,customer.id,invitationId,method==='paypal'?PAYPAL_CURRENCY:config.currency,quote.subtotalCents,quote.discountCents,quote.taxCents,quote.totalCents,coupon?.row.id||null,coupon?.row.influencer_id||null,coupon?.row.commission_bps||0,JSON.stringify(snapshot)),
       ...(coupon?[env.DB.prepare(`INSERT INTO coupon_redemptions(id,coupon_code_id,campaign_id,order_id,user_id,discount_cents,reserved_until) VALUES(?,?,?,?,?,?,?)`).bind(id('redemption'),coupon.row.id,coupon.row.campaign_id,orderId,customer.id,quote.discountCents,new Date(Date.now()+30*60_000).toISOString())]:[]),
     ]);}catch(error){await env.MEDIA.delete(r2Key);if(coupon)await env.DB.prepare(`UPDATE coupon_codes SET reserved_count=MAX(0,reserved_count-1) WHERE id=?`).bind(coupon.row.id).run();throw error;}
     if(quote.totalCents===0){
@@ -232,6 +242,20 @@ async function commerceRoutes(request:Request,env:RuntimeEnv,path:string,user:Au
       await env.DB.batch(statements);await audit(env,request,customer.id,'order.complimentary','order',orderId,null,snapshot);return json({order:{id:orderId,...snapshot,providerOrderId:null,checkoutKey:null},paymentConfigured:false,complimentary:true},201);
     }
     let providerOrderId:string|null=null;let checkoutKey:string|null=null;
+    if(method==='paypal'){
+      if(!env.PAYPAL_CLIENT_ID||!env.PAYPAL_CLIENT_SECRET){await audit(env,request,customer.id,'order.create','order',orderId,null,snapshot);return json({order:{id:orderId,...snapshot,providerOrderId:null,paypalClientId:null},paymentConfigured:false,provider:'paypal',complimentary:false},201);}
+      let paypalOrderId:string;
+      try{
+        const created=await createPayPalOrder(env,orderId,quote.totalCents);paypalOrderId=created.id;
+        await env.DB.batch([env.DB.prepare(`UPDATE orders SET provider_order_id=? WHERE id=?`).bind(paypalOrderId,orderId),env.DB.prepare(`INSERT INTO payments(id,order_id,provider,provider_order_id,amount_cents) VALUES(?,?,?,?,?)`).bind(id('payment'),orderId,'paypal',paypalOrderId,quote.totalCents)]);
+      }catch(error){
+        console.error(JSON.stringify({level:'error',event:'payment_provider_order_failed',orderId,provider:'paypal',error:error instanceof Error?error.message:String(error)}));
+        await env.DB.batch([env.DB.prepare(`DELETE FROM payments WHERE order_id=?`).bind(orderId),env.DB.prepare(`DELETE FROM orders WHERE id=?`).bind(orderId),env.DB.prepare(`DELETE FROM invitation_revisions WHERE id=?`).bind(revisionId),env.DB.prepare(`DELETE FROM invitations WHERE id=?`).bind(invitationId)]);
+        await env.MEDIA.delete(r2Key);
+        throw new ApiError(500,'Payment provider could not create the order','provider_error');
+      }
+      await audit(env,request,customer.id,'order.create','order',orderId,null,snapshot);return json({order:{id:orderId,...snapshot,providerOrderId:paypalOrderId,paypalClientId:env.PAYPAL_CLIENT_ID},paymentConfigured:true,provider:'paypal',complimentary:false},201);
+    }
     if(env.RAZORPAY_KEY_ID&&env.RAZORPAY_KEY_SECRET){
       let providerStatus=0;
       try{const providerResponse=await fetch('https://api.razorpay.com/v1/orders',{method:'POST',headers:{authorization:`Basic ${btoa(`${env.RAZORPAY_KEY_ID}:${env.RAZORPAY_KEY_SECRET}`)}`,'content-type':'application/json'},body:JSON.stringify({amount:quote.totalCents,currency:config.currency,receipt:orderId,notes:{vowvel_order_id:orderId}})});providerStatus=providerResponse.status;
@@ -252,7 +276,7 @@ async function commerceRoutes(request:Request,env:RuntimeEnv,path:string,user:Au
         throw new ApiError(500,'Payment provider could not create the order','provider_error');
       }
     }
-    await audit(env,request,customer.id,'order.create','order',orderId,null,snapshot);return json({order:{id:orderId,...snapshot,providerOrderId,checkoutKey},paymentConfigured:Boolean(providerOrderId),complimentary:false},201);
+    await audit(env,request,customer.id,'order.create','order',orderId,null,snapshot);return json({order:{id:orderId,...snapshot,providerOrderId,checkoutKey},paymentConfigured:Boolean(providerOrderId),provider:'razorpay',complimentary:false},201);
   }
   if(path==='/api/verify-payment'&&request.method==='POST'){
     const customer=requireRole(user,['customer']);requireCsrf(request,customer);if(!env.RAZORPAY_KEY_SECRET)throw new ApiError(503,'Razorpay secret is not configured');
@@ -266,6 +290,28 @@ async function commerceRoutes(request:Request,env:RuntimeEnv,path:string,user:Au
     if(order.provider_payment_id&&order.provider_payment_id!==paymentId)throw new ApiError(409,'A different payment is already linked to this order','payment_conflict');
     await env.DB.batch([env.DB.prepare(`UPDATE orders SET provider_payment_id=?,updated_at=CURRENT_TIMESTAMP WHERE id=?`).bind(paymentId,order.id),env.DB.prepare(`UPDATE payments SET provider_payment_id=?,status=CASE WHEN status='created' THEN 'authorized' ELSE status END,raw_status=CASE WHEN raw_status IS NULL THEN 'signature_verified' ELSE raw_status END,updated_at=CURRENT_TIMESTAMP WHERE order_id=?`).bind(paymentId,order.id)]);
     await audit(env,request,customer.id,'payment.signature_verified','order',order.id,null,{providerOrderId:order.provider_order_id,paymentId});return json({success:true,orderId:order.id,paymentId});
+  }
+  if(path==='/api/paypal/capture'&&request.method==='POST'){
+    const customer=requireRole(user,['customer']);requireCsrf(request,customer);
+    const body=await readJson(request);const orderId=cleanText(body.orderId,100);
+    if(!orderId)throw new ApiError(400,'Order id is required','order_required');
+    const order=await env.DB.prepare(`SELECT o.id,o.state,o.currency,o.total_cents,o.provider_order_id,o.provider_payment_id,o.invitation_id,p.provider,i.slug,i.custom_subdomain,customer.email customer_email FROM orders o JOIN users customer ON customer.id=o.user_id LEFT JOIN payments p ON p.order_id=o.id LEFT JOIN invitations i ON i.id=o.invitation_id WHERE o.id=? AND o.user_id=?`).bind(orderId,customer.id).first<{id:string;state:string;currency:string;total_cents:number;provider_order_id:string|null;provider_payment_id:string|null;invitation_id:string|null;provider:string|null;slug:string|null;custom_subdomain:string|null;customer_email:string}>();
+    if(!order||!order.provider_order_id)throw new ApiError(404,'Order not found','order_not_found');
+    if(order.provider&&order.provider!=='paypal')throw new ApiError(409,'This order uses a different payment provider','provider_mismatch');
+    if(order.currency!==PAYPAL_CURRENCY)throw new ApiError(409,'This order is not a PayPal order','provider_mismatch');
+    if(order.state==='paid')return json({success:true,orderId:order.id,alreadyPaid:true});
+    if(order.provider_payment_id)throw new ApiError(409,'A payment is already linked to this order','payment_conflict');
+    let capture;
+    try{capture=await capturePayPalOrder(env,order.provider_order_id);}
+    catch(error){console.error(JSON.stringify({level:'error',event:'paypal_capture_failed',orderId,error:error instanceof Error?error.message:String(error)}));throw new ApiError(502,'PayPal could not capture the payment','provider_error');}
+    if(capture.amountCents!==order.total_cents)throw new ApiError(409,'Payment amount does not match order','amount_mismatch');
+    if(capture.status!=='COMPLETED')throw new ApiError(502,'PayPal payment was not completed','payment_incomplete');
+    const inviteUrl=order.custom_subdomain?`https://${order.custom_subdomain}.vowvel.com`:order.slug?`${(env.PUBLIC_APP_URL||new URL(request.url).origin).replace(/\/$/,'')}/#/invite/${order.slug}`:(env.PUBLIC_APP_URL||new URL(request.url).origin);
+    const statements=[env.DB.prepare(`UPDATE orders SET state='paid',provider_payment_id=?,paid_at=CURRENT_TIMESTAMP,updated_at=CURRENT_TIMESTAMP WHERE id=? AND state!='paid'`).bind(capture.captureId,order.id),env.DB.prepare(`UPDATE payments SET provider_payment_id=?,status='captured',raw_status='capture_completed',updated_at=CURRENT_TIMESTAMP WHERE order_id=?`).bind(capture.captureId,order.id)];
+    if(order.invitation_id)statements.push(env.DB.prepare(`UPDATE invitations SET state='published',updated_at=CURRENT_TIMESTAMP WHERE id=?`).bind(order.invitation_id));
+    statements.push(emailStatement(env,`purchase:${order.id}`,purchaseEmail(order.customer_email,order.id,money(order.total_cents,order.currency),inviteUrl)));
+    await env.DB.batch(statements);ctx.waitUntil(flushEmailOutbox(env));
+    await audit(env,request,customer.id,'payment.captured','order',order.id,null,{provider:'paypal',captureId:capture.captureId});return json({success:true,orderId:order.id,captureId:capture.captureId,invitationUrl:inviteUrl});
   }
   return null;
 }
@@ -362,7 +408,7 @@ async function adminRoutes(request:Request,env:RuntimeEnv,path:string,user:AuthU
   }
   const refundMatch=path.match(/^\/api\/admin\/orders\/([^/]+)\/refund$/);
   if(refundMatch&&request.method==='POST'){
-    if(!['owner','finance'].includes(actor.role))throw new ApiError(403,'Owner or Finance permission required');if(!env.RAZORPAY_KEY_ID||!env.RAZORPAY_KEY_SECRET)throw new ApiError(503,'Razorpay secrets are not configured');const orderId=refundMatch[1];const body=await readJson(request);const reason=cleanText(body.reason,500);if(!reason)throw new ApiError(400,'A refund reason is required');const order=await env.DB.prepare(`SELECT o.id,o.state,o.total_cents,o.provider_payment_id,p.id payment_id FROM orders o LEFT JOIN payments p ON p.order_id=o.id WHERE o.id=?`).bind(orderId).first<{id:string;state:string;total_cents:number;provider_payment_id:string|null;payment_id:string|null}>();if(!order||!order.provider_payment_id||!order.payment_id)throw new ApiError(404,'Paid order not found');const already=await env.DB.prepare(`SELECT COALESCE(SUM(amount_cents),0) amount FROM refunds WHERE order_id=? AND status='processed'`).bind(orderId).first<{amount:number}>();const remaining=order.total_cents-(already?.amount||0);const amount=integer(body.amountCents,1,remaining,remaining);const refundId=id('refund');await env.DB.prepare(`INSERT INTO refunds(id,order_id,payment_id,amount_cents,reason,created_by) VALUES(?,?,?,?,?,?)`).bind(refundId,orderId,order.payment_id,amount,reason,actor.id).run();const response=await fetch(`https://api.razorpay.com/v1/payments/${encodeURIComponent(order.provider_payment_id)}/refund`,{method:'POST',headers:{authorization:`Basic ${btoa(`${env.RAZORPAY_KEY_ID}:${env.RAZORPAY_KEY_SECRET}`)}`,'content-type':'application/json'},body:JSON.stringify({amount,notes:{vowvel_refund_id:refundId,reason}})});const provider=await responseJson(response);if(!response.ok||typeof provider.id!=='string'){await env.DB.prepare(`UPDATE refunds SET status='failed' WHERE id=?`).bind(refundId).run();throw new ApiError(502,'Payment provider could not process the refund');}const full=amount===remaining;const statements=[env.DB.prepare(`UPDATE refunds SET status='processed',provider_refund_id=?,processed_at=CURRENT_TIMESTAMP WHERE id=?`).bind(provider.id,refundId),env.DB.prepare(`UPDATE orders SET state=?,updated_at=CURRENT_TIMESTAMP WHERE id=?`).bind(full?'refunded':'partially_refunded',orderId),env.DB.prepare(`UPDATE payments SET status=?,updated_at=CURRENT_TIMESTAMP WHERE id=?`).bind(full?'refunded':'partially_refunded',order.payment_id)];const earned=await env.DB.prepare(`SELECT influencer_id,basis_cents,rate_bps,amount_cents FROM commission_ledger WHERE order_id=? AND entry_type='earned'`).bind(orderId).first<{influencer_id:string;basis_cents:number;rate_bps:number;amount_cents:number}>();if(earned){const reversal=Math.min(earned.amount_cents,Math.round(earned.amount_cents*amount/order.total_cents));statements.push(env.DB.prepare(`INSERT INTO commission_ledger(id,influencer_id,order_id,entry_type,basis_cents,rate_bps,amount_cents,status,available_at,note,created_by) VALUES(?,?,?,'reversal',?,?,?,'reversed',CURRENT_TIMESTAMP,?,?)`).bind(id('commission'),earned.influencer_id,orderId,earned.basis_cents,earned.rate_bps,-reversal,`Refund ${refundId}`,actor.id));}if(full)statements.push(env.DB.prepare(`UPDATE coupon_redemptions SET status='reversed' WHERE order_id=? AND status='used'`).bind(orderId));await env.DB.batch(statements);await audit(env,request,actor.id,'order.refund','order',orderId,{state:order.state},{amount,full,providerRefundId:provider.id},reason);return json({ok:true,refundId,amountCents:amount});
+    if(!['owner','finance'].includes(actor.role))throw new ApiError(403,'Owner or Finance permission required');const orderId=refundMatch[1];const body=await readJson(request);const reason=cleanText(body.reason,500);if(!reason)throw new ApiError(400,'A refund reason is required');const order=await env.DB.prepare(`SELECT o.id,o.state,o.total_cents,o.provider_payment_id,p.id payment_id,p.provider payment_provider FROM orders o LEFT JOIN payments p ON p.order_id=o.id WHERE o.id=?`).bind(orderId).first<{id:string;state:string;total_cents:number;provider_payment_id:string|null;payment_id:string|null;payment_provider:string|null}>();if(!order||!order.provider_payment_id||!order.payment_id)throw new ApiError(404,'Paid order not found');const already=await env.DB.prepare(`SELECT COALESCE(SUM(amount_cents),0) amount FROM refunds WHERE order_id=? AND status='processed'`).bind(orderId).first<{amount:number}>();const remaining=order.total_cents-(already?.amount||0);const amount=integer(body.amountCents,1,remaining,remaining);const refundId=id('refund');await env.DB.prepare(`INSERT INTO refunds(id,order_id,payment_id,amount_cents,reason,created_by) VALUES(?,?,?,?,?,?)`).bind(refundId,orderId,order.payment_id,amount,reason,actor.id).run();let providerRefundId:string;if(order.payment_provider==='paypal'){try{const refund=await refundPayPalCapture(env,order.provider_payment_id as string,amount);providerRefundId=refund.id;}catch{await env.DB.prepare(`UPDATE refunds SET status='failed' WHERE id=?`).bind(refundId).run();throw new ApiError(502,'Payment provider could not process the refund');}}else{if(!env.RAZORPAY_KEY_ID||!env.RAZORPAY_KEY_SECRET)throw new ApiError(503,'Razorpay secrets are not configured');const response=await fetch(`https://api.razorpay.com/v1/payments/${encodeURIComponent(order.provider_payment_id as string)}/refund`,{method:'POST',headers:{authorization:`Basic ${btoa(`${env.RAZORPAY_KEY_ID}:${env.RAZORPAY_KEY_SECRET}`)}`,'content-type':'application/json'},body:JSON.stringify({amount,notes:{vowvel_refund_id:refundId,reason}})});const provider=await responseJson(response);if(!response.ok||typeof provider.id!=='string'){await env.DB.prepare(`UPDATE refunds SET status='failed' WHERE id=?`).bind(refundId).run();throw new ApiError(502,'Payment provider could not process the refund');}providerRefundId=provider.id as string;}const full=amount===remaining;const statements=[env.DB.prepare(`UPDATE refunds SET status='processed',provider_refund_id=?,processed_at=CURRENT_TIMESTAMP WHERE id=?`).bind(providerRefundId,refundId),env.DB.prepare(`UPDATE orders SET state=?,updated_at=CURRENT_TIMESTAMP WHERE id=?`).bind(full?'refunded':'partially_refunded',orderId),env.DB.prepare(`UPDATE payments SET status=?,updated_at=CURRENT_TIMESTAMP WHERE id=?`).bind(full?'refunded':'partially_refunded',order.payment_id)];const earned=await env.DB.prepare(`SELECT influencer_id,basis_cents,rate_bps,amount_cents FROM commission_ledger WHERE order_id=? AND entry_type='earned'`).bind(orderId).first<{influencer_id:string;basis_cents:number;rate_bps:number;amount_cents:number}>();if(earned){const reversal=Math.min(earned.amount_cents,Math.round(earned.amount_cents*amount/order.total_cents));statements.push(env.DB.prepare(`INSERT INTO commission_ledger(id,influencer_id,order_id,entry_type,basis_cents,rate_bps,amount_cents,status,available_at,note,created_by) VALUES(?,?,?,'reversal',?,?,?,'reversed',CURRENT_TIMESTAMP,?,?)`).bind(id('commission'),earned.influencer_id,orderId,earned.basis_cents,earned.rate_bps,-reversal,`Refund ${refundId}`,actor.id));}if(full)statements.push(env.DB.prepare(`UPDATE coupon_redemptions SET status='reversed' WHERE order_id=? AND status='used'`).bind(orderId));await env.DB.batch(statements);await audit(env,request,actor.id,'order.refund','order',orderId,{state:order.state},{amount,full,providerRefundId},reason);return json({ok:true,refundId,amountCents:amount});
   }
   return null;
 }
@@ -390,6 +436,43 @@ async function razorpayWebhook(request:Request,env:RuntimeEnv,ctx:ExecutionConte
   return json({ok:true});
 }
 
+async function paypalWebhook(request:Request,env:RuntimeEnv,ctx:ExecutionContext):Promise<Response>{
+  const raw=await readBody(request,256_000);
+  let payload:unknown;
+  try{payload=JSON.parse(new TextDecoder().decode(raw));}catch{throw new ApiError(400,'Invalid webhook payload');}
+  const body=payload as Record<string,unknown>;
+  const eventType=cleanText(body.event_type,120);
+  const verified=await verifyPayPalWebhook(env,{
+    transmissionId:request.headers.get('paypal-transmission-id')||'',
+    transmissionTime:request.headers.get('paypal-transmission-time')||'',
+    certUrl:request.headers.get('paypal-cert-url')||'',
+    authAlgo:request.headers.get('paypal-auth-algo')||'',
+    transmissionSig:request.headers.get('paypal-transmission-sig')||'',
+  },payload).catch(error=>{
+    if(error instanceof Error&&error.message==='PayPal webhook id is not configured')throw new ApiError(503,'PayPal webhook id is not configured');
+    throw new ApiError(502,'PayPal webhook verification failed');
+  });
+  if(!verified)throw new ApiError(401,'Invalid webhook signature');
+  if(eventType!=='PAYMENT.CAPTURE.COMPLETED')return json({ok:true,ignored:true});
+  const parsed=parsePayPalCaptureEvent(payload);
+  if(!parsed)throw new ApiError(400,'Payment identifiers missing');
+  const payloadHash=await sha256(raw);
+  const duplicate=await env.DB.prepare(`SELECT id FROM webhook_events WHERE provider='paypal' AND provider_event_id=?`).bind(parsed.eventId).first();
+  if(duplicate)return json({ok:true,duplicate:true});
+  const order=await env.DB.prepare(`SELECT o.id,o.state,o.currency,o.total_cents,o.invitation_id,customer.email customer_email,i.slug,i.custom_subdomain FROM orders o JOIN users customer ON customer.id=o.user_id LEFT JOIN invitations i ON i.id=o.invitation_id WHERE o.provider_order_id=?`).bind(parsed.paypalOrderId).first<{id:string;state:string;currency:string;total_cents:number;invitation_id:string|null;customer_email:string;slug:string|null;custom_subdomain:string|null}>();
+  if(!order)throw new ApiError(404,'Order not found');
+  if(order.currency!==PAYPAL_CURRENCY||parsed.amountCents!==order.total_cents)throw new ApiError(409,'Payment amount does not match order');
+  const eventStatement=env.DB.prepare(`INSERT INTO webhook_events(id,provider,provider_event_id,event_type,payload_hash) VALUES(?,'paypal',?,?,?)`).bind(id('webhook'),parsed.eventId,eventType,payloadHash);
+  if(order.state!=='paid'){
+    const inviteUrl=order.custom_subdomain?`https://${order.custom_subdomain}.vowvel.com`:order.slug?`${(env.PUBLIC_APP_URL||new URL(request.url).origin).replace(/\/$/,'')}/#/invite/${order.slug}`:(env.PUBLIC_APP_URL||new URL(request.url).origin);
+    const statements=[eventStatement,env.DB.prepare(`UPDATE orders SET state='paid',provider_payment_id=?,paid_at=CURRENT_TIMESTAMP,updated_at=CURRENT_TIMESTAMP WHERE id=? AND state!='paid'`).bind(parsed.captureId,order.id),env.DB.prepare(`UPDATE payments SET provider_payment_id=?,status='captured',raw_status='webhook_completed',updated_at=CURRENT_TIMESTAMP WHERE order_id=?`).bind(parsed.captureId,order.id)];
+    if(order.invitation_id)statements.push(env.DB.prepare(`UPDATE invitations SET state='published',updated_at=CURRENT_TIMESTAMP WHERE id=?`).bind(order.invitation_id));
+    statements.push(emailStatement(env,`purchase:${order.id}`,purchaseEmail(order.customer_email,order.id,money(order.total_cents,order.currency),inviteUrl)));
+    await env.DB.batch(statements);ctx.waitUntil(flushEmailOutbox(env));
+  }else await env.DB.batch([eventStatement]);
+  return json({ok:true});
+}
+
 async function handleApi(request:Request,env:RuntimeEnv,ctx:ExecutionContext):Promise<Response>{
   const path=new URL(request.url).pathname;
   if(path==='/api/health'&&request.method==='GET')return json({ok:true,version:'1.0.0',status:'operational',timestamp:nowIso()},200,{'access-control-allow-origin':'*'});
@@ -406,8 +489,9 @@ async function handleApi(request:Request,env:RuntimeEnv,ctx:ExecutionContext):Pr
   }
   requireSameOrigin(request);
   if(path==='/api/webhooks/razorpay'&&request.method==='POST')return razorpayWebhook(request,env,ctx);
+  if(path==='/api/webhooks/paypal'&&request.method==='POST')return paypalWebhook(request,env,ctx);
   const auth=await authRoutes(request,env,path);if(auth)return auth;if(path==='/api/influencers/apply'&&request.method==='POST')return influencerApply(request,env);const user=await getSession(request,env);
-  const commerce=await commerceRoutes(request,env,path,user);if(commerce)return commerce;const customer=await customerRoutes(request,env,path,user);if(customer)return customer;const admin=await adminRoutes(request,env,path,user);if(admin)return admin;const partner=await partnerRoutes(request,env,path,user);if(partner)return partner;throw new ApiError(404,'API route not found','not_found');
+  const commerce=await commerceRoutes(request,env,path,user,ctx);if(commerce)return commerce;const customer=await customerRoutes(request,env,path,user);if(customer)return customer;const admin=await adminRoutes(request,env,path,user);if(admin)return admin;const partner=await partnerRoutes(request,env,path,user);if(partner)return partner;throw new ApiError(404,'API route not found','not_found');
 }
 
 const DISCOVERY_LINK_HEADER='</.well-known/api-catalog>; rel="api-catalog", </openapi.json>; rel="service-desc"; type="application/openapi+json", </auth.md>; rel="describedby", </.well-known/ai-catalog.json>; rel="ai-catalog"';
@@ -426,7 +510,7 @@ Vowvel provides an editorial storefront and five signature invitation design wor
 - **Azure**: Mediterranean cliffside, cobalt tiles, sea breeze romance. Live demo: https://vowvel.com/#/preview/azure
 
 ## Pricing & Commerce
-- **Base Invitation License**: ₹2,499 INR domestic (one-time purchase, lifetime hosting, guest RSVP dashboard, custom subdomain). International guests pay $40 USD via PayPal (integration pending).
+- **Base Invitation License**: ₹2,499 INR domestic, or $40 USD international via PayPal (one-time purchase, lifetime hosting, guest RSVP dashboard, custom subdomain).
 - **Supported Commerce Protocols**: ACP (Agentic Commerce Protocol), UCP (Universal Commerce Protocol), MPP (Machine Payment Protocol), x402 HTTP payments, and AP2.
 - **Quote Calculation**: POST /api/coupons/quote
 - **Checkout**: POST /api/orders

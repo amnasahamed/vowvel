@@ -2,3 +2,10 @@ OTP_SECRET="replace-with-at-least-32-random-characters"
 RAZORPAY_KEY_ID="rzp_test_replace_me"
 RAZORPAY_KEY_SECRET="replace-me"
 RAZORPAY_WEBHOOK_SECRET="replace-me"
+PAYPAL_CLIENT_ID="replace-me"
+PAYPAL_CLIENT_SECRET="replace-me"
+# Optional: PayPal webhook verification (from the PayPal dashboard webhook details).
+# Leave unset until the webhook is created; the approve-and-capture flow works without it.
+PAYPAL_WEBHOOK_ID=""
+# Optional override for sandbox testing. Production default is https://api-m.paypal.com.
+PAYPAL_API_BASE="https://api-m.paypal.com"

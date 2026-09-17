@@ -182,6 +182,10 @@ test('Commerce: ACP, AP2, UCP, x402, and MPP openapi.json discovery documents ar
   assert.equal(checkoutOp['x-payment-info'].intent, 'charge');
   assert.equal(checkoutOp['x-payment-info'].amount, 249900);
   assert.equal(checkoutOp['x-payment-info'].currency, 'INR');
+  const paypalOp = openapi.paths['/api/paypal/capture'].post;
+  assert.ok(paypalOp['x-payment-info'], 'Missing x-payment-info on /api/paypal/capture');
+  assert.equal(paypalOp['x-payment-info'].amount, 4000);
+  assert.equal(paypalOp['x-payment-info'].currency, 'USD');
 });
 
 test('Worker: Markdown Content Negotiation returns markdown with x-markdown-tokens', async () => {

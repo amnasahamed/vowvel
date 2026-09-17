@@ -76,6 +76,17 @@ Fill `.dev.vars` with local test credentials. Admin and partner login have no pa
 
 For production, create the D1 database and R2 bucket referenced by `wrangler.jsonc`, apply `npm run db:migrate:remote`, and enter `OTP_SECRET`, `RAZORPAY_KEY_ID`, `RAZORPAY_KEY_SECRET` and `RAZORPAY_WEBHOOK_SECRET` interactively with `npx wrangler secret put SECRET_NAME`. Never commit live credentials. Set `EMAIL_FROM` to an address on a domain onboarded in Cloudflare Email Sending, and set `PUBLIC_APP_URL` to the final HTTPS origin if the webhook origin differs from the public site. Register the Razorpay webhook URL as `/api/webhooks/razorpay` and enable `payment.captured` delivery.
 
+## International checkout (PayPal, $40 USD)
+
+Guests outside India pay a flat **$40 USD** via PayPal. INR Razorpay checkout is unchanged. Coupons are not supported for PayPal orders yet, and PayPal orders carry no influencer commission.
+
+```sh
+printf '%s' '<your-paypal-client-id>' | npx wrangler secret put PAYPAL_CLIENT_ID
+printf '%s' '<your-paypal-client-secret>' | npx wrangler secret put PAYPAL_CLIENT_SECRET
+```
+
+For local testing, copy the same values into `.dev.vars` (never commit that file). The checkout page shows an India / Outside-India switch; PayPal approval is captured server-side at `POST /api/paypal/capture`, which publishes the invitation and queues the confirmation email. Optionally register the webhook URL `/api/webhooks/paypal` for `PAYMENT.CAPTURE.COMPLETED` in the PayPal dashboard, then store its webhook id with `npx wrangler secret put PAYPAL_WEBHOOK_ID` — the webhook is a backup confirmation path; approve-and-capture works without it. Admin refunds support PayPal captures as well as Razorpay payments.
+
 Cloudflare Email Sending must be enabled for the sender domain before OTP or transactional messages can be delivered. Purchase confirmation includes the durable invitation link. A verified creator coupon redemption queues a privacy-safe creator notification and both message types retry automatically from the email outbox.
 
 The local Vite-only command (`npm run dev`) does not run `/api/*`; use `npm run dev:full` when exercising accounts, checkout or admin features. Apply D1 migrations remotely before the first production deployment.

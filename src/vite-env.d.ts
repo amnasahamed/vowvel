@@ -25,4 +25,13 @@ interface RazorpayFailureResponse {
 
 interface Window {
   Razorpay?:new(options:RazorpayOptions)=>{open:()=>void;on:(event:'payment.failed',handler:(response:RazorpayFailureResponse)=>void)=>void};
+  paypal?:{Buttons:(config:PayPalButtonsConfig)=>{render:(target:HTMLElement)=>Promise<void>|void}};
+}
+
+interface PayPalButtonsConfig {
+  style?:{layout?:string;label?:string};
+  createOrder:()=>string|Promise<string>;
+  onApprove:(data:{orderID:string})=>void|Promise<void>;
+  onCancel?:()=>void;
+  onError?:(err:unknown)=>void;
 }

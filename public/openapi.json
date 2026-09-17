@@ -75,7 +75,7 @@
     "/api/coupons/quote": {
       "post": {
         "summary": "Calculate pricing quote",
-        "description": "Calculates subtotal, discount, applicable taxes, and final payable total for a wedding invitation, optionally with a coupon code.",
+        "description": "Calculates subtotal, discount, applicable taxes, and final payable total. Use method paypal for the flat $40 USD international price (coupons are not supported for PayPal yet).",
         "requestBody": {
           "required": false,
           "content": {
@@ -83,7 +83,8 @@
               "schema": {
                 "type": "object",
                 "properties": {
-                  "code": { "type": "string" }
+                  "code": { "type": "string" },
+                  "method": { "type": "string", "enum": ["razorpay", "paypal"] }
                 }
               }
             }
@@ -113,7 +114,7 @@
     "/api/orders": {
       "post": {
         "summary": "Initiate invitation purchase order",
-        "description": "Creates a payable order for a customized luxury wedding invitation. Requires a signed-in customer session and CSRF token.",
+        "description": "Creates a payable order for a customized luxury wedding invitation. Requires a signed-in customer session and CSRF token. Use method paypal for $40 USD international orders (coupons not supported); use razorpay for INR orders.",
         "x-payment-info": {
           "intent": "charge",
           "method": "card",
@@ -129,6 +130,7 @@
                 "type": "object",
                 "properties": {
                   "code": { "type": "string" },
+                  "method": { "type": "string", "enum": ["razorpay", "paypal"] },
                   "subdomain": { "type": "string" },
                   "invitation": { "type": "object" }
                 },
@@ -155,6 +157,38 @@
           },
           "402": {
             "description": "Payment Required via x402 protocol or payment gateway"
+          }
+        }
+      }
+    },
+    "/api/paypal/capture": {
+      "post": {
+        "summary": "Capture an approved PayPal order",
+        "description": "Captures the buyer-approved $40 USD PayPal order, publishes the invitation and queues the confirmation email. Requires a signed-in customer session and CSRF token.",
+        "x-payment-info": {
+          "intent": "capture",
+          "method": "paypal",
+          "amount": 4000,
+          "currency": "USD",
+          "description": "Vowvel Bespoke Invitation License (international)"
+        },
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "orderId": { "type": "string" }
+                },
+                "required": ["orderId"]
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Payment captured and invitation published"
           }
         }
       }
@@ -244,6 +278,17 @@
         "responses": {
           "200": {
             "description": "RSVP recorded successfully"
+          }
+        }
+      }
+    },
+    "/api/webhooks/paypal": {
+      "post": {
+        "summary": "PayPal webhook (payment capture events)",
+        "description": "Receives PAYMENT.CAPTURE.COMPLETED events from PayPal. Signature is verified against the configured PayPal webhook id; register the webhook URL as /api/webhooks/paypal in the PayPal dashboard.",
+        "responses": {
+          "200": {
+            "description": "Event recorded"
           }
         }
       }
