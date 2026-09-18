@@ -6,6 +6,7 @@
 .design-item.design-gulmohar .design-category { letter-spacing: .08em; }
 .hero-outcome { font-size: 13px !important; line-height: 1.7 !important; color: #4d5546 !important; max-width: 42ch; margin-bottom: 10px; }
 .trust-strip { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px 22px; padding: 22px 0 8px; font-size: 11px; color: #5d6456; }
+.trust-strip.trust-proof { padding-top: 4px; padding-bottom: 18px; color: #6a7163; }
 .trust-strip span { position: relative; padding-left: 14px; }
 .trust-strip span:before { content: ''; position: absolute; left: 0; top: 6px; width: 6px; height: 6px; border-radius: 50%; background: #8a9378; }
 .landing-sticky-cta { display: none; }

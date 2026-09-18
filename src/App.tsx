@@ -79,7 +79,9 @@ function Landing({section}:{section:LandingSection|null}){
       <div className="trust-strip wrap" aria-label="Why couples choose Vowvel">
         <span>No app for guests</span>
         <span>Pay once</span>
-        <span>Live for your celebration</span>
+        <span>Hosting through your celebration</span>
+      </div>
+      <div className="trust-strip trust-proof wrap" aria-label="How invitations are shared">
         <span>Built for Indian multi-ceremony weddings</span>
         <span>Share on WhatsApp</span>
         <span>Opens on any phone</span>
