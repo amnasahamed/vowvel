@@ -46,7 +46,11 @@ function Landing({section}:{section:LandingSection|null}){
   const [occasion,setOccasion]=useState('All celebrations');
   useEffect(()=>{
     if(!section)return;
-    const timer=setTimeout(()=>document.getElementById(section)?.scrollIntoView({behavior:'smooth'}),80);
+    const timer=setTimeout(()=>{
+      const target=document.getElementById(section);
+      if(target instanceof HTMLDetailsElement)target.open=true;
+      target?.scrollIntoView({behavior:'smooth'});
+    },80);
     return()=>clearTimeout(timer);
   },[section]);
   return <div className="landing-page">
