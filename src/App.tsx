@@ -49,13 +49,14 @@ function Landing({section}:{section:LandingSection|null}){
     const timer=setTimeout(()=>document.getElementById(section)?.scrollIntoView({behavior:'smooth'}),80);
     return()=>clearTimeout(timer);
   },[section]);
-  return <>
+  return <div className="landing-page">
     <SiteNav/>
     <main id="main">
       <section className="hero wrap">
         <div className="hero-copy">
           <span className="eyebrow"><Flower size={18} weight="thin"/> SMALL DETAILS. BIG FEELINGS.</span>
           <h1>Something<br/>worth <em>opening.</em></h1>
+          <p className="hero-outcome">Digital wedding invitation · Free to design · ₹2,499 to publish & collect RSVPs on WhatsApp.</p>
           <p>An invitation they’ll open more than once.<br/>Personalise your wedding website. Share it on WhatsApp.</p>
           <div className="hero-actions">
             <a className="button" href="#designs" onClick={event=>{event.preventDefault();goToLandingSection('designs')}}>Find your invitation <ArrowUpRight size={18}/></a>
@@ -65,12 +66,20 @@ function Landing({section}:{section:LandingSection|null}){
         </div>
         <div className="hero-art">
           <div className="hero-handwritten">a little preview of your forever</div>
-          <Envelope onOpen={()=>navigate(previewPath('conservatory',occasion))}/>
+          <Envelope theme="gulmohar" onOpen={()=>navigate(previewPath('gulmohar',occasion))}/>
           <span className="open-hint"><MouseSimple size={18} weight="thin"/> Go on, break the seal.</span>
           <div className="hero-flower" aria-hidden="true"><Flower size={75} weight="thin"/></div>
         </div>
       </section>
       <div className="promise-line"><span>A little paper magic.</span><span>A whole lot of heart.</span><span>One very good first impression.</span></div>
+      <div className="trust-strip wrap" aria-label="Why couples choose Vowvel">
+        <span>No app for guests</span>
+        <span>Pay once</span>
+        <span>Live for your celebration</span>
+        <span>Built for Indian multi-ceremony weddings</span>
+        <span>Share on WhatsApp</span>
+        <span>Opens on any phone</span>
+      </div>
       <section id="designs" className="collection wrap">
         <Reveal>
           <div className="section-heading">
@@ -91,13 +100,13 @@ function Landing({section}:{section:LandingSection|null}){
             </button>
             <div className="design-caption">
               <div>
-                <span className="design-category">{designCategories[i]}</span>
+                <span className="design-category">{t.id==='gulmohar'?'BEST FOR INDIAN WEDDINGS':designCategories[i]}</span>
                 <h3>{t.name}</h3>
                 <p>{t.subtitle}</p>
-                <span className="suite-inclusions">Animated opening · Personal story · Event suite</span>
+                <span className="suite-inclusions">{t.id==='gulmohar'?'Haldi, sangeet, wedding & reception — one link.':'Animated opening · Personal story · Event suite'}</span>
               </div>
               <div className="design-card-actions">
-                {t.id==='gulmohar'&&<button className="button compact" onClick={()=>navigate('/create/gulmohar')}>Start with Gulmohar <ArrowUpRight size={17}/></button>}
+                <button className="button compact" onClick={()=>navigate('/create/'+t.id+(occasion==='Engagement'?'?occasion=engagement':''))}>{t.id==='gulmohar'?'Start with Gulmohar':'Start free'} <ArrowUpRight size={17}/></button>
                 <button className="text-button" onClick={()=>navigate(previewPath(t.id,occasion))}>Explore <ArrowUpRight size={17}/></button>
               </div>
             </div>
@@ -147,16 +156,16 @@ function Landing({section}:{section:LandingSection|null}){
           <Reveal>
             <span className="eyebrow">BEAUTIFUL SHOULD FEEL EASY</span>
             <h2>All the little things.<br/><em>One simple price.</em></h2>
-            <p>We’re making the kind of invitation you’d keep in a drawer. Only this one goes wherever your people are.</p>
+            <p>We’re making the kind of invitation you’d keep in a drawer. Only this one goes wherever your people are. One link for Haldi, sangeet, wedding and reception.</p>
             <span className="pricing-footnote">The Signature Collection · One payment. Publishing is available now.</span>
           </Reveal>
           <Reveal className="price-card">
             <span className="eyebrow">THE SIGNATURE INVITATION SUITE</span>
             <div className="price">₹2,499 <span>one time</span></div>
-            <p>India total. International: $40 via PayPal.</p>
+            <p>or $40 internationally via PayPal. Less than one box of printed cards.</p>
             <ul>{['Your choice of five fully coordinated design suites','Up to eight ceremonies in one invitation','Cinematic opening & a personal scratch-to-reveal note','Your story, six photographs, travel & dress code','Guest replies, venue directions & calendar dates'].map(x=><li key={x}><Check size={16}/>{x}</li>)}</ul>
             <button className="button" onClick={()=>navigate('/create/gulmohar')}>Start with Gulmohar <ArrowUpRight size={18}/></button>
-            <button className="text-button price-secondary" onClick={()=>goToLandingSection('designs')}>Or choose another design</button>
+            <button className="text-button price-secondary" onClick={()=>goToLandingSection('designs')}>Browse all designs</button>
             <small>₹2,499 is the amount charged for India. Hosting lasts through your celebration and a reasonable period after. Questions on refunds or privacy? Email support@vowvel.com.</small>
           </Reveal>
         </div>
@@ -166,7 +175,7 @@ function Landing({section}:{section:LandingSection|null}){
           <span className="eyebrow">A FEW GOOD QUESTIONS</span>
           <h2>Before you<br/><em>say hello.</em></h2>
         </div>
-        <div>{faqs.map(([q,a])=><details key={q}><summary>{q}<Plus size={17}/></summary><p>{a}</p></details>)}</div>
+        <div>{faqs.map(([q,a])=><details key={q} id={q==='Can I get a refund?'?'faq-refunds':undefined}><summary>{q}<Plus size={17}/></summary><p>{a}</p></details>)}</div>
       </section>
       <section className="final-cta">
         <Flower size={38} weight="thin"/>
@@ -179,10 +188,15 @@ function Landing({section}:{section:LandingSection|null}){
       <Brand/>
       <span>Made for your kind of love.</span>
       <a href="#/blog">Journal</a>
-      <a href="mailto:support@vowvel.com">Talk to us</a>
+      <a href="#faq-refunds" onClick={event=>{event.preventDefault();goToLandingSection('faq-refunds')}}>Refunds</a>
+      <a href="mailto:support@vowvel.com">Privacy, terms & support</a>
       <a href="#designs" onClick={event=>{event.preventDefault();goToLandingSection('designs')}}>Explore the collection <ArrowUpRight size={14}/></a>
     </footer>
-  </>;
+    <div className="landing-sticky-cta">
+      <button className="button compact" onClick={()=>navigate('/create/gulmohar')}>Start free</button>
+      <button className="button secondary compact" onClick={()=>goToLandingSection('pricing')}>See pricing</button>
+    </div>
+  </div>;
 }
 export default function App(){
   const [{route,section},setLocation]=useState(()=>readAppLocation(location.hash,location.pathname));

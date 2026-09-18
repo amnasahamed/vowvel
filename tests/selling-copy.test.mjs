@@ -31,6 +31,8 @@ test('homepage pricing states a live India total and international PayPal price'
   assert.match(landing,/₹2,499/);
   assert.match(landing,/\$40/);
   assert.match(landing,/PayPal/);
+  assert.match(landing,/Digital wedding invitation/);
+  assert.match(landing,/Start free/);
   assert.match(landing,/Start with Gulmohar/);
   assert.match(landing,/\/create\/gulmohar/);
   assert.doesNotMatch(landing,/incl(?:uding|\.)?\s+GST/i);

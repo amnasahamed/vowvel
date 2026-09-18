@@ -21,6 +21,8 @@
 .invitation .inv-price-chip { font-size: 9px; letter-spacing: .08em; text-transform: uppercase; text-align: center; flex: 1; opacity: .82; }
 .inv-continuous .inv-topbar>.inv-price-chip,
 .invitation .inv-topbar>.inv-price-chip { display: block; }
+.invitation .inv-topbar-actions { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+.invitation .inv-start-draft { font-weight: 500; }
 .invitation.inv-continuous .inv-page:before { opacity: .08; }
 .invitation.inv-continuous .inv-text-button { font-size: 14px; min-height: 44px; }
 .invitation.inv-continuous .world-date { font-size: clamp(12px, 2.5cqw, 15px); letter-spacing: .08em; }
