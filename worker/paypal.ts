@@ -170,7 +170,7 @@ export async function verifyPayPalWebhook(
   eventBody: unknown,
 ): Promise<boolean> {
   const webhookId = env.PAYPAL_WEBHOOK_ID?.trim() || '';
-  if (!webhookId) throw new Error('PayPal webhook id is not configured');
+  if (!webhookId) return false;
   if (
     !verification.transmissionId ||
     !verification.transmissionTime ||
