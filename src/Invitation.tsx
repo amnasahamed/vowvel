@@ -101,7 +101,7 @@ export default function Invitation({
   };
 
   return <article ref={articleRef} style={customStyles as any} className={`invitation inv-continuous inv-${data.theme} ${fontMoodClass} ${embedded?'inv-embedded':''} ${open?'inv-is-open':''}`}>
-    {!embedded&&!slug&&<div className="inv-topbar" inert={!open||film}><button onClick={onClose} className="inv-text-button">← Back</button><span>VOWVEL / INVITATION PREVIEW</span>{onUse&&<button className="inv-text-button" onClick={onUse}>Make this yours ↗</button>}</div>}
+    {!embedded&&!slug&&<div className="inv-topbar" inert={!open||film}><button onClick={onClose} className="inv-text-button">← Back</button><span className="inv-price-chip">Free to design · ₹2,499 to publish</span>{onUse&&<button className="inv-text-button" onClick={onUse}>Make this yours ↗</button>}</div>}
     {!open&&!film&&<InvitationCover key={data.theme} theme={data.theme} name1={data.name1} name2={data.name2} design={data.design} onSkip={()=>setOpen(true)} onOpen={handleOpenCover}/> }
     {film&&<InvitationFilm key={data.theme} theme={data.theme} onComplete={()=>{setFilm(false);setOpen(true)}}/>}
     <OpeningFilmActive value={film}><div inert={film} aria-hidden={film||undefined}>

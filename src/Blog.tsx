@@ -6,7 +6,7 @@ import {
   type BlogPost 
 } from './blogData';
 import { themeById, type ThemeId } from './data';
-import { navigate, Brand } from './App';
+import { navigate, Brand, goToLandingSection } from './App';
 import { 
   ArrowUpRight, 
   ArrowLeft, 
@@ -126,13 +126,13 @@ export default function Blog({ slug }: BlogProps) {
         <header className="site-nav">
           <Brand />
           <nav aria-label="Journal navigation">
-            <a href="#designs">The collection</a>
+            <a href="#designs" onClick={event => { event.preventDefault(); goToLandingSection('designs'); }}>The collection</a>
             <a href="#/blog">Journal</a>
-            <a href="#how-it-works">How it works</a>
-            <a href="#pricing">Pricing</a>
+            <a href="#how-it-works" onClick={event => { event.preventDefault(); goToLandingSection('how-it-works'); }}>How it works</a>
+            <a href="#pricing" onClick={event => { event.preventDefault(); goToLandingSection('pricing'); }}>Pricing</a>
           </nav>
           <div className="nav-actions">
-            <button className="button compact" onClick={() => navigate('/create/conservatory')}>
+            <button className="button compact" onClick={() => navigate('/create/gulmohar')}>
               Create yours <ArrowUpRight size={16} />
             </button>
           </div>
@@ -319,7 +319,7 @@ export default function Blog({ slug }: BlogProps) {
           <Brand />
           <span>Made for your kind of love.</span>
           <a href="#/blog">Journal</a>
-          <a href="#designs">Explore the collection <ArrowUpRight size={14} /></a>
+          <a href="#designs" onClick={event => { event.preventDefault(); goToLandingSection('designs'); }}>Explore the collection <ArrowUpRight size={14} /></a>
         </footer>
       </div>
     );
@@ -333,13 +333,13 @@ export default function Blog({ slug }: BlogProps) {
       <header className="site-nav">
         <Brand />
         <nav aria-label="Main navigation">
-          <a href="#designs">The collection</a>
+          <a href="#designs" onClick={event => { event.preventDefault(); goToLandingSection('designs'); }}>The collection</a>
           <a href="#/blog" style={{ textDecoration: 'underline', textUnderlineOffset: '6px' }}>Journal</a>
-          <a href="#how-it-works">How it works</a>
-          <a href="#pricing">Pricing</a>
+          <a href="#how-it-works" onClick={event => { event.preventDefault(); goToLandingSection('how-it-works'); }}>How it works</a>
+          <a href="#pricing" onClick={event => { event.preventDefault(); goToLandingSection('pricing'); }}>Pricing</a>
         </nav>
         <div className="nav-actions">
-          <button className="button compact" onClick={() => navigate('/create/conservatory')}>
+          <button className="button compact" onClick={() => navigate('/create/gulmohar')}>
             Create yours <ArrowUpRight size={16} />
           </button>
         </div>
@@ -476,7 +476,7 @@ export default function Blog({ slug }: BlogProps) {
       <footer className="site-footer wrap" style={{ marginTop: '80px' }}>
         <Brand />
         <span>Made for your kind of love.</span>
-        <a href="#designs">The collection</a>
+        <a href="#designs" onClick={event => { event.preventDefault(); goToLandingSection('designs'); }}>The collection</a>
         <a href="#/blog">Journal</a>
       </footer>
     </div>

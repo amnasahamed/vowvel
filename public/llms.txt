@@ -34,7 +34,7 @@ Vowvel provides an editorial storefront and five signature invitation design wor
 
 ## Pricing & Commerce
 
-- **Base Invitation License**: ₹2,499 INR (Signature Collection launch price; publishing is not yet available, hosting and payment terms will be confirmed before launch).
+- **Base Invitation License**: ₹2,499 INR domestic (the amount charged in India), or $40 USD internationally via PayPal. Design is free; pay once to publish, host, and collect RSVPs.
 - **Supported Commerce Protocols**: ACP (Agentic Commerce Protocol), UCP (Universal Commerce Protocol), MPP (Machine Payment Protocol), x402 HTTP payments, and AP2.
 
 For full details, see [llms-full.txt](https://vowvel.com/llms-full.txt).

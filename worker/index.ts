@@ -119,7 +119,7 @@ async function authRoutes(request:Request,env:RuntimeEnv,path:string):Promise<Re
   if((path==='/api/auth/login'||path==='/api/auth/register')&&request.method==='POST')throw new ApiError(410,'Password sign-in has been replaced by an email code.','password_auth_retired');
   if(path==='/api/auth/otp/request'&&request.method==='POST'){
     const body=await readJson(request);const email=cleanText(body.email,254).toLowerCase();const purpose=body.purpose==='partner'?'partner':body.purpose==='admin'?'admin':body.purpose==='customer'?'customer':'';
-    if(!isValidEmail(email)||!purpose)throw new ApiError(400,'A valid email and sign-in area are required');if(!env.OTP_SECRET)throw new ApiError(503,'OTP_SECRET is not configured');
+    if(!isValidEmail(email)||!purpose)throw new ApiError(400,'A valid email and sign-in area are required');if(!env.OTP_SECRET)throw new ApiError(503,'Sign-in is temporarily unavailable. Email support@vowvel.com');
     await enforceRateLimit(env,request,`otp_request:${purpose}`,5,900);await enforceRateLimit(env,request,`otp_email:${purpose}:${email}`,5,900);
     let eligible=email===cleanText(env.ADMIN_EMAIL,254).toLowerCase()&&purpose==='admin';
     if(purpose==='admin'&&!eligible){const staff=await env.DB.prepare(`SELECT id FROM users WHERE email=? AND role IN ('owner','admin','finance','support','content') AND status='active'`).bind(email).first();eligible=Boolean(staff);}
@@ -130,7 +130,7 @@ async function authRoutes(request:Request,env:RuntimeEnv,path:string):Promise<Re
   }
   if(path==='/api/auth/otp/verify'&&request.method==='POST'){
     const body=await readJson(request);const email=cleanText(body.email,254).toLowerCase();const purpose=body.purpose==='partner'?'partner':body.purpose==='admin'?'admin':body.purpose==='customer'?'customer':'';const code=cleanText(body.code,6);
-    if(!isValidEmail(email)||!purpose||!/^\d{6}$/.test(code))throw new ApiError(400,'Enter the six-digit code');if(!env.OTP_SECRET)throw new ApiError(503,'OTP_SECRET is not configured');await enforceRateLimit(env,request,`otp_verify:${purpose}`,10,900);
+    if(!isValidEmail(email)||!purpose||!/^\d{6}$/.test(code))throw new ApiError(400,'Enter the six-digit code');if(!env.OTP_SECRET)throw new ApiError(503,'Sign-in is temporarily unavailable. Email support@vowvel.com');await enforceRateLimit(env,request,`otp_verify:${purpose}`,10,900);
     const challenge=await env.DB.prepare(`SELECT id,code_hash,attempts,expires_at FROM otp_challenges WHERE email=? AND purpose=? AND consumed_at IS NULL ORDER BY created_at DESC LIMIT 1`).bind(email,purpose).first<{id:string;code_hash:string;attempts:number;expires_at:string}>();if(!challenge||challenge.attempts>=5||new Date(challenge.expires_at).getTime()<=Date.now())throw new ApiError(401,'The code is invalid or expired','otp_invalid');await env.DB.prepare(`UPDATE otp_challenges SET attempts=attempts+1 WHERE id=?`).bind(challenge.id).run();const expected=await hmacHex(env.OTP_SECRET,`${challenge.id}:${purpose}:${email}:${code}`);if(!constantTimeEqual(expected,challenge.code_hash))throw new ApiError(401,'The code is invalid or expired','otp_invalid');
     let user=await env.DB.prepare(`SELECT id,email,name,role,status FROM users WHERE email=?`).bind(email).first<{id:string;email:string;name:string;role:Role;status:UserStatus}>();
     if(purpose==='admin'){const primaryAdmin=email===cleanText(env.ADMIN_EMAIL,254).toLowerCase();if(primaryAdmin&&!user){const userId=id('user');const disabledPasswordHash=await sha256(randomToken());await env.DB.batch([env.DB.prepare(`INSERT OR IGNORE INTO setup_state(key) VALUES('owner_bootstrap')`),env.DB.prepare(`INSERT INTO users(id,email,password_hash,password_salt,name,role,status,email_verified_at) VALUES(?,?,?,?,?,'owner','active',CURRENT_TIMESTAMP)`).bind(userId,email,disabledPasswordHash,randomToken(16),'Vowvel Owner')]);user={id:userId,email,name:'Vowvel Owner',role:'owner',status:'active'};}else if(primaryAdmin&&user&&(user.role!=='owner'||user.status!=='active')){await env.DB.prepare(`UPDATE users SET role='owner',status='active',email_verified_at=CURRENT_TIMESTAMP,updated_at=CURRENT_TIMESTAMP WHERE id=?`).bind(user.id).run();user={...user,role:'owner',status:'active'};}else if(!user||!['owner','admin','finance','support','content'].includes(user.role)||user.status!=='active')throw new ApiError(403,'This email does not have admin access');}
@@ -289,14 +289,14 @@ async function commerceRoutes(request:Request,env:RuntimeEnv,path:string,user:Au
         ];
         if(coupon)statements.push(env.DB.prepare(`UPDATE coupon_codes SET reserved_count=MAX(0,reserved_count-1) WHERE id=?`).bind(coupon.row.id));
         await env.DB.batch(statements);await env.MEDIA.delete(r2Key);
-        if(providerStatus===401)throw new ApiError(401,'Razorpay authentication failed','provider_auth_failed');
+        if(providerStatus===401)throw new ApiError(401,'Payment is temporarily unavailable. Email support@vowvel.com and we’ll help you publish.','provider_auth_failed');
         throw new ApiError(500,'Payment provider could not create the order','provider_error');
       }
     }
     await audit(env,request,customer.id,'order.create','order',orderId,null,snapshot);trackMeta(env,ctx,{eventName:'InitiateCheckout',eventId:`order:${orderId}:initiate`,email:customer.email,name:customer.name,userAgent:request.headers.get('user-agent')||'',eventSourceUrl:metaCheckoutUrl(env,request),valueCents:quote.totalCents,currency:config.currency,contentIds:[themeContentId(invitationPayload)],orderId});return json({order:{id:orderId,...snapshot,providerOrderId,checkoutKey},paymentConfigured:Boolean(providerOrderId),provider:'razorpay',complimentary:false},201);
   }
   if(path==='/api/verify-payment'&&request.method==='POST'){
-    const customer=requireRole(user,['customer']);requireCsrf(request,customer);if(!env.RAZORPAY_KEY_SECRET)throw new ApiError(503,'Razorpay secret is not configured');
+    const customer=requireRole(user,['customer']);requireCsrf(request,customer);if(!env.RAZORPAY_KEY_SECRET)throw new ApiError(503,'Payment is temporarily unavailable. Email support@vowvel.com and we’ll help you publish.','payment_unavailable');
     const body=await readJson(request);const orderId=cleanText(body.orderId,100);const paymentId=cleanText(body.razorpay_payment_id,120);const providerOrderId=cleanText(body.razorpay_order_id,120);const signature=cleanText(body.razorpay_signature,256);
     if(!orderId||!paymentId||!providerOrderId||!signature)throw new ApiError(400,'Payment verification fields are required','payment_fields_missing');
     const order=await env.DB.prepare(`SELECT id,state,provider_order_id,provider_payment_id FROM orders WHERE id=? AND user_id=?`).bind(orderId,customer.id).first<{id:string;state:string;provider_order_id:string|null;provider_payment_id:string|null}>();

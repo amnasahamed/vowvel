@@ -18,6 +18,9 @@
 .invitation.inv-continuous .inv-eyebrow { font-size: 12px; letter-spacing: .15em; line-height: 1.6; margin-bottom: 24px; }
 .invitation.inv-continuous .inv-prose { font-size: 16px; line-height: 1.9; max-width: 34ch; margin: 24px auto 0; }
 .invitation.inv-continuous .inv-topbar button { min-height: 44px; font-size: 12px; padding: 10px 16px; }
+.invitation .inv-price-chip { font-size: 9px; letter-spacing: .08em; text-transform: uppercase; text-align: center; flex: 1; opacity: .82; }
+.inv-continuous .inv-topbar>.inv-price-chip,
+.invitation .inv-topbar>.inv-price-chip { display: block; }
 .invitation.inv-continuous .inv-page:before { opacity: .08; }
 .invitation.inv-continuous .inv-text-button { font-size: 14px; min-height: 44px; }
 .invitation.inv-continuous .world-date { font-size: clamp(12px, 2.5cqw, 15px); letter-spacing: .08em; }

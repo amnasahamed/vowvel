@@ -8,7 +8,7 @@ Use this skill when calculating invitation licensing fees, applying influencer p
 
 ## Pricing
 
-- Base license: ₹2,499 INR (Signature Collection launch price; publishing is not yet available, hosting and payment terms will be confirmed before launch).
+- Base license: ₹2,499 INR domestic (amount charged in India), or $40 USD internationally via PayPal. Design is free; pay once to publish, host, and collect RSVPs.
 
 ## Actions
 
