@@ -32,7 +32,7 @@ function Reveal({children,className=''}:{children:React.ReactNode;className?:str
 const designCategories=['BOTANICAL ROMANCE','INDIAN WEDDINGS · MULTI-CEREMONY','MODERN GLAMOUR','PLAYFUL PAPERCRAFT','DESTINATION DAYDREAM'];
 const faqs:[string,string][]=[
   ['Can I try it before paying?','Yes. Design is free. Add your names, events and photos, and explore the invitation on this device. You pay once — ₹2,499 in India, or $40 via PayPal internationally — only when you publish and start collecting RSVPs.'],
-  ['When can I publish my invitation?','Now. When your draft feels ready, choose Ready to share, pay once, and your invitation goes live on a vowvel.com address you choose.'],
+  ['When can I publish my invitation?','Now. When your draft feels ready, choose Ready to publish, pay once, and your invitation goes live on a vowvel.com address you choose.'],
   ['What does ₹2,499 include?','₹2,499 is the total charged in India for one invitation suite: your design, live hosting, guest replies and a shareable link. Outside India, pay $40 USD via PayPal. Checkout does not add a separate tax line today.'],
   ['Can I get a refund?','Drafting is free, so you can decide before you pay. After a successful publish this is a delivered digital product, so we don’t refund change-of-mind. If you paid and your invitation did not go live, email support@vowvel.com and we will publish it or refund you.'],
   ['How long does hosting last?','Your invitation stays live for the celebration and a reasonable time after — at least through your wedding date, and typically a year from the publish date, whichever is later. Need it longer? Write to support@vowvel.com.'],
