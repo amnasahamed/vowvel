@@ -9,3 +9,6 @@ PAYPAL_CLIENT_SECRET="replace-me"
 PAYPAL_WEBHOOK_ID=""
 # Optional override for sandbox testing. Production default is https://api-m.paypal.com.
 PAYPAL_API_BASE="https://api-m.paypal.com"
+# Optional: Meta Conversions API (server-side Purchase + InitiateCheckout events).
+META_ACCESS_TOKEN="replace-me"
+META_DATASET_ID="1398800338359043"

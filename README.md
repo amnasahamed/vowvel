@@ -87,6 +87,16 @@ printf '%s' '<your-paypal-client-secret>' | npx wrangler secret put PAYPAL_CLIEN
 
 For local testing, copy the same values into `.dev.vars` (never commit that file). The checkout page shows an India / Outside-India switch; PayPal approval is captured server-side at `POST /api/paypal/capture`, which publishes the invitation and queues the confirmation email. Optionally register the webhook URL `/api/webhooks/paypal` for `PAYMENT.CAPTURE.COMPLETED` in the PayPal dashboard, then store its webhook id with `npx wrangler secret put PAYPAL_WEBHOOK_ID` — the webhook is a backup confirmation path; approve-and-capture works without it. Admin refunds support PayPal captures as well as Razorpay payments.
 
+## Meta Conversions API (server-side events)
+
+The Worker sends `InitiateCheckout` (order creation, both providers) and `Purchase` (PayPal capture route plus both payment webhooks) to the Meta dataset in `META_DATASET_ID`, with SHA-256-hashed email/name matching, value, currency, theme content id and stable `order:<id>:<action>` event ids for Pixel deduplication. Events fire via `waitUntil` and never break checkout on failure.
+
+```sh
+npx wrangler secret put META_ACCESS_TOKEN
+```
+
+For local testing, copy the token and dataset id into `.dev.vars`. The connection stays `pending` in Events Manager until the first real event arrives — place a test order to activate it.
+
 Cloudflare Email Sending must be enabled for the sender domain before OTP or transactional messages can be delivered. Purchase confirmation includes the durable invitation link. A verified creator coupon redemption queues a privacy-safe creator notification and both message types retry automatically from the email outbox.
 
 The local Vite-only command (`npm run dev`) does not run `/api/*`; use `npm run dev:full` when exercising accounts, checkout or admin features. Apply D1 migrations remotely before the first production deployment.
