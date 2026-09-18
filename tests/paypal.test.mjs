@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {PAYPAL_CURRENCY,PAYPAL_PRICE_CENTS,fromPayPalValue,parsePayPalCaptureEvent,paypalApiBase,requirePayPalCredentials,toPayPalValue} from '../worker/paypal.ts';
+import {PAYPAL_CURRENCY,PAYPAL_PRICE_CENTS,fromPayPalValue,parsePayPalCaptureEvent,paypalApiBase,requirePayPalCredentials,toPayPalValue,verifyPayPalWebhook} from '../worker/paypal.ts';
 
 test('PayPal flat international price is $40 USD',()=>{
   assert.equal(PAYPAL_CURRENCY,'USD');
@@ -23,6 +23,13 @@ test('PayPal credentials are required before any API call',()=>{
   assert.throws(()=>requirePayPalCredentials({}),/not configured/);
   assert.throws(()=>requirePayPalCredentials({PAYPAL_CLIENT_ID:'id'}),/not configured/);
   assert.deepEqual(requirePayPalCredentials({PAYPAL_CLIENT_ID:'id',PAYPAL_CLIENT_SECRET:'secret'}),{clientId:'id',clientSecret:'secret'});
+});
+
+test('PayPal webhook id is optional and does not block capture credentials',async()=>{
+  assert.deepEqual(requirePayPalCredentials({PAYPAL_CLIENT_ID:'id',PAYPAL_CLIENT_SECRET:'secret'}),{clientId:'id',clientSecret:'secret'});
+  assert.equal(await verifyPayPalWebhook({PAYPAL_CLIENT_ID:'id',PAYPAL_CLIENT_SECRET:'secret'},{
+    transmissionId:'t',transmissionTime:'now',certUrl:'https://api.paypal.com/cert',authAlgo:'SHA256withRSA',transmissionSig:'sig',
+  },{}),false);
 });
 
 test('PayPal API base defaults to live and rejects bad overrides',()=>{

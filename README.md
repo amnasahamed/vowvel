@@ -28,13 +28,17 @@ npm run deploy:check
 
 ## Production status
 
-The Worker, static assets, D1 database, R2 bucket, production schema, custom domains, OTP secret and Cloudflare Email Sending are provisioned. Admin OTP delivery to `amnasahmd@gmail.com` has been verified in production. Transactional messages are sent from `notifications@vowvel.com` with replies directed to `support@vowvel.com`; Cloudflare Email Routing forwards that address to the verified admin inbox. Live Razorpay API credentials are installed and validated; payment completion automation remains disabled until the production `payment.captured` webhook and its separate signing secret are configured in Razorpay. Cloud draft synchronization, real guest reply delivery, automatic post-payment publishing, invitation hostnames and music uploads are not connected. Times currently use India Standard Time, explicitly labeled in the editor and guest calendar/event controls.
+Publishing and payments are live. Design is free; couples pay once to publish, host, and collect RSVPs — **₹2,499** in India (the amount charged) or **$40 USD** via PayPal internationally.
 
-₹2,499 is the user-approved Signature Collection launch price. Migration 0008 updates only the previous ₹1,499 base price, retaining taxes and historical order amounts. Final taxes, hosting duration, refund and rescheduling policies require confirmation before production Razorpay secrets are configured. ₹5,000 was a perceived-quality design target; no fake price discount or testimonials were added.
+The Worker, static assets, D1, R2, custom domains, OTP, and Cloudflare Email Sending are provisioned. Transactional mail goes from `notifications@vowvel.com` with replies to `support@vowvel.com`. India checkout uses Razorpay (`payment.captured` webhook plus client signature verify, which publishes immediately). International checkout uses PayPal approve-and-capture at `POST /api/paypal/capture`. `PAYPAL_WEBHOOK_ID` is optional and is only a backup confirmation path.
+
+Cloud draft sync and music uploads remain local-only. Times use India Standard Time, labeled in the editor and guest calendar.
+
+₹2,499 is the Signature Collection price (migration 0008 raised the previous ₹1,499 base). Checkout does not add a separate tax line. Hosting lasts through the celebration and a reasonable period after.
 
 ## Remaining production integration
 
-See [integration plan](docs/cloudflare-integration.md). Secrets must stay on a Worker, never in the Vite client. The frontend can be deployed independently for review, but real checkout must remain unavailable until server verification and publication are connected.
+See [integration plan](docs/cloudflare-integration.md). Secrets must stay on a Worker, never in the Vite client. The storefront checkout is live; keep provider credentials on the Worker only.
 
 ## Design and assets
 

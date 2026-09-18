@@ -13,6 +13,7 @@ test('storefront and public marketing no longer advertise a waitlist',async()=>{
     'src/Invitation.tsx',
     'public/llms.txt',
     'public/.well-known/agent-skills/commerce-assistant/SKILL.md',
+    'README.md',
   ];
   for(const file of files){
     const text=await fs.readFile(file,'utf8');
@@ -22,8 +23,10 @@ test('storefront and public marketing no longer advertise a waitlist',async()=>{
 
 test('checkout never tells buyers about missing payment secrets',async()=>{
   const checkout=await fs.readFile('src/Checkout.tsx','utf8');
+  const worker=await fs.readFile('worker/index.ts','utf8');
   assert.doesNotMatch(checkout,/Razorpay secrets|not configured yet|OTP_SECRET/i);
   assert.match(checkout,/support@vowvel\.com/);
+  assert.doesNotMatch(worker,/Add Razorpay secrets|Razorpay secrets are not configured|OTP_SECRET is not configured/i);
 });
 
 test('homepage pricing states a live India total and international PayPal price',async()=>{
