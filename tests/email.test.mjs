@@ -7,6 +7,9 @@ test('transactional email content escapes user-controlled values',()=>{
   const purchase=purchaseEmail('client@example.com','order_<unsafe>','₹1,499','https://example.com/#/invite/abc');
   assert.ok(!purchase.html.includes('order_<unsafe>'));
   assert.match(purchase.text,/https:\/\/example\.com\/#\/invite\/abc/);
+  assert.ok(purchase.html.includes('Copy your link'));
+  assert.ok(purchase.html.includes('https://example.com/#/invite/abc'));
+  assert.match(purchase.text,/tap and hold/i);
 });
 
 test('OTP and creator redemption emails include required facts',()=>{
