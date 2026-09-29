@@ -20,7 +20,7 @@
       "type": "skill-md",
       "description": "Handle quotes, coupon validations, and checkout initialization for Vowvel bespoke invitations.",
       "url": "/.well-known/agent-skills/commerce-assistant/SKILL.md",
-      "digest": "sha256:c5545f337ffd4bc13551133b36dcac33dbeaa6557eff0f2f7d5b7aa9321c3611"
+      "digest": "sha256:46c560b77ced2a9c5fa56fe0ad800bec9b50a097dafed40d6245a5201a5bdaa3"
     }
   ]
 }
