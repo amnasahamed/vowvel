@@ -6,6 +6,7 @@ import InvitationFilm from './InvitationFilm';
 import {OpeningFilmActive} from './films';
 import {RsvpConfetti} from './InvitationEffects';
 import {api} from './api';
+import {trackStep} from './analytics';
 import '@fontsource/great-vibes/400.css';
 import './invitation.css';
 import './opening-hero.css';
@@ -101,7 +102,7 @@ export default function Invitation({
   };
 
   return <article ref={articleRef} style={customStyles as any} className={`invitation inv-continuous inv-${data.theme} ${fontMoodClass} ${embedded?'inv-embedded':''} ${open?'inv-is-open':''}`}>
-    {!embedded&&!slug&&<div className="inv-topbar" inert={!open||film}><button onClick={onClose} className="inv-text-button">← Back</button><span className="inv-price-chip">Free to design · ₹2,499 to publish</span>{onUse&&<div className="inv-topbar-actions"><button className="inv-text-button" onClick={onUse}>Make this yours</button><button className="inv-text-button inv-start-draft" onClick={onUse}>Start free draft ↗</button></div>}</div>}
+    {!embedded&&!slug&&<div className="inv-topbar" inert={!open||film}><button onClick={onClose} className="inv-text-button">← Back</button><span className="inv-price-chip">Free to design · ₹2,499 to publish</span>{onUse&&<div className="inv-topbar-actions"><button className="inv-text-button" onClick={()=>{trackStep('preview_use_clicked',{theme:data.theme,intent:'make_yours'});onUse();}}>Make this yours</button><button className="inv-text-button inv-start-draft" onClick={()=>{trackStep('preview_use_clicked',{theme:data.theme,intent:'start_draft'});onUse();}}>Start free draft ↗</button></div>}</div>}
     {!open&&!film&&<InvitationCover key={data.theme} theme={data.theme} name1={data.name1} name2={data.name2} design={data.design} onSkip={()=>setOpen(true)} onOpen={handleOpenCover}/> }
     {film&&<InvitationFilm key={data.theme} theme={data.theme} onComplete={()=>{setFilm(false);setOpen(true)}}/>}
     <OpeningFilmActive value={film}><div inert={film} aria-hidden={film||undefined}>

@@ -3,6 +3,7 @@ import {clearSessionCookie,constantTimeEqual,hashPassword,hmacHex,isValidEmail,p
 import {flushEmailOutbox,otpEmail,purchaseEmail,redemptionEmail,sendTransactional,type EmailContent} from './email.ts';
 import {PAYPAL_CURRENCY,PAYPAL_PRICE_CENTS,capturePayPalOrder,createPayPalOrder,parsePayPalCaptureEvent,paypalAccessToken,refundPayPalCapture,requirePayPalCredentials,verifyPayPalWebhook} from './paypal.ts';
 import {sendMetaEvent,type MetaEventInput} from './meta.ts';
+import {parseFunnelBody,buildFunnelLogLine} from './funnel.ts';
 
 
 type Role='owner'|'admin'|'finance'|'support'|'content'|'influencer'|'customer';
@@ -520,6 +521,24 @@ async function handleApi(request:Request,env:RuntimeEnv,ctx:ExecutionContext):Pr
   }
   if(path==='/api/commerce/catalog'&&request.method==='GET'){
     return json({currency:'INR',basePriceCents:249900,internationalPriceUSD:40,items:[{id:'conservatory',name:'Conservatory',aesthetic:'Botanical glasshouse, ivory, gold foil, organic romanticism'},{id:'gulmohar',name:'Gulmohar',aesthetic:'Royal crimson, marigold, architectural arches, warm festivities'},{id:'afterhours',name:'After Hours',aesthetic:'Noir editorial, chandeliers, jazz club, modern champagne gala'},{id:'sunday',name:'Sunday Edit',aesthetic:'Warm editorial linen, minimalist typography, intimate weekend'},{id:'azure',name:'Azure',aesthetic:'Coastal cliffside, Mediterranean tiles, ocean romance'}]},200,{'access-control-allow-origin':'*'});
+  }
+  if(path==='/api/funnel'&&request.method==='POST'){
+    let body:unknown;
+    try{body=await readJson(request,4_000);}catch{throw new ApiError(400,'Funnel body is invalid JSON');}
+    const payload=parseFunnelBody(body);
+    if(!payload)throw new ApiError(400,'Unknown or missing funnel event name','funnel_invalid');
+    try{await enforceRateLimit(env,request,'funnel_event',120,60);}catch(error){
+      if(error instanceof ApiError&&error.code==='rate_limited'){
+        console.warn(JSON.stringify({level:'warn',event:'funnel_rate_limited'}));
+        return new Response(null,{status:204});
+      }
+      throw error;
+    }
+    console.log(buildFunnelLogLine(payload));
+    return new Response(null,{status:204});
+  }
+  if(path==='/api/funnel'&&request.method==='GET'){
+    return json({ok:true,endpoint:'funnel',events:'allowlisted',hint:'POST {eventName,params,path,ts}'},200,{'access-control-allow-origin':'*'});
   }
   requireSameOrigin(request);
   if(path==='/api/webhooks/razorpay'&&request.method==='POST')return razorpayWebhook(request,env,ctx);

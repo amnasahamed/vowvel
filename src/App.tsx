@@ -8,6 +8,7 @@ import {themes,themeById,type ThemeId,type InvitationData} from './data';
 import {loadDraft} from './storage';
 import {loadSession,type SessionUser} from './api';
 import {goToLandingSection,readAppLocation,type LandingSection} from './hashRoute';
+import {trackStep} from './analytics';
 import './account-nav.css';
 const Invitation=lazy(()=>import('./Invitation'));
 const Editor=lazy(()=>import('./Editor'));
@@ -27,8 +28,8 @@ export function Brand(){return <a className="brand" href="#/" aria-label="Vowvel
 function SiteNav(){
   return <header className="site-nav"><Brand/><nav aria-label="Main navigation"><a href="#designs" onClick={event=>{event.preventDefault();goToLandingSection('designs')}}>The collection</a><a href="#/blog">Journal</a><a href="#how-it-works" onClick={event=>{event.preventDefault();goToLandingSection('how-it-works')}}>How it works</a><a href="#pricing" onClick={event=>{event.preventDefault();goToLandingSection('pricing')}}>Pricing</a></nav><div className="nav-actions"><ClientAccess/><button className="text-button resume" onClick={()=>navigate('/create/'+loadDraft().theme)}>My invitation</button><button className="button compact" onClick={()=>navigate('/create/gulmohar')}>Create yours <ArrowUpRight size={16}/></button></div></header>;
 }
-export function Envelope({theme='conservatory',onOpen,small=false}:{theme?:ThemeId;onOpen:()=>void;small?:boolean}){const t=themeById(theme);const [open,setOpen]=useState(false);useEffect(()=>{if(!open)return;const timer=setTimeout(onOpen,850);return()=>clearTimeout(timer)},[open,onOpen]);return <button className={`paper-envelope ${open?'is-open':''} ${small?'small':''} ${theme}`} style={{'--env-ink':t.color,'--env-paper':t.paper} as CSSProperties} onClick={()=>setOpen(true)} aria-label={`Open ${t.name} invitation`}><div className="envelope-shadow"/><div className="envelope-back"/><div className="envelope-letter"><img src={t.art} alt="" fetchPriority="high"/><span className="letter-copy"><small>TOGETHER WITH OUR FAMILIES</small><strong>Ishaan <i>&</i> Ananya</strong><span>14 FEBRUARY 2027</span></span></div><div className="envelope-front"/><div className="envelope-flap"/><span className="wax-seal">V</span><span className="envelope-address">For you, with love.</span></button>}
-function Reveal({children,className=''}:{children:React.ReactNode;className?:string}){const ref=useRef<HTMLDivElement>(null);useEffect(()=>{const node=ref.current;if(!node||!('IntersectionObserver' in window)||window.matchMedia('(prefers-reduced-motion: reduce)').matches){node?.classList.add('is-visible');return}const observer=new IntersectionObserver(([entry])=>{if(entry.isIntersecting){node.classList.add('is-visible');observer.disconnect()}},{threshold:.12});observer.observe(node);return()=>observer.disconnect()},[]);return <div ref={ref} className={`reveal ${className}`}>{children}</div>}
+export function Envelope({theme='conservatory',onOpen,small=false}:{theme?:ThemeId;onOpen:()=>void;small?:boolean}){const t=themeById(theme);const [open,setOpen]=useState(false);useEffect(()=>{if(!open)return;const timer=setTimeout(onOpen,850);return()=>clearTimeout(timer)},[open,onOpen]);return <button className={`paper-envelope ${open?'is-open':''} ${small?'small':''} ${theme}`} style={{'--env-ink':t.color,'--env-paper':t.paper} as CSSProperties} onClick={()=>{trackStep('cover_sealed_broken',{theme});setOpen(true)}} aria-label={`Open ${t.name} invitation`}><div className="envelope-shadow"/><div className="envelope-back"/><div className="envelope-letter"><img src={t.art} alt="" fetchPriority="high"/><span className="letter-copy"><small>TOGETHER WITH OUR FAMILIES</small><strong>Ishaan <i>&</i> Ananya</strong><span>14 FEBRUARY 2027</span></span></div><div className="envelope-front"/><div className="envelope-flap"/><span className="wax-seal">V</span><span className="envelope-address">For you, with love.</span></button>}
+function Reveal({children,className='',onReveal}:{children:React.ReactNode;className?:string;onReveal?:()=>void}){const ref=useRef<HTMLDivElement>(null);useEffect(()=>{const node=ref.current;if(!node||!('IntersectionObserver' in window)||window.matchMedia('(prefers-reduced-motion: reduce)').matches){node?.classList.add('is-visible');if(onReveal)onReveal();return}const observer=new IntersectionObserver(([entry])=>{if(entry.isIntersecting){node.classList.add('is-visible');observer.disconnect();if(onReveal)onReveal()}},{threshold:.12});observer.observe(node);return()=>observer.disconnect()},[onReveal]);return <div ref={ref} className={`reveal ${className}`}>{children}</div>}
 const designCategories=['BOTANICAL ROMANCE','INDIAN WEDDINGS · MULTI-CEREMONY','MODERN GLAMOUR','PLAYFUL PAPERCRAFT','DESTINATION DAYDREAM'];
 const faqs:[string,string][]=[
   ['Can I try it before paying?','Yes. Design is free. Add your names, events and photos, and explore the invitation on this device. You pay once — ₹2,499 in India, or $40 via PayPal internationally — only when you publish and start collecting RSVPs.'],
@@ -100,8 +101,8 @@ function Landing({section}:{section:LandingSection|null}){
           </div>
         </Reveal>
         <div className="design-grid">{themes.map((t,i)=>
-          <Reveal key={t.id} className={`design-item design-${t.id}`}>
-            <button className={`design-art ${t.id}`} onClick={()=>navigate(previewPath(t.id,occasion))} aria-label={`Preview ${t.name}`} style={{'--card-paper':t.paper,'--card-ink':t.color} as CSSProperties}>
+          <Reveal key={t.id} className={`design-item design-${t.id}`} onReveal={()=>trackStep('design_card_view',{theme:t.id,position:i})}>
+            <button className={`design-art ${t.id}`} onClick={()=>{trackStep('design_card_click',{theme:t.id,position:i});navigate(previewPath(t.id,occasion))}} aria-label={`Preview ${t.name}`} style={{'--card-paper':t.paper,'--card-ink':t.color} as CSSProperties}>
               <div className="design-stage"><WorldScene data={sampleForTheme(t.id,occasion==='Engagement'?'Engagement':'Wedding')}/></div>
               <span className="preview-circle"><ArrowUpRight size={24}/></span>
             </button>
@@ -233,6 +234,15 @@ export default function App(){
       document.querySelector('meta[name="description"]')?.setAttribute('content',meta.description);
     }
   },[route,isPreview]);
+  useEffect(()=>{
+    if(isPreview)trackStep('preview_open',{theme:id||data.theme,occasion:data.occasion});
+  },[route,isPreview,id,data.theme,data.occasion]);
+  useEffect(()=>{
+    if(isEditor)trackStep('editor_open',{theme:id||data.theme,update:Boolean(route.includes('update='))});
+  },[route,isEditor,id,data.theme]);
+  useEffect(()=>{
+    if(route==='/checkout')trackStep('checkout_open',{theme:data.theme});
+  },[route,data.theme]);
   return <>
     <a className="skip-link" href="#main" onClick={e=>{e.preventDefault();const main=document.getElementById('main')||document.querySelector('article');main?.setAttribute('tabindex','-1');(main as HTMLElement)?.focus();main?.scrollIntoView()}}>Skip to content</a>
     <Suspense fallback={<div className="loading-screen"><Flower size={36}/><p>Opening something lovely...</p></div>}>
