@@ -6,8 +6,10 @@
   "scripts": {
     "dev": "vite --host 0.0.0.0",
     "dev:full": "wrangler dev",
+    "prebuild": "node scripts/generate-skills-index.mjs",
     "build": "node scripts/generate-favicons.mjs && tsc -b && tsc -p tsconfig.worker.json && vite build && node scripts/generate-sharing.mjs",
     "preview": "vite preview --host 0.0.0.0",
+    "pretest": "node scripts/generate-skills-index.mjs",
     "test": "node --experimental-strip-types --test tests/*.test.mjs",
     "db:migrate:local": "wrangler d1 migrations apply vowvel --local",
     "db:migrate:remote": "wrangler d1 migrations apply vowvel --remote",
