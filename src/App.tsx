@@ -41,6 +41,7 @@ const faqs:[string,string][]=[
   ['Is this for engagements too?','Yes. Every design works for weddings and engagements. You can also add a reception, welcome gathering or another celebration to your invitation.'],
   ['Will guests need to download an app?','No. The invitations are designed to open in a browser on a phone or computer. Opening animations can be skipped, and your guests can reach the essentials immediately.'],
   ['Can I add my own photos?','Yes. Add up to six photos in the editor, or leave them out. Every design is also made to look complete with its original artwork.'],
+  ['What happens to my photos and replies?','Your draft lives in your browser until you publish (localStorage key vowvel:draft:v1); each published version is stored as a JSON object in Cloudflare R2. Photos are resized in your browser to a 900-pixel-wide JPEG before upload, and the editor caps each photo near 2 MB. Guest replies sit in Cloudflare D1 and you can export them as CSV from #/replies. Hosting lasts at least through your wedding date and typically a year from publish (see above). For deletion or export requests, email support@vowvel.com — we respond within the standard support window.'],
 ];
 function Landing({section}:{section:LandingSection|null}){
   const [occasion,setOccasion]=useState('All celebrations');
@@ -181,7 +182,7 @@ function Landing({section}:{section:LandingSection|null}){
           <span className="eyebrow">A FEW GOOD QUESTIONS</span>
           <h2>Before you<br/><em>say hello.</em></h2>
         </div>
-        <div>{faqs.map(([q,a])=><details key={q} id={q==='Can I get a refund?'?'faq-refunds':undefined}><summary>{q}<Plus size={17}/></summary><p>{a}</p></details>)}</div>
+        <div>{faqs.map(([q,a])=><details key={q} id={q==='Can I get a refund?'?'faq-refunds':q==='What happens to my photos and replies?'?'faq-privacy':undefined}><summary>{q}<Plus size={17}/></summary><p>{a}</p></details>)}</div>
       </section>
       <section className="final-cta">
         <Flower size={38} weight="thin"/>
@@ -195,7 +196,8 @@ function Landing({section}:{section:LandingSection|null}){
       <span>Made for your kind of love.</span>
       <a href="#/blog">Journal</a>
       <a href="#faq-refunds" onClick={event=>{event.preventDefault();goToLandingSection('faq-refunds')}}>Refunds</a>
-      <a href="mailto:support@vowvel.com">Privacy, terms & support</a>
+      <a href="#faq-privacy" onClick={event=>{event.preventDefault();goToLandingSection('faq-privacy')}}>Privacy</a>
+      <a href="mailto:support@vowvel.com">Support</a>
       <a href="#designs" onClick={event=>{event.preventDefault();goToLandingSection('designs')}}>Explore the collection <ArrowUpRight size={14}/></a>
     </footer>
     <div className="landing-sticky-cta">

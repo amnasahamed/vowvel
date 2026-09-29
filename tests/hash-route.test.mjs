@@ -6,13 +6,16 @@ test('known marketing hashes are landing sections, not app routes',()=>{
   assert.equal(isLandingSection('pricing'),true);
   assert.equal(isLandingSection('how-it-works'),true);
   assert.equal(isLandingSection('designs'),true);
+  assert.equal(isLandingSection('faq-privacy'),true);
   assert.equal(isLandingSection('blog'),false);
   assert.deepEqual(parseLocationHash('#pricing'),{route:'/',section:'pricing'});
   assert.deepEqual(parseLocationHash('#how-it-works'),{route:'/',section:'how-it-works'});
   assert.deepEqual(parseLocationHash('#designs'),{route:'/',section:'designs'});
   assert.deepEqual(parseLocationHash('#faq-refunds'),{route:'/',section:'faq-refunds'});
+  assert.deepEqual(parseLocationHash('#faq-privacy'),{route:'/',section:'faq-privacy'});
   assert.deepEqual(parseLocationHash('#/pricing'),{route:'/',section:'pricing'});
   assert.deepEqual(parseLocationHash('#/how-it-works'),{route:'/',section:'how-it-works'});
+  assert.deepEqual(parseLocationHash('#/faq-privacy'),{route:'/',section:'faq-privacy'});
 });
 
 test('app routes that start with a slash stay routes',()=>{

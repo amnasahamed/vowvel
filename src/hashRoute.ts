@@ -1,4 +1,4 @@
-export const LANDING_SECTIONS = ['designs', 'how-it-works', 'pricing', 'faq-refunds'] as const;
+export const LANDING_SECTIONS = ['designs', 'how-it-works', 'pricing', 'faq-refunds', 'faq-privacy'] as const;
 export type LandingSection = typeof LANDING_SECTIONS[number];
 
 export function isLandingSection(value: string): value is LandingSection {
