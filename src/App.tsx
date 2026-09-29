@@ -9,6 +9,7 @@ import {loadDraft} from './storage';
 import {loadSession,type SessionUser} from './api';
 import {goToLandingSection,readAppLocation,type LandingSection} from './hashRoute';
 import './account-nav.css';
+import {preserveEditRoute} from './editRoute';
 const Invitation=lazy(()=>import('./Invitation'));
 const Editor=lazy(()=>import('./Editor'));
 const CommerceCheckout=lazy(()=>import('./Checkout'));
@@ -18,7 +19,7 @@ const InfluencerApplication=lazy(()=>import('./CommercePortals').then(module=>({
 const PublishedInvitation=lazy(()=>import('./PublishedInvitation'));
 const GuestReplies=lazy(()=>import('./GuestReplies'));
 const Blog=lazy(()=>import('./Blog'));
-export function navigate(path:string){window.location.hash=path;window.scrollTo({top:0,behavior:'instant'})}
+export function navigate(path:string){window.location.hash=preserveEditRoute(path,window.location.hash);window.scrollTo({top:0,behavior:'instant'})}
 export {goToLandingSection};
 function collection(){goToLandingSection('designs')}
 function previewPath(theme:ThemeId,occasion:string){return `/preview/${theme}${occasion==='Engagement'?'?occasion=engagement':''}`}
