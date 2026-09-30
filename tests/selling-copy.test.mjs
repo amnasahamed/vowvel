@@ -55,7 +55,7 @@ test('preview, editor and checkout make the free-to-paid path obvious',async()=>
   const success=await fs.readFile('src/PaymentSuccess.tsx','utf8');
   assert.match(invitation,/Free to design · ₹2,499 to publish/);
   assert.match(invitation,/Start free draft/);
-  assert.match(editor,/Draft free · Publish when ready/);
+  assert.match(editor,/Draft free · ₹2,499 or \$40 internationally — publish when you(?:’|')re ready\./);
   assert.match(editor,/Ready to publish/);
   assert.match(checkout,/Your guests will open/);
   assert.match(success,/Share on WhatsApp/);
