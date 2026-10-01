@@ -19,6 +19,7 @@ export const FUNNEL_EVENTS=[
   'payment_succeeded',
   'invite_shared',
   'checkout_error',
+  'payment_method_changed',
 ] as const;
 export type FunnelEventName=typeof FUNNEL_EVENTS[number];
 export const FUNNEL_ALLOWLIST:Set<string>=new Set<string>(FUNNEL_EVENTS);

@@ -91,6 +91,20 @@ function trackMeta(env:RuntimeEnv,ctx:ExecutionContext,input:MetaEventInput):voi
 function metaCheckoutUrl(env:RuntimeEnv,request:Request):string{
   return `${(env.PUBLIC_APP_URL||new URL(request.url).origin).replace(/\/$/,'')}/#/checkout`;
 }
+function resolveCheckoutGeo(request:Request):{method:'razorpay'|'paypal';currency:'INR'|'USD';source:'cf'|'override'|'fallback'}{
+  const url=new URL(request.url);
+  const rawOverride=url.searchParams.get('country');
+  if(rawOverride!==null&&rawOverride!==''){
+    const trimmed=rawOverride.trim().toUpperCase();
+    if(!/^[A-Z]{2}$/.test(trimmed))throw new ApiError(400,'Country code must be two letters','geo_invalid');
+    return trimmed==='IN'?{method:'razorpay',currency:'INR',source:'override'}:{method:'paypal',currency:'USD',source:'override'};
+  }
+  const cfCountry=(request as Request&{cf?:{country?:string}}).cf?.country;
+  if(typeof cfCountry==='string'&&/^[A-Z]{2}$/.test(cfCountry.toUpperCase())){
+    return cfCountry.toUpperCase()==='IN'?{method:'razorpay',currency:'INR',source:'cf'}:{method:'paypal',currency:'USD',source:'cf'};
+  }
+  return {method:'razorpay',currency:'INR',source:'fallback'};
+}
 function themeContentId(invitationPayload:unknown):string{
   try{
     const data=(invitationPayload as {data?:{theme?:unknown}})?.data;
@@ -539,6 +553,9 @@ async function handleApi(request:Request,env:RuntimeEnv,ctx:ExecutionContext):Pr
   }
   if(path==='/api/funnel'&&request.method==='GET'){
     return json({ok:true,endpoint:'funnel',events:'allowlisted',hint:'POST {eventName,params,path,ts}'},200,{'access-control-allow-origin':'*'});
+  }
+  if(path==='/api/checkout/geo'&&request.method==='GET'){
+    return json(resolveCheckoutGeo(request),200,{'access-control-allow-origin':'*'});
   }
   requireSameOrigin(request);
   if(path==='/api/webhooks/razorpay'&&request.method==='POST')return razorpayWebhook(request,env,ctx);

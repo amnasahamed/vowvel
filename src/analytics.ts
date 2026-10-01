@@ -19,6 +19,7 @@ export const FUNNEL_EVENTS=[
   'payment_succeeded',
   'invite_shared',
   'checkout_error',
+  'payment_method_changed',
 ] as const;
 export type FunnelEvent=typeof FUNNEL_EVENTS[number];
 export type FunnelParams=Record<string,unknown>;
