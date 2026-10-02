@@ -18,6 +18,7 @@ export const FUNNEL_EVENTS=[
   'payment_initiated',
   'payment_succeeded',
   'invite_shared',
+  'checkout_cta_blocked_help_shown',
   'checkout_error',
 ] as const;
 export type FunnelEvent=typeof FUNNEL_EVENTS[number];

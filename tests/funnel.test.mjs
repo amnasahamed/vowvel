@@ -25,13 +25,13 @@ function withStubbedBrowser(scenario,fn){
   }
 }
 
-test('funnel allowlist matches the 20 canonical event names',()=>{
-  assert.equal(FUNNEL_EVENTS.length,20);
+test('funnel allowlist matches the 21 canonical event names',()=>{
+  assert.equal(FUNNEL_EVENTS.length,21);
   for(const name of [
     'design_card_view','design_card_click','preview_open','cover_sealed_broken','preview_use_clicked',
     'editor_open','editor_name_filled','editor_tab_advanced','editor_ready_to_publish_clicked','editor_review_continue_clicked',
     'checkout_open','otp_requested','otp_verified','subdomain_typed','subdomain_available',
-    'coupon_applied','payment_initiated','payment_succeeded','invite_shared','checkout_error',
+    'coupon_applied','payment_initiated','payment_succeeded','invite_shared','checkout_cta_blocked_help_shown','checkout_error',
   ]){assert.ok(FUNNEL_EVENTS.includes(name),`${name} must be in the allowlist`);}
 });
 
