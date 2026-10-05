@@ -25,11 +25,12 @@ function withStubbedBrowser(scenario,fn){
   }
 }
 
-test('funnel allowlist matches the 22 canonical event names',()=>{
-  assert.equal(FUNNEL_EVENTS.length,22);
+test('funnel allowlist matches the 25 canonical event names',()=>{
+  assert.equal(FUNNEL_EVENTS.length,25);
   for(const name of [
     'design_card_view','design_card_click','preview_open','cover_sealed_broken','preview_use_clicked',
     'editor_open','editor_name_filled','editor_tab_advanced','editor_ready_to_publish_clicked','editor_review_continue_clicked',
+    'editor_validation_shown',
     'checkout_open','otp_requested','otp_verified','subdomain_typed','subdomain_available',
     'coupon_applied','payment_initiated','payment_succeeded','invite_shared','checkout_cta_blocked_help_shown','checkout_error',
     'paypal_order_summary_visible',

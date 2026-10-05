@@ -9,8 +9,10 @@ export const FUNNEL_EVENTS=[
   'editor_tab_advanced',
   'editor_ready_to_publish_clicked',
   'editor_review_continue_clicked',
+  'editor_validation_shown',
   'checkout_open',
   'otp_requested',
+  'otp_resent',
   'otp_verified',
   'subdomain_typed',
   'subdomain_available',
@@ -21,6 +23,7 @@ export const FUNNEL_EVENTS=[
   'checkout_cta_blocked_help_shown',
   'checkout_error',
   'paypal_order_summary_visible',
+  'reveal_visible',
 ] as const;
 export type FunnelEvent=typeof FUNNEL_EVENTS[number];
 export type FunnelParams=Record<string,unknown>;
