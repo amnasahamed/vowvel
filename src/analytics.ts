@@ -20,6 +20,7 @@ export const FUNNEL_EVENTS=[
   'invite_shared',
   'checkout_cta_blocked_help_shown',
   'checkout_error',
+  'paypal_order_summary_visible',
 ] as const;
 export type FunnelEvent=typeof FUNNEL_EVENTS[number];
 export type FunnelParams=Record<string,unknown>;
