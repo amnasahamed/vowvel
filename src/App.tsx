@@ -174,7 +174,7 @@ function Landing({section}:{section:LandingSection|null}){
             <ul>{['Your choice of five fully coordinated design suites','Up to eight ceremonies in one invitation','Cinematic opening & a personal scratch-to-reveal note','Your story, six photographs, travel & dress code','Guest replies, venue directions & calendar dates'].map(x=><li key={x}><Check size={16}/>{x}</li>)}</ul>
             <button className="button" onClick={()=>navigate('/create/gulmohar')}>Start with Gulmohar <ArrowUpRight size={18}/></button>
             <button className="text-button price-secondary" onClick={()=>goToLandingSection('designs')}>Browse all designs</button>
-            <small>₹2,499 is the amount charged for India. Hosting lasts through your celebration and a reasonable period after. Questions on refunds or privacy? Email support@vowvel.com.</small>
+            <small>₹2,499 is the amount charged for India. Hosting lasts at least through your wedding date and typically a year from publish, whichever is later. Questions on refunds or privacy? Email support@vowvel.com.</small>
           </Reveal>
         </div>
       </section>
